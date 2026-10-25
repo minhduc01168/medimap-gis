@@ -1,0 +1,30 @@
+# BMAD and Agents internal folders (DO NOT COMMIT)
+_bmad/
+_bmad-output/
+.agent/
+.agents/
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+.venv/
+venv/
+env/
+
+# Large geospatial raster/vector files
+data/01_raw/
+data/02_intermediate/
+*.tif
+*.tiff
+*.geotiff
+*.gpkg
+*.tar.gz
+*.zip
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
