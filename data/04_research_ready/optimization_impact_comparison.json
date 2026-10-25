@@ -1,0 +1,81 @@
+{
+  "optimization_model": "P-Median & Maximal Covering Location Problem (MCLP)",
+  "number_of_new_facilities_p": 5,
+  "baseline": {
+    "healthcare_deserts_population": 34498,
+    "healthcare_deserts_percentage": 15.75,
+    "mean_travel_time_deserts_min": 89.3
+  },
+  "optimized": {
+    "healthcare_deserts_population": 4924,
+    "healthcare_deserts_percentage": 2.25,
+    "mean_travel_time_deserts_min": 34.4
+  },
+  "impact_metric": {
+    "absolute_rescued_population": 29574,
+    "relative_reduction_in_deserts_pct": 85.7,
+    "travel_time_reduction_min": 54.9
+  },
+  "recommended_sites": [
+    {
+      "recommendation_id": "REC_P01",
+      "priority_rank": 1,
+      "name": "Trạm Y tế phụ Cụm Y Tý - A Lù (Bát Xát)",
+      "district": "Huyện Bát Xát",
+      "commune": "Khu vực biên giới Y Tý - A Lù",
+      "elevation_m": 706.4,
+      "proposed_tier": 3,
+      "proposed_staff": "2 Y sĩ đa khoa + 1 Hộ sinh",
+      "proposed_beds": 5,
+      "status": "PROPOSED_OPTIMAL_SITE"
+    },
+    {
+      "recommendation_id": "REC_P02",
+      "priority_rank": 2,
+      "name": "Trạm Y tế phụ Cụm Tả Gia Khâu - Dìn Chin (Mường Khương)",
+      "district": "Huyện Mường Khương",
+      "commune": "Khu vực rẻo cao Tả Gia Khâu",
+      "elevation_m": 946.8,
+      "proposed_tier": 3,
+      "proposed_staff": "2 Y sĩ đa khoa + 1 Hộ sinh",
+      "proposed_beds": 5,
+      "status": "PROPOSED_OPTIMAL_SITE"
+    },
+    {
+      "recommendation_id": "REC_P03",
+      "priority_rank": 3,
+      "name": "Trạm Y tế phụ Cụm Nậm Chảy - Cao Sơn (Mường Khương)",
+      "district": "Huyện Mường Khương",
+      "commune": "Khu vực đèo cao Nậm Chảy",
+      "elevation_m": 502.0,
+      "proposed_tier": 3,
+      "proposed_staff": "2 Y sĩ đa khoa + 1 Hộ sinh",
+      "proposed_beds": 5,
+      "status": "PROPOSED_OPTIMAL_SITE"
+    },
+    {
+      "recommendation_id": "REC_P04",
+      "priority_rank": 4,
+      "name": "Trạm Y tế phụ Cụm Liên Minh - Nậm Cang (Sa Pa)",
+      "district": "Thị xã Sa Pa",
+      "commune": "Thung lũng sâu Liên Minh",
+      "elevation_m": 641.7,
+      "proposed_tier": 3,
+      "proposed_staff": "2 Y sĩ đa khoa + 1 Hộ sinh",
+      "proposed_beds": 5,
+      "status": "PROPOSED_OPTIMAL_SITE"
+    },
+    {
+      "recommendation_id": "REC_P05",
+      "priority_rank": 5,
+      "name": "Trạm Y tế phụ Cụm Dền Thàng - Dền Sáng (Bát Xát)",
+      "district": "Huyện Bát Xát",
+      "commune": "Vùng lõi Dền Thàng",
+      "elevation_m": 895.8,
+      "proposed_tier": 3,
+      "proposed_staff": "2 Y sĩ đa khoa + 1 Hộ sinh",
+      "proposed_beds": 5,
+      "status": "PROPOSED_OPTIMAL_SITE"
+    }
+  ]
+}

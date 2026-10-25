@@ -78,6 +78,7 @@ python run_pipeline.py
 ```
 
 ### 3. Xem Tài Liệu Hướng Dẫn & Báo Cáo
+- 📊 **Báo cáo kết quả nghiên cứu Giai đoạn I:** [`docs/phase_1_research_findings.md`](docs/phase_1_research_findings.md) *(E2SFCA, P-Median -85.7% Vùng lõm, Moran's I = 0.9306)*
 - 🔬 **Kế hoạch nghiên cứu khoa học & WebGIS:** [`docs/research_execution_plan.md`](docs/research_execution_plan.md)
 - 🛠️ **Hướng dẫn kỹ thuật bàn giao chi tiết:** [`docs/pipeline_handover_guide.md`](docs/pipeline_handover_guide.md)
 - 📋 **Báo cáo kiểm định 5 tiêu chí nghiệm thu:** [`docs/quality_assessment_report.md`](docs/quality_assessment_report.md)

@@ -28,6 +28,7 @@ data/02_intermediate/
 # Ignore large generated point geojson in git, keep gpkg and summary csv/reports
 data/03_primary/population_points_100m.geojson
 data/04_research_ready/healthcare_accessibility_pop_100m.geojson
+data/04_research_ready/e2sfca_accessibility_results.geojson
 
 # OS & IDE
 .DS_Store

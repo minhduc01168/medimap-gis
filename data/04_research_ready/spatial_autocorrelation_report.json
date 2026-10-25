@@ -1,0 +1,14 @@
+{
+  "analysis": "Global Moran's I Spatial Autocorrelation Test",
+  "variable": "Travel Time to Healthcare (minutes)",
+  "sample_size": 2000,
+  "global_morans_i": 0.9306,
+  "expected_value_e_i": -0.0005,
+  "variance_var_i": 9.74e-06,
+  "standard_deviation": 0.003122,
+  "z_score": 298.29,
+  "p_value": 0.0,
+  "statistical_significance": "p < 0.001 (Highly Significant)",
+  "spatial_pattern": "Strong Positive Spatial Clustering",
+  "scientific_conclusion": "Dữ liệu có tính TỰ TƯƠNG QUAN KHÔNG GIAN DƯƠNG RẤT CAO (Spatial Clustering, p < 0.001). Bác bỏ hoàn toàn giả thuyết ngẫu nhiên. Các vùng lõm y tế hình thành thành từng cụm địa lý rộng lớn tại vùng cao."
+}
