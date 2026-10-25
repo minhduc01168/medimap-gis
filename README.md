@@ -47,8 +47,9 @@ medimap_gis/
 │   ├── 03_primary/             # Tọa độ cơ sở y tế Ground-Truth & CSV Catalog
 │   └── 04_research_ready/      # GeoPackage (.gpkg), CSV danh sách vùng lõm y tế
 ├── docs/
-│   ├── dataset_research_plan.md   # Kế hoạch chi tiết 5 giai đoạn
-│   └── quality_assessment_report.md # Báo cáo kiểm định chất lượng Acceptance Criteria
+│   ├── dataset_research_plan.md      # Kế hoạch chi tiết 5 giai đoạn
+│   ├── pipeline_handover_guide.md    # Hướng dẫn kỹ thuật bàn giao quy trình dữ liệu
+│   └── quality_assessment_report.md  # Báo cáo kiểm định chất lượng Acceptance Criteria
 ├── scripts/
 │   ├── 01_download_boundaries.py
 │   ├── 02_ingest_health_facilities.py
@@ -76,8 +77,10 @@ pip install -r requirements.txt
 python run_pipeline.py
 ```
 
-### 3. Xem Báo Cáo Chất Lượng Nghiệm Thu
-Chi tiết báo cáo kiểm định 5 tiêu chí tại: [`docs/quality_assessment_report.md`](docs/quality_assessment_report.md).
+### 3. Xem Tài Liệu Hướng Dẫn & Báo Cáo
+- 🛠️ **Hướng dẫn kỹ thuật bàn giao chi tiết:** [`docs/pipeline_handover_guide.md`](docs/pipeline_handover_guide.md)
+- 📋 **Báo cáo kiểm định 5 tiêu chí nghiệm thu:** [`docs/quality_assessment_report.md`](docs/quality_assessment_report.md)
+- 📘 **Kế hoạch nghiên cứu không gian:** [`docs/dataset_research_plan.md`](docs/dataset_research_plan.md)
 
 ---
 
