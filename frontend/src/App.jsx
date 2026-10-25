@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import MapContainer from './components/MapContainer';
-import SimulationPanel from './components/SimulationPanel';
-import StatsPanel from './components/StatsPanel';
+import UnifiedSidebar from './components/UnifiedSidebar';
 import DataManagementView from './components/DataManagementView';
 import ReportModal from './components/ReportModal';
 import { ApiService } from './services/api';
@@ -54,6 +53,9 @@ export default function App() {
 
   // Simulation Result Output
   const [simulationResult, setSimulationResult] = useState(null);
+
+  // Interactive Target for Map Fly-To
+  const [flyToTarget, setFlyToTarget] = useState(null);
 
   // Initial Data Load & Health Check
   const loadInitialData = useCallback(async () => {
@@ -123,6 +125,16 @@ export default function App() {
     setSelectedDistrict('');
     setCustomClinics([]);
     setIsAddingClinic(false);
+    setFlyToTarget(null);
+  };
+
+  const handleFlyToFacility = (facility) => {
+    setFlyToTarget({
+      lat: facility.lat,
+      lon: facility.lon,
+      id: facility.id,
+      timestamp: Date.now()
+    });
   };
 
   return (
@@ -153,7 +165,7 @@ export default function App() {
       <main style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
         {activeTab === 'map' ? (
           <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-            {/* Interactive WebGIS Leaflet Map */}
+            {/* Interactive WebGIS Leaflet Map (100% Canvas Area) */}
             <MapContainer
               facilities={facilities}
               deserts={deserts}
@@ -168,12 +180,13 @@ export default function App() {
               onAddCustomClinic={handleAddCustomClinic}
               onRemoveCustomClinic={handleRemoveCustomClinic}
               selectedDistrict={selectedDistrict}
+              flyToTarget={flyToTarget}
               t={t}
               language={language}
             />
 
-            {/* Left Floating Simulation Control Panel */}
-            <SimulationPanel
+            {/* Open-Design Unified Collapsible Multi-Tab Sidebar */}
+            <UnifiedSidebar
               params={simulationParams}
               setParams={setSimulationParams}
               layers={layers}
@@ -183,15 +196,11 @@ export default function App() {
               onResetSimulation={handleResetSimulation}
               customClinicsCount={customClinics.length}
               onClearCustomClinics={handleClearCustomClinics}
-              t={t}
-            />
-
-            {/* Right Floating KPI and Spatial Stats Panel */}
-            <StatsPanel
               simulationResult={simulationResult}
               moranStats={moranStats}
               districtStats={districtStats}
-              isProposedActive={layers.proposed}
+              facilities={facilities}
+              onFlyToFacility={handleFlyToFacility}
               t={t}
               language={language}
             />

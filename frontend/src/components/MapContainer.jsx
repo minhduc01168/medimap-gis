@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import L from 'leaflet';
 import { 
   Layers, 
@@ -8,7 +8,11 @@ import {
   Map as MapIcon,
   ChevronDown,
   ChevronUp,
-  Info
+  Maximize2,
+  ZoomIn,
+  ZoomOut,
+  Info,
+  Check
 } from 'lucide-react';
 
 export default function MapContainer({
@@ -25,11 +29,13 @@ export default function MapContainer({
   onAddCustomClinic,
   onRemoveCustomClinic,
   selectedDistrict = '',
+  flyToTarget = null,
   t,
   language
 }) {
   const mapRef = useRef(null);
   const leafletMapRef = useRef(null);
+  const facilityMarkersRef = useRef({});
   const layersGroupRef = useRef({
     facilities: null,
     isochrones: null,
@@ -39,26 +45,28 @@ export default function MapContainer({
     boundary: null
   });
 
-  // Base Map: Default to high-res topographic terrain (Zero API key watermark)
+  // Base Map: Default to high-res topographic terrain
   const [baseMap, setBaseMap] = useState('topo'); // 'topo' | 'street' | 'satellite'
+  const [isBaseMapMenuOpen, setIsBaseMapMenuOpen] = useState(false);
+  const [isLegendOpen, setIsLegendOpen] = useState(false);
   const [coordsHud, setCoordsHud] = useState({ lat: 22.3364, lon: 103.8441 });
-  const [isLegendOpen, setIsLegendOpen] = useState(true);
   const tileLayerRef = useRef(null);
 
-  // Initialize Map with strict bounds focused on Sa Pa, Bat Xat, Muong Khuong
+  // Precise pilot study bounding box
+  const pilotBoundsRef = useRef(L.latLngBounds(
+    [22.18, 103.48], // South-West
+    [22.88, 104.38]  // North-East
+  ));
+
+  // Initialize Map
   useEffect(() => {
     if (!mapRef.current) return;
     if (leafletMapRef.current) return;
 
-    // Study Area Precise Bounds (Sa Pa, Bát Xát, Mường Khương + tight buffer)
-    const pilotBounds = L.latLngBounds(
-      [22.18, 103.48], // South-West (Sa Pa southern tip)
-      [22.88, 104.38]  // North-East (Mường Khương northern border)
-    );
-
+    const pilotBounds = pilotBoundsRef.current;
     const maxPanningBounds = L.latLngBounds(
-      [22.08, 103.35], // South-West max buffer
-      [22.98, 104.48]  // North-East max buffer
+      [22.08, 103.35],
+      [22.98, 104.48]
     );
 
     const map = L.map(mapRef.current, {
@@ -67,23 +75,21 @@ export default function MapContainer({
       minZoom: 9.6,
       maxZoom: 18,
       maxBounds: maxPanningBounds,
-      maxBoundsViscosity: 0.95, // Prevent panning outside study area
-      zoomControl: false,
+      maxBoundsViscosity: 0.95,
+      zoomControl: false, // Custom Open-Design Dock zoom buttons instead
       attributionControl: false
     });
 
-    // Fit tightly to the 3 target districts
-    map.fitBounds(pilotBounds, { padding: [25, 25] });
+    // Fit tightly to 3 pilot districts
+    map.fitBounds(pilotBounds, { padding: [30, 30] });
 
-    L.control.zoom({ position: 'topright' }).addTo(map);
-
-    // Initial Tile Layer: ESRI World Topo Map (No key required, bright, gorgeous contours)
+    // Initial Tile Layer: ESRI World Topo Map (Clean, high relief, zero watermarks)
     const topoTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 19
     }).addTo(map);
     tileLayerRef.current = topoTiles;
 
-    // Track mouse coords
+    // Track mouse coordinates
     map.on('mousemove', (e) => {
       setCoordsHud({
         lat: Number(e.latlng.lat.toFixed(4)),
@@ -116,7 +122,7 @@ export default function MapContainer({
     layersGroupRef.current.proposed = L.layerGroup().addTo(map);
     layersGroupRef.current.custom = L.layerGroup().addTo(map);
 
-    // Draw Study Area Boundary Outline (Refined Bounding Zone)
+    // Draw Study Area Boundary Outline
     const boundaryRect = L.rectangle(pilotBounds, {
       color: '#0d9488',
       weight: 2,
@@ -142,7 +148,7 @@ export default function MapContainer({
     window._onAddCustomClinicCallback = onAddCustomClinic;
   }, [isAddingClinic, customClinics.length, onAddCustomClinic]);
 
-  // Handle Base Map Switcher (100% Free, NO API Key Required)
+  // Handle Base Map Switcher
   useEffect(() => {
     if (!leafletMapRef.current || !tileLayerRef.current) return;
     const map = leafletMapRef.current;
@@ -165,11 +171,47 @@ export default function MapContainer({
     tileLayerRef.current = newLayer;
   }, [baseMap]);
 
+  // Recenter map function
+  const handleRecenter = useCallback(() => {
+    if (!leafletMapRef.current) return;
+    leafletMapRef.current.fitBounds(pilotBoundsRef.current, { 
+      padding: [40, 40],
+      duration: 1.0,
+      easeLinearity: 0.25
+    });
+  }, []);
+
+  // Zoom handlers
+  const handleZoomIn = () => {
+    if (leafletMapRef.current) leafletMapRef.current.zoomIn();
+  };
+  const handleZoomOut = () => {
+    if (leafletMapRef.current) leafletMapRef.current.zoomOut();
+  };
+
+  // FlyTo Handler for when user selects a facility in Sidebar
+  useEffect(() => {
+    if (!flyToTarget || !leafletMapRef.current) return;
+    const { lat, lon, id } = flyToTarget;
+    leafletMapRef.current.flyTo([lat, lon], 14, {
+      duration: 1.2,
+      easeLinearity: 0.25
+    });
+
+    const marker = facilityMarkersRef.current[id];
+    if (marker) {
+      setTimeout(() => {
+        marker.openPopup();
+      }, 700);
+    }
+  }, [flyToTarget]);
+
   // Render 67 Health Facilities
   useEffect(() => {
     if (!layersGroupRef.current.facilities) return;
     const group = layersGroupRef.current.facilities;
     group.clearLayers();
+    facilityMarkersRef.current = {};
 
     if (!showFacilities) return;
 
@@ -237,11 +279,12 @@ export default function MapContainer({
         </div>
       `);
 
+      facilityMarkersRef.current[f.id] = marker;
       group.addLayer(marker);
     });
   }, [facilities, showFacilities, selectedDistrict, language, t]);
 
-  // Render Isochrone Rings / Coverage Polygons
+  // Render Isochrone Rings
   useEffect(() => {
     if (!layersGroupRef.current.isochrones) return;
     const group = layersGroupRef.current.isochrones;
@@ -280,7 +323,7 @@ export default function MapContainer({
     });
   }, [facilities, showIsochrones, simulationResult]);
 
-  // Render Healthcare Deserts Clusters (Glowing Rose/Crimson)
+  // Render Healthcare Deserts Clusters
   useEffect(() => {
     if (!layersGroupRef.current.deserts) return;
     const group = layersGroupRef.current.deserts;
@@ -331,7 +374,7 @@ export default function MapContainer({
     });
   }, [deserts, showDeserts, language, t]);
 
-  // Render 5 Proposed Clinics from P-Median Optimization (Purple Diamond Marker)
+  // Render 5 Proposed Clinics from P-Median Optimization
   useEffect(() => {
     if (!layersGroupRef.current.proposed) return;
     const group = layersGroupRef.current.proposed;
@@ -366,7 +409,6 @@ export default function MapContainer({
 
       const marker = L.marker([p.lat, p.lon], { icon: customIcon });
 
-      // Add new rescued coverage buffer circle (purple ring)
       L.circle([p.lat, p.lon], {
         radius: 6500,
         color: '#7c3aed',
@@ -486,7 +528,7 @@ export default function MapContainer({
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-      {/* Map Root DOM */}
+      {/* Map Root DOM (100% Full Bleed) */}
       <div 
         ref={mapRef} 
         style={{ 
@@ -496,172 +538,327 @@ export default function MapContainer({
         }} 
       />
 
-      {/* Floating HUD: Base Map Switcher */}
-      <div 
-        className="glass-panel"
-        style={{
-          position: 'absolute',
-          top: '16px',
-          right: '54px', // Avoid overlapping topright Leaflet zoom control
-          zIndex: 800,
-          padding: '4px',
-          display: 'flex',
-          gap: '3px',
-          boxShadow: 'var(--shadow-md)',
-          background: 'rgba(255, 255, 255, 0.95)'
-        }}
-      >
-        <button
-          onClick={() => setBaseMap('topo')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px',
-            padding: '6px 12px',
-            fontSize: '0.74rem',
-            fontWeight: baseMap === 'topo' ? 700 : 500,
-            borderRadius: '6px',
-            border: 'none',
-            background: baseMap === 'topo' ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'transparent',
-            color: baseMap === 'topo' ? '#ffffff' : '#475569',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            boxShadow: baseMap === 'topo' ? '0 2px 6px rgba(13, 148, 136, 0.3)' : 'none'
-          }}
-        >
-          <Mountain size={13} />
-          {t.mapBaseTopo}
-        </button>
-
-        <button
-          onClick={() => setBaseMap('street')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px',
-            padding: '6px 12px',
-            fontSize: '0.74rem',
-            fontWeight: baseMap === 'street' ? 700 : 500,
-            borderRadius: '6px',
-            border: 'none',
-            background: baseMap === 'street' ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'transparent',
-            color: baseMap === 'street' ? '#ffffff' : '#475569',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            boxShadow: baseMap === 'street' ? '0 2px 6px rgba(13, 148, 136, 0.3)' : 'none'
-          }}
-        >
-          <MapIcon size={13} />
-          {t.mapBaseStreet}
-        </button>
-
-        <button
-          onClick={() => setBaseMap('satellite')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px',
-            padding: '6px 12px',
-            fontSize: '0.74rem',
-            fontWeight: baseMap === 'satellite' ? 700 : 500,
-            borderRadius: '6px',
-            border: 'none',
-            background: baseMap === 'satellite' ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'transparent',
-            color: baseMap === 'satellite' ? '#ffffff' : '#475569',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            boxShadow: baseMap === 'satellite' ? '0 2px 6px rgba(13, 148, 136, 0.3)' : 'none'
-          }}
-        >
-          <Compass size={13} />
-          {t.mapBaseSatellite}
-        </button>
-      </div>
-
-      {/* Floating HUD: Collapsible Legend Dock (Bottom Left, No Overlap) */}
-      <div
-        className="glass-panel"
-        style={{
-          position: 'absolute',
-          bottom: '16px',
-          left: '16px',
-          zIndex: 800,
-          padding: isLegendOpen ? '10px 14px' : '6px 10px',
-          maxWidth: '260px',
-          fontSize: '0.76rem',
-          background: 'rgba(255, 255, 255, 0.96)',
-          boxShadow: 'var(--shadow-md)',
-          transition: 'all 0.2s ease'
-        }}
-      >
+      {/* ============================================================== */}
+      {/* OPEN-DESIGN FLOATING MAP CONTROL DOCK (TOP RIGHT)              */}
+      {/* ============================================================== */}
+      <div style={{
+        position: 'absolute',
+        top: '16px',
+        right: '16px',
+        zIndex: 880,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        alignItems: 'flex-end'
+      }}>
+        {/* Vertical Action Dock */}
         <div 
-          onClick={() => setIsLegendOpen(!isLegendOpen)}
-          style={{ 
-            fontFamily: 'var(--font-display)', 
-            fontWeight: 700, 
-            fontSize: '0.8rem', 
-            color: '#0f172a', 
+          className="glass-panel"
+          style={{
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            cursor: 'pointer',
-            userSelect: 'none'
+            flexDirection: 'column',
+            background: 'rgba(255, 255, 255, 0.98)',
+            border: '1px solid #cbd5e1',
+            borderRadius: '12px',
+            boxShadow: '0 8px 24px rgba(15, 23, 42, 0.1)',
+            overflow: 'hidden'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Compass size={14} color="#0d9488" />
-            <span>{t.legendTitle}</span>
-          </div>
-          {isLegendOpen ? <ChevronDown size={14} color="#64748b" /> : <ChevronUp size={14} color="#64748b" />}
+          {/* Zoom In */}
+          <button
+            onClick={handleZoomIn}
+            style={{
+              width: '38px',
+              height: '38px',
+              border: 'none',
+              background: 'transparent',
+              color: '#334155',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'background-color 0.15s ease'
+            }}
+            title="Zoom in"
+          >
+            <ZoomIn size={18} />
+          </button>
+
+          <div style={{ height: '1px', background: '#e2e8f0' }} />
+
+          {/* Zoom Out */}
+          <button
+            onClick={handleZoomOut}
+            style={{
+              width: '38px',
+              height: '38px',
+              border: 'none',
+              background: 'transparent',
+              color: '#334155',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'background-color 0.15s ease'
+            }}
+            title="Zoom out"
+          >
+            <ZoomOut size={18} />
+          </button>
+
+          <div style={{ height: '1px', background: '#e2e8f0' }} />
+
+          {/* Re-center bounds */}
+          <button
+            onClick={handleRecenter}
+            style={{
+              width: '38px',
+              height: '38px',
+              border: 'none',
+              background: 'transparent',
+              color: '#0d9488',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'background-color 0.15s ease'
+            }}
+            title={t.mapRecenter}
+          >
+            <Maximize2 size={17} />
+          </button>
+
+          <div style={{ height: '1px', background: '#e2e8f0' }} />
+
+          {/* Base Layer Switcher Button */}
+          <button
+            onClick={() => setIsBaseMapMenuOpen(!isBaseMapMenuOpen)}
+            style={{
+              width: '38px',
+              height: '38px',
+              border: 'none',
+              background: isBaseMapMenuOpen ? '#f0fdfa' : 'transparent',
+              color: isBaseMapMenuOpen ? '#0d9488' : '#334155',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+            title="Base Map Layer"
+          >
+            <Layers size={18} />
+          </button>
+
+          <div style={{ height: '1px', background: '#e2e8f0' }} />
+
+          {/* Legend Toggle Button */}
+          <button
+            onClick={() => setIsLegendOpen(!isLegendOpen)}
+            style={{
+              width: '38px',
+              height: '38px',
+              border: 'none',
+              background: isLegendOpen ? '#f0fdfa' : 'transparent',
+              color: isLegendOpen ? '#0d9488' : '#334155',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+            title={t.mapLegendToggle}
+          >
+            <Compass size={18} />
+          </button>
         </div>
 
+        {/* Base Layer Selector Popover Menu */}
+        {isBaseMapMenuOpen && (
+          <div
+            className="glass-panel"
+            style={{
+              width: '180px',
+              padding: '6px',
+              background: 'rgba(255, 255, 255, 0.98)',
+              border: '1px solid #cbd5e1',
+              borderRadius: '12px',
+              boxShadow: '0 12px 28px rgba(15, 23, 42, 0.15)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px'
+            }}
+          >
+            <div style={{
+              fontSize: '0.68rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+              color: '#64748b',
+              padding: '4px 8px'
+            }}>
+              {language === 'vi' ? 'Bản Đồ Nền' : 'Base Map'}
+            </div>
+
+            <button
+              onClick={() => { setBaseMap('topo'); setIsBaseMapMenuOpen(false); }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '6px 10px',
+                borderRadius: '8px',
+                border: 'none',
+                background: baseMap === 'topo' ? '#f0fdfa' : 'transparent',
+                color: baseMap === 'topo' ? '#0f766e' : '#334155',
+                fontWeight: baseMap === 'topo' ? 700 : 500,
+                fontSize: '0.76rem',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Mountain size={14} color={baseMap === 'topo' ? '#0d9488' : '#64748b'} />
+                <span>{t.mapBaseTopo}</span>
+              </div>
+              {baseMap === 'topo' && <Check size={14} color="#0d9488" />}
+            </button>
+
+            <button
+              onClick={() => { setBaseMap('street'); setIsBaseMapMenuOpen(false); }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '6px 10px',
+                borderRadius: '8px',
+                border: 'none',
+                background: baseMap === 'street' ? '#f0fdfa' : 'transparent',
+                color: baseMap === 'street' ? '#0f766e' : '#334155',
+                fontWeight: baseMap === 'street' ? 700 : 500,
+                fontSize: '0.76rem',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <MapIcon size={14} color={baseMap === 'street' ? '#0d9488' : '#64748b'} />
+                <span>{t.mapBaseStreet}</span>
+              </div>
+              {baseMap === 'street' && <Check size={14} color="#0d9488" />}
+            </button>
+
+            <button
+              onClick={() => { setBaseMap('satellite'); setIsBaseMapMenuOpen(false); }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '6px 10px',
+                borderRadius: '8px',
+                border: 'none',
+                background: baseMap === 'satellite' ? '#f0fdfa' : 'transparent',
+                color: baseMap === 'satellite' ? '#0f766e' : '#334155',
+                fontWeight: baseMap === 'satellite' ? 700 : 500,
+                fontSize: '0.76rem',
+                cursor: 'pointer',
+                textAlign: 'left'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Compass size={14} color={baseMap === 'satellite' ? '#0d9488' : '#64748b'} />
+                <span>{t.mapBaseSatellite}</span>
+              </div>
+              {baseMap === 'satellite' && <Check size={14} color="#0d9488" />}
+            </button>
+          </div>
+        )}
+
+        {/* Legend Drawer Card */}
         {isLegendOpen && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#d97706', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
-              <span style={{ color: '#334155' }}>{t.legendTier1}</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
-              <span style={{ color: '#334155' }}>{t.legendTier2}</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0d9488', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
-              <span style={{ color: '#334155' }}>{t.legendTier3}</span>
+          <div
+            className="glass-panel"
+            style={{
+              width: '260px',
+              padding: '12px 14px',
+              background: 'rgba(255, 255, 255, 0.98)',
+              border: '1px solid #cbd5e1',
+              borderRadius: '12px',
+              boxShadow: '0 12px 32px rgba(15, 23, 42, 0.16)',
+              fontSize: '0.76rem'
+            }}
+          >
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '8px',
+              fontWeight: 800,
+              fontFamily: 'var(--font-display)',
+              color: '#0f172a'
+            }}>
+              <span>{t.legendTitle}</span>
+              <button
+                onClick={() => setIsLegendOpen(false)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#94a3b8',
+                  cursor: 'pointer',
+                  padding: '2px'
+                }}
+              >
+                ✕
+              </button>
             </div>
 
-            <div style={{ height: '1px', background: '#e2e8f0', margin: '2px 0' }} />
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#e11d48', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
-              <span style={{ color: '#e11d48', fontWeight: 700 }}>{t.legendDesert}</span>
-            </div>
-
-            {showProposed && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ 
-                  width: '9px', 
-                  height: '9px', 
-                  backgroundColor: '#7c3aed', 
-                  transform: 'rotate(45deg)', 
-                  border: '1.5px solid #fff',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
-                }} />
-                <span style={{ color: '#6d28d9', fontWeight: 700 }}>{t.legendProposed}</span>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#d97706', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
+                <span style={{ color: '#334155' }}>{t.legendTier1}</span>
               </div>
-            )}
-
-            {customClinics.length > 0 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7', border: '1.5px solid #fff' }} />
-                <span style={{ color: '#0369a1', fontWeight: 700 }}>{t.legendCustom} ({customClinics.length})</span>
+                <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
+                <span style={{ color: '#334155' }}>{t.legendTier2}</span>
               </div>
-            )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0d9488', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
+                <span style={{ color: '#334155' }}>{t.legendTier3}</span>
+              </div>
+
+              <div style={{ height: '1px', background: '#e2e8f0', margin: '4px 0' }} />
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#e11d48', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
+                <span style={{ color: '#e11d48', fontWeight: 700 }}>{t.legendDesert}</span>
+              </div>
+
+              {showProposed && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ 
+                    width: '9px', 
+                    height: '9px', 
+                    backgroundColor: '#7c3aed', 
+                    transform: 'rotate(45deg)', 
+                    border: '1.5px solid #fff',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
+                  }} />
+                  <span style={{ color: '#6d28d9', fontWeight: 700 }}>{t.legendProposed}</span>
+                </div>
+              )}
+
+              {customClinics.length > 0 && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7', border: '1.5px solid #fff' }} />
+                  <span style={{ color: '#0369a1', fontWeight: 700 }}>{t.legendCustom} ({customClinics.length})</span>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
 
-      {/* Coordinate & Focus Area HUD */}
+      {/* Coordinate & Focus Area HUD Pill (Bottom Right) */}
       <div
         className="glass-panel"
         style={{
@@ -669,17 +866,23 @@ export default function MapContainer({
           bottom: '16px',
           right: '16px',
           zIndex: 800,
-          padding: '4px 10px',
+          padding: '6px 12px',
           fontFamily: 'var(--font-mono)',
           fontSize: '0.72rem',
           color: '#475569',
           background: 'rgba(255, 255, 255, 0.95)',
+          border: '1px solid #cbd5e1',
+          borderRadius: '9999px',
+          boxShadow: '0 4px 12px rgba(15, 23, 42, 0.08)',
           display: 'flex',
           alignItems: 'center',
           gap: '8px'
         }}
       >
+        <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#0d9488' }} />
         <span>{t.coordsLabel}: <strong style={{ color: '#0f172a' }}>{coordsHud.lat.toFixed(4)}°N, {coordsHud.lon.toFixed(4)}°E</strong></span>
+        <span style={{ color: '#cbd5e1' }}>|</span>
+        <span style={{ color: '#0d9488', fontWeight: 600 }}>Lào Cai</span>
       </div>
 
       {/* Banner indicator when in Add Clinic Mode */}
@@ -695,7 +898,7 @@ export default function MapContainer({
             borderRadius: '9999px',
             background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
             color: '#ffffff',
-            boxShadow: '0 8px 20px rgba(124, 58, 237, 0.35)',
+            boxShadow: '0 8px 24px rgba(124, 58, 237, 0.4)',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
