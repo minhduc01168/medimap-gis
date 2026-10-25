@@ -1,0 +1,35 @@
+{
+  "study_area": "Thị xã Sa Pa, Huyện Bát Xát, Huyện Mường Khương (Lào Cai)",
+  "total_facilities": 67,
+  "total_population_analyzed": 219094,
+  "population_by_tier": {
+    "<15m": {
+      "population": 78723,
+      "percentage": 35.93,
+      "cells_count": 4351
+    },
+    "15-30m": {
+      "population": 57754,
+      "percentage": 26.36,
+      "cells_count": 4310
+    },
+    "30-60m": {
+      "population": 48119,
+      "percentage": 21.96,
+      "cells_count": 5119
+    },
+    ">60m (Healthcare Desert)": {
+      "population": 34498,
+      "percentage": 15.75,
+      "cells_count": 4083
+    }
+  },
+  "healthcare_deserts_total_pop": 34498,
+  "healthcare_deserts_clusters_count": 4083,
+  "model_parameters": {
+    "friction_model": "Tobler Mountain Motorbike Elevation Formula",
+    "winding_factor": 1.75,
+    "base_speed_kmh": 32.0,
+    "min_speed_kmh": 8.0
+  }
+}

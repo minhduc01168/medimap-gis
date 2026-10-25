@@ -1,0 +1,1479 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8441,
+          22.3364
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_H01",
+        "name": "Bệnh viện Đa khoa thị xã Sa Pa",
+        "district": "Thị xã Sa Pa",
+        "commune": "Phường Sa Pa",
+        "tier_level": 2,
+        "facility_type": "hospital",
+        "beds_capacity": 150,
+        "doctors_count": 35,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8562,
+          22.3421
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_H02",
+        "name": "Trung tâm Y tế thị xã Sa Pa",
+        "district": "Thị xã Sa Pa",
+        "commune": "Phường Sa Pả",
+        "tier_level": 2,
+        "facility_type": "health_center",
+        "beds_capacity": 50,
+        "doctors_count": 12,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8715,
+          22.3842
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_C01",
+        "name": "Phòng khám Đa khoa khu vực Tả Phìn",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Tả Phìn",
+        "tier_level": 3,
+        "facility_type": "polyclinic",
+        "beds_capacity": 15,
+        "doctors_count": 4,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.9682,
+          22.2531
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_C02",
+        "name": "Phòng khám Đa khoa khu vực Bản Hồ",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Bản Hồ",
+        "tier_level": 3,
+        "facility_type": "polyclinic",
+        "beds_capacity": 10,
+        "doctors_count": 3,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8415,
+          22.3355
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT01",
+        "name": "Trạm Y tế phường Sa Pa",
+        "district": "Thị xã Sa Pa",
+        "commune": "Phường Sa Pa",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 2,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8612,
+          22.3458
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT02",
+        "name": "Trạm Y tế phường Sa Pả",
+        "district": "Thị xã Sa Pa",
+        "commune": "Phường Sa Pả",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8488,
+          22.3276
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT03",
+        "name": "Trạm Y tế phường Cầu Mây",
+        "district": "Thị xã Sa Pa",
+        "commune": "Phường Cầu Mây",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8398,
+          22.3392
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT04",
+        "name": "Trạm Y tế phường Hàm Rồng",
+        "district": "Thị xã Sa Pa",
+        "commune": "Phường Hàm Rồng",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8315,
+          22.3298
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT05",
+        "name": "Trạm Y tế phường Phan Si Păng",
+        "district": "Thị xã Sa Pa",
+        "commune": "Phường Phan Si Păng",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8012,
+          22.3551
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT06",
+        "name": "Trạm Y tế phường Ô Quý Hồ",
+        "district": "Thị xã Sa Pa",
+        "commune": "Phường Ô Quý Hồ",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8341,
+          22.2985
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT07",
+        "name": "Trạm Y tế xã Hoàng Liên",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Hoàng Liên",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8924,
+          22.3021
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT08",
+        "name": "Trạm Y tế xã Tả Van",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Tả Van",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.9215,
+          22.2845
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT09",
+        "name": "Trạm Y tế xã Mường Hoa",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Mường Hoa",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8682,
+          22.3815
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT10",
+        "name": "Trạm Y tế xã Tả Phìn",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Tả Phìn",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7845,
+          22.4125
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT11",
+        "name": "Trạm Y tế xã Ngũ Chỉ Sơn",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Ngũ Chỉ Sơn",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.9654,
+          22.2512
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT12",
+        "name": "Trạm Y tế xã Bản Hồ",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Bản Hồ",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.0125,
+          22.2215
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT13",
+        "name": "Trạm Y tế xã Liên Minh",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Liên Minh",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.9841,
+          22.2612
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT14",
+        "name": "Trạm Y tế xã Thanh Bình",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Thanh Bình",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8841,
+          22.3685
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_SP_TYT15",
+        "name": "Trạm Y tế xã Trung Chải",
+        "district": "Thị xã Sa Pa",
+        "commune": "Xã Trung Chải",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.9015,
+          22.5482
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_H01",
+        "name": "Bệnh viện Đa khoa huyện Bát Xát",
+        "district": "Huyện Bát Xát",
+        "commune": "Thị trấn Bát Xát",
+        "tier_level": 2,
+        "facility_type": "hospital",
+        "beds_capacity": 120,
+        "doctors_count": 28,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8992,
+          22.5451
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_H02",
+        "name": "Trung tâm Y tế huyện Bát Xát",
+        "district": "Huyện Bát Xát",
+        "commune": "Thị trấn Bát Xát",
+        "tier_level": 2,
+        "facility_type": "health_center",
+        "beds_capacity": 40,
+        "doctors_count": 10,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7485,
+          22.6842
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_C01",
+        "name": "Phòng khám Đa khoa khu vực Trịnh Tường",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Trịnh Tường",
+        "tier_level": 3,
+        "facility_type": "polyclinic",
+        "beds_capacity": 15,
+        "doctors_count": 3,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7912,
+          22.4852
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_C02",
+        "name": "Phòng khám Đa khoa khu vực Bản Xèo",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Bản Xèo",
+        "tier_level": 3,
+        "facility_type": "polyclinic",
+        "beds_capacity": 15,
+        "doctors_count": 3,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7125,
+          22.5124
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_C03",
+        "name": "Phòng khám Đa khoa khu vực Mường Hum",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Mường Hum",
+        "tier_level": 3,
+        "facility_type": "polyclinic",
+        "beds_capacity": 15,
+        "doctors_count": 3,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6041,
+          22.6245
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_C04",
+        "name": "Phòng khám Đa khoa khu vực Y Tý",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Y Tý",
+        "tier_level": 3,
+        "facility_type": "polyclinic",
+        "beds_capacity": 12,
+        "doctors_count": 2,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.9032,
+          22.5471
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT01",
+        "name": "Trạm Y tế thị trấn Bát Xát",
+        "district": "Huyện Bát Xát",
+        "commune": "Thị trấn Bát Xát",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.9241,
+          22.5215
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT02",
+        "name": "Trạm Y tế xã Quang Kim",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Quang Kim",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8645,
+          22.5712
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT03",
+        "name": "Trạm Y tế xã Bản Qua",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Bản Qua",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8215,
+          22.6125
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT04",
+        "name": "Trạm Y tế xã Bản Vược",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Bản Vược",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7845,
+          22.6512
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT05",
+        "name": "Trạm Y tế xã Cốc Mỳ",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Cốc Mỳ",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7462,
+          22.6821
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT06",
+        "name": "Trạm Y tế xã Trịnh Tường",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Trịnh Tường",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6841,
+          22.7215
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT07",
+        "name": "Trạm Y tế xã Nậm Chạc",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Nậm Chạc",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6325,
+          22.7541
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT08",
+        "name": "Trạm Y tế xã A Mú Sung",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã A Mú Sung",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6215,
+          22.6985
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT09",
+        "name": "Trạm Y tế xã A Lù",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã A Lù",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6025,
+          22.6261
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT10",
+        "name": "Trạm Y tế xã Y Tý",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Y Tý",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6285,
+          22.6512
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT11",
+        "name": "Trạm Y tế xã Ngải Thầu",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã A Lù (sáp nhập)",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6521,
+          22.5841
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT12",
+        "name": "Trạm Y tế xã Dền Sáng",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Dền Sáng",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6912,
+          22.5612
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT13",
+        "name": "Trạm Y tế xã Dền Thàng",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Dền Thàng",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7145,
+          22.5142
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT14",
+        "name": "Trạm Y tế xã Mường Hum",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Mường Hum",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6625,
+          22.5412
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT15",
+        "name": "Trạm Y tế xã Sàng Ma Sáo",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Sàng Ma Sáo",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6821,
+          22.5285
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT16",
+        "name": "Trạm Y tế xã Trung Lèng Hồ",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Trung Lèng Hồ",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6745,
+          22.4921
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT17",
+        "name": "Trạm Y tế xã Nậm Pung",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Nậm Pung",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7315,
+          22.4541
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT18",
+        "name": "Trạm Y tế xã Pa Cheo",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Pa Cheo",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7895,
+          22.4835
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT19",
+        "name": "Trạm Y tế xã Bản Xèo",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Bản Xèo",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8124,
+          22.5215
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT20",
+        "name": "Trạm Y tế xã Mường Vi",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Mường Vi",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8541,
+          22.5012
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT21",
+        "name": "Trạm Y tế xã Phìn Ngan",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Phìn Ngan",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.8415,
+          22.4412
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_BX_TYT22",
+        "name": "Trạm Y tế xã Tòng Sành",
+        "district": "Huyện Bát Xát",
+        "commune": "Xã Tòng Sành",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1485,
+          22.7582
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_H01",
+        "name": "Bệnh viện Đa khoa huyện Mường Khương",
+        "district": "Huyện Mường Khương",
+        "commune": "Thị trấn Mường Khương",
+        "tier_level": 2,
+        "facility_type": "hospital",
+        "beds_capacity": 140,
+        "doctors_count": 30,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1452,
+          22.7561
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_H02",
+        "name": "Trung tâm Y tế huyện Mường Khương",
+        "district": "Huyện Mường Khương",
+        "commune": "Thị trấn Mường Khương",
+        "tier_level": 2,
+        "facility_type": "health_center",
+        "beds_capacity": 45,
+        "doctors_count": 11,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1895,
+          22.8241
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_C01",
+        "name": "Phòng khám Đa khoa khu vực Pha Long",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Pha Long",
+        "tier_level": 3,
+        "facility_type": "polyclinic",
+        "beds_capacity": 15,
+        "doctors_count": 3,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.0924,
+          22.5712
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_C02",
+        "name": "Phòng khám Đa khoa khu vực Bản Lầu",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Bản Lầu",
+        "tier_level": 3,
+        "facility_type": "polyclinic",
+        "beds_capacity": 15,
+        "doctors_count": 3,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1472,
+          22.7595
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT01",
+        "name": "Trạm Y tế thị trấn Mường Khương",
+        "district": "Huyện Mường Khương",
+        "commune": "Thị trấn Mường Khương",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1882,
+          22.8225
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT02",
+        "name": "Trạm Y tế xã Pha Long",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Pha Long",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.2215,
+          22.8012
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT03",
+        "name": "Trạm Y tế xã Tả Ngải Chồ",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Tả Ngải Chồ",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1541,
+          22.8125
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT04",
+        "name": "Trạm Y tế xã Dìn Chin",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Dìn Chin",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.2485,
+          22.8451
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT05",
+        "name": "Trạm Y tế xã Tả Gia Khâu",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Tả Gia Khâu",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1685,
+          22.7341
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT06",
+        "name": "Trạm Y tế xã Tung Chung Phố",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Tung Chung Phố",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.2045,
+          22.7125
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT07",
+        "name": "Trạm Y tế xã Nấm Lư",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Nấm Lư",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.2285,
+          22.6842
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT08",
+        "name": "Trạm Y tế xã Lùng Khấu Nhin",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Lùng Khấu Nhin",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1215,
+          22.7112
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT09",
+        "name": "Trạm Y tế xã Thanh Bình",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Thanh Bình",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.0745,
+          22.7215
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT10",
+        "name": "Trạm Y tế xã Nậm Chảy",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Nậm Chảy",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.2541,
+          22.6412
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT11",
+        "name": "Trạm Y tế xã Cao Sơn",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Cao Sơn",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.2215,
+          22.6125
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT12",
+        "name": "Trạm Y tế xã La Pan Tẩn",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã La Pan Tẩn",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.2415,
+          22.5841
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT13",
+        "name": "Trạm Y tế xã Tả Thàng",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Tả Thàng",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.0941,
+          22.5695
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT14",
+        "name": "Trạm Y tế xã Bản Lầu",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Bản Lầu",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1485,
+          22.5412
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT15",
+        "name": "Trạm Y tế xã Bản Sen",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Bản Sen",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.1012,
+          22.5245
+        ]
+      },
+      "properties": {
+        "facility_id": "LC_MK_TYT16",
+        "name": "Trạm Y tế xã Lùng Vai",
+        "district": "Huyện Mường Khương",
+        "commune": "Xã Lùng Vai",
+        "tier_level": 3,
+        "facility_type": "commune_clinic",
+        "beds_capacity": 5,
+        "doctors_count": 1,
+        "verification_status": "SATELLITE_VERIFIED_GROUND_TRUTH",
+        "crs_srid": 4326
+      }
+    }
+  ]
+}

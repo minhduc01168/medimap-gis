@@ -1,0 +1,31 @@
+# Core Spatial Analysis & GIS Stack
+geopandas>=0.12.0
+shapely>=2.0.0
+rasterio>=1.3.0
+osmnx>=1.6.0
+networkx>=3.0
+scipy>=1.9.0
+numpy>=1.23.0
+pandas>=1.5.0
+
+# Geocoding & APIs
+requests>=2.28.0
+overpy>=0.7
+geopy>=2.3.0
+
+# Elevation & Rasters
+elevation>=1.1.3
+rioxarray>=0.14.0
+
+# Database & Spatial Engine
+psycopg2-binary>=2.9.0
+SQLAlchemy>=2.0.0
+geoalchemy2>=0.14.0
+
+# H3 Spatial Indexing (Optional/Recommended for micro-grid)
+h3>=3.7.0
+
+# CLI & Utilities
+tqdm>=4.64.0
+pyyaml>=6.0
+pydantic>=2.0

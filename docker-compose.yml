@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgis:
+    image: postgis/postgis:16-3.4
+    container_name: medimap_postgis
+    environment:
+      POSTGRES_DB: medimap_gis
+      POSTGRES_USER: medimap_user
+      POSTGRES_PASSWORD: medimap_secret_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
+volumes:
+  postgis_data:

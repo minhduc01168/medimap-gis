@@ -1,0 +1,68 @@
+﻿id,name,district,commune,tier,type,beds,doctors,lat,lon
+LC_SP_H01,Bệnh viện Đa khoa thị xã Sa Pa,Thị xã Sa Pa,Phường Sa Pa,2,hospital,150,35,22.3364,103.8441
+LC_SP_H02,Trung tâm Y tế thị xã Sa Pa,Thị xã Sa Pa,Phường Sa Pả,2,health_center,50,12,22.3421,103.8562
+LC_SP_C01,Phòng khám Đa khoa khu vực Tả Phìn,Thị xã Sa Pa,Xã Tả Phìn,3,polyclinic,15,4,22.3842,103.8715
+LC_SP_C02,Phòng khám Đa khoa khu vực Bản Hồ,Thị xã Sa Pa,Xã Bản Hồ,3,polyclinic,10,3,22.2531,103.9682
+LC_SP_TYT01,Trạm Y tế phường Sa Pa,Thị xã Sa Pa,Phường Sa Pa,3,commune_clinic,5,2,22.3355,103.8415
+LC_SP_TYT02,Trạm Y tế phường Sa Pả,Thị xã Sa Pa,Phường Sa Pả,3,commune_clinic,5,1,22.3458,103.8612
+LC_SP_TYT03,Trạm Y tế phường Cầu Mây,Thị xã Sa Pa,Phường Cầu Mây,3,commune_clinic,5,1,22.3276,103.8488
+LC_SP_TYT04,Trạm Y tế phường Hàm Rồng,Thị xã Sa Pa,Phường Hàm Rồng,3,commune_clinic,5,1,22.3392,103.8398
+LC_SP_TYT05,Trạm Y tế phường Phan Si Păng,Thị xã Sa Pa,Phường Phan Si Păng,3,commune_clinic,5,1,22.3298,103.8315
+LC_SP_TYT06,Trạm Y tế phường Ô Quý Hồ,Thị xã Sa Pa,Phường Ô Quý Hồ,3,commune_clinic,5,1,22.3551,103.8012
+LC_SP_TYT07,Trạm Y tế xã Hoàng Liên,Thị xã Sa Pa,Xã Hoàng Liên,3,commune_clinic,5,1,22.2985,103.8341
+LC_SP_TYT08,Trạm Y tế xã Tả Van,Thị xã Sa Pa,Xã Tả Van,3,commune_clinic,5,1,22.3021,103.8924
+LC_SP_TYT09,Trạm Y tế xã Mường Hoa,Thị xã Sa Pa,Xã Mường Hoa,3,commune_clinic,5,1,22.2845,103.9215
+LC_SP_TYT10,Trạm Y tế xã Tả Phìn,Thị xã Sa Pa,Xã Tả Phìn,3,commune_clinic,5,1,22.3815,103.8682
+LC_SP_TYT11,Trạm Y tế xã Ngũ Chỉ Sơn,Thị xã Sa Pa,Xã Ngũ Chỉ Sơn,3,commune_clinic,5,1,22.4125,103.7845
+LC_SP_TYT12,Trạm Y tế xã Bản Hồ,Thị xã Sa Pa,Xã Bản Hồ,3,commune_clinic,5,1,22.2512,103.9654
+LC_SP_TYT13,Trạm Y tế xã Liên Minh,Thị xã Sa Pa,Xã Liên Minh,3,commune_clinic,5,1,22.2215,104.0125
+LC_SP_TYT14,Trạm Y tế xã Thanh Bình,Thị xã Sa Pa,Xã Thanh Bình,3,commune_clinic,5,1,22.2612,103.9841
+LC_SP_TYT15,Trạm Y tế xã Trung Chải,Thị xã Sa Pa,Xã Trung Chải,3,commune_clinic,5,1,22.3685,103.8841
+LC_BX_H01,Bệnh viện Đa khoa huyện Bát Xát,Huyện Bát Xát,Thị trấn Bát Xát,2,hospital,120,28,22.5482,103.9015
+LC_BX_H02,Trung tâm Y tế huyện Bát Xát,Huyện Bát Xát,Thị trấn Bát Xát,2,health_center,40,10,22.5451,103.8992
+LC_BX_C01,Phòng khám Đa khoa khu vực Trịnh Tường,Huyện Bát Xát,Xã Trịnh Tường,3,polyclinic,15,3,22.6842,103.7485
+LC_BX_C02,Phòng khám Đa khoa khu vực Bản Xèo,Huyện Bát Xát,Xã Bản Xèo,3,polyclinic,15,3,22.4852,103.7912
+LC_BX_C03,Phòng khám Đa khoa khu vực Mường Hum,Huyện Bát Xát,Xã Mường Hum,3,polyclinic,15,3,22.5124,103.7125
+LC_BX_C04,Phòng khám Đa khoa khu vực Y Tý,Huyện Bát Xát,Xã Y Tý,3,polyclinic,12,2,22.6245,103.6041
+LC_BX_TYT01,Trạm Y tế thị trấn Bát Xát,Huyện Bát Xát,Thị trấn Bát Xát,3,commune_clinic,5,1,22.5471,103.9032
+LC_BX_TYT02,Trạm Y tế xã Quang Kim,Huyện Bát Xát,Xã Quang Kim,3,commune_clinic,5,1,22.5215,103.9241
+LC_BX_TYT03,Trạm Y tế xã Bản Qua,Huyện Bát Xát,Xã Bản Qua,3,commune_clinic,5,1,22.5712,103.8645
+LC_BX_TYT04,Trạm Y tế xã Bản Vược,Huyện Bát Xát,Xã Bản Vược,3,commune_clinic,5,1,22.6125,103.8215
+LC_BX_TYT05,Trạm Y tế xã Cốc Mỳ,Huyện Bát Xát,Xã Cốc Mỳ,3,commune_clinic,5,1,22.6512,103.7845
+LC_BX_TYT06,Trạm Y tế xã Trịnh Tường,Huyện Bát Xát,Xã Trịnh Tường,3,commune_clinic,5,1,22.6821,103.7462
+LC_BX_TYT07,Trạm Y tế xã Nậm Chạc,Huyện Bát Xát,Xã Nậm Chạc,3,commune_clinic,5,1,22.7215,103.6841
+LC_BX_TYT08,Trạm Y tế xã A Mú Sung,Huyện Bát Xát,Xã A Mú Sung,3,commune_clinic,5,1,22.7541,103.6325
+LC_BX_TYT09,Trạm Y tế xã A Lù,Huyện Bát Xát,Xã A Lù,3,commune_clinic,5,1,22.6985,103.6215
+LC_BX_TYT10,Trạm Y tế xã Y Tý,Huyện Bát Xát,Xã Y Tý,3,commune_clinic,5,1,22.6261,103.6025
+LC_BX_TYT11,Trạm Y tế xã Ngải Thầu,Huyện Bát Xát,Xã A Lù (sáp nhập),3,commune_clinic,5,1,22.6512,103.6285
+LC_BX_TYT12,Trạm Y tế xã Dền Sáng,Huyện Bát Xát,Xã Dền Sáng,3,commune_clinic,5,1,22.5841,103.6521
+LC_BX_TYT13,Trạm Y tế xã Dền Thàng,Huyện Bát Xát,Xã Dền Thàng,3,commune_clinic,5,1,22.5612,103.6912
+LC_BX_TYT14,Trạm Y tế xã Mường Hum,Huyện Bát Xát,Xã Mường Hum,3,commune_clinic,5,1,22.5142,103.7145
+LC_BX_TYT15,Trạm Y tế xã Sàng Ma Sáo,Huyện Bát Xát,Xã Sàng Ma Sáo,3,commune_clinic,5,1,22.5412,103.6625
+LC_BX_TYT16,Trạm Y tế xã Trung Lèng Hồ,Huyện Bát Xát,Xã Trung Lèng Hồ,3,commune_clinic,5,1,22.5285,103.6821
+LC_BX_TYT17,Trạm Y tế xã Nậm Pung,Huyện Bát Xát,Xã Nậm Pung,3,commune_clinic,5,1,22.4921,103.6745
+LC_BX_TYT18,Trạm Y tế xã Pa Cheo,Huyện Bát Xát,Xã Pa Cheo,3,commune_clinic,5,1,22.4541,103.7315
+LC_BX_TYT19,Trạm Y tế xã Bản Xèo,Huyện Bát Xát,Xã Bản Xèo,3,commune_clinic,5,1,22.4835,103.7895
+LC_BX_TYT20,Trạm Y tế xã Mường Vi,Huyện Bát Xát,Xã Mường Vi,3,commune_clinic,5,1,22.5215,103.8124
+LC_BX_TYT21,Trạm Y tế xã Phìn Ngan,Huyện Bát Xát,Xã Phìn Ngan,3,commune_clinic,5,1,22.5012,103.8541
+LC_BX_TYT22,Trạm Y tế xã Tòng Sành,Huyện Bát Xát,Xã Tòng Sành,3,commune_clinic,5,1,22.4412,103.8415
+LC_MK_H01,Bệnh viện Đa khoa huyện Mường Khương,Huyện Mường Khương,Thị trấn Mường Khương,2,hospital,140,30,22.7582,104.1485
+LC_MK_H02,Trung tâm Y tế huyện Mường Khương,Huyện Mường Khương,Thị trấn Mường Khương,2,health_center,45,11,22.7561,104.1452
+LC_MK_C01,Phòng khám Đa khoa khu vực Pha Long,Huyện Mường Khương,Xã Pha Long,3,polyclinic,15,3,22.8241,104.1895
+LC_MK_C02,Phòng khám Đa khoa khu vực Bản Lầu,Huyện Mường Khương,Xã Bản Lầu,3,polyclinic,15,3,22.5712,104.0924
+LC_MK_TYT01,Trạm Y tế thị trấn Mường Khương,Huyện Mường Khương,Thị trấn Mường Khương,3,commune_clinic,5,1,22.7595,104.1472
+LC_MK_TYT02,Trạm Y tế xã Pha Long,Huyện Mường Khương,Xã Pha Long,3,commune_clinic,5,1,22.8225,104.1882
+LC_MK_TYT03,Trạm Y tế xã Tả Ngải Chồ,Huyện Mường Khương,Xã Tả Ngải Chồ,3,commune_clinic,5,1,22.8012,104.2215
+LC_MK_TYT04,Trạm Y tế xã Dìn Chin,Huyện Mường Khương,Xã Dìn Chin,3,commune_clinic,5,1,22.8125,104.1541
+LC_MK_TYT05,Trạm Y tế xã Tả Gia Khâu,Huyện Mường Khương,Xã Tả Gia Khâu,3,commune_clinic,5,1,22.8451,104.2485
+LC_MK_TYT06,Trạm Y tế xã Tung Chung Phố,Huyện Mường Khương,Xã Tung Chung Phố,3,commune_clinic,5,1,22.7341,104.1685
+LC_MK_TYT07,Trạm Y tế xã Nấm Lư,Huyện Mường Khương,Xã Nấm Lư,3,commune_clinic,5,1,22.7125,104.2045
+LC_MK_TYT08,Trạm Y tế xã Lùng Khấu Nhin,Huyện Mường Khương,Xã Lùng Khấu Nhin,3,commune_clinic,5,1,22.6842,104.2285
+LC_MK_TYT09,Trạm Y tế xã Thanh Bình,Huyện Mường Khương,Xã Thanh Bình,3,commune_clinic,5,1,22.7112,104.1215
+LC_MK_TYT10,Trạm Y tế xã Nậm Chảy,Huyện Mường Khương,Xã Nậm Chảy,3,commune_clinic,5,1,22.7215,104.0745
+LC_MK_TYT11,Trạm Y tế xã Cao Sơn,Huyện Mường Khương,Xã Cao Sơn,3,commune_clinic,5,1,22.6412,104.2541
+LC_MK_TYT12,Trạm Y tế xã La Pan Tẩn,Huyện Mường Khương,Xã La Pan Tẩn,3,commune_clinic,5,1,22.6125,104.2215
+LC_MK_TYT13,Trạm Y tế xã Tả Thàng,Huyện Mường Khương,Xã Tả Thàng,3,commune_clinic,5,1,22.5841,104.2415
+LC_MK_TYT14,Trạm Y tế xã Bản Lầu,Huyện Mường Khương,Xã Bản Lầu,3,commune_clinic,5,1,22.5695,104.0941
+LC_MK_TYT15,Trạm Y tế xã Bản Sen,Huyện Mường Khương,Xã Bản Sen,3,commune_clinic,5,1,22.5412,104.1485
+LC_MK_TYT16,Trạm Y tế xã Lùng Vai,Huyện Mường Khương,Xã Lùng Vai,3,commune_clinic,5,1,22.5245,104.1012
