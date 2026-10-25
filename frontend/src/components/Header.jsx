@@ -28,7 +28,10 @@ export default function Header({
       alignItems: 'center',
       justifyContent: 'space-between',
       zIndex: 1000,
-      position: 'relative'
+      position: 'relative',
+      background: 'rgba(255, 255, 255, 0.96)',
+      border: '1px solid #e2e8f0',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)'
     }}>
       {/* Brand & Project Identity */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
@@ -36,11 +39,11 @@ export default function Header({
           width: '42px',
           height: '42px',
           borderRadius: '12px',
-          background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #06b6d4 100%)',
+          background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0284c7 100%)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 0 18px rgba(16, 185, 129, 0.45)'
+          boxShadow: '0 4px 14px rgba(13, 148, 136, 0.35)'
         }}>
           <Activity size={24} color="#ffffff" strokeWidth={2.5} />
         </div>
@@ -51,9 +54,7 @@ export default function Header({
               fontSize: '1.25rem',
               fontWeight: 800,
               letterSpacing: '-0.02em',
-              background: 'linear-gradient(90deg, #f8fafc 0%, #cbd5e1 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: '#0f172a',
               margin: 0
             }}>
               MediMap GIS
@@ -61,19 +62,19 @@ export default function Header({
             <span style={{
               fontSize: '0.68rem',
               fontFamily: 'var(--font-mono)',
-              fontWeight: 600,
+              fontWeight: 700,
               padding: '2px 8px',
               borderRadius: '9999px',
-              background: 'rgba(16, 185, 129, 0.15)',
-              color: '#34d399',
-              border: '1px solid rgba(16, 185, 129, 0.3)'
+              background: 'rgba(13, 148, 136, 0.1)',
+              color: '#0d9488',
+              border: '1px solid rgba(13, 148, 136, 0.25)'
             }}>
               Pilot Lào Cai v1.0
             </span>
           </div>
           <p style={{
             fontSize: '0.78rem',
-            color: 'var(--text-muted)',
+            color: '#64748b',
             margin: '2px 0 0 0',
             fontWeight: 500
           }}>
@@ -86,10 +87,10 @@ export default function Header({
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        background: 'rgba(15, 23, 42, 0.8)',
+        background: '#f1f5f9',
         padding: '4px',
         borderRadius: '12px',
-        border: '1px solid var(--border-subtle)'
+        border: '1px solid #e2e8f0'
       }}>
         <button
           onClick={() => setActiveTab('map')}
@@ -97,16 +98,16 @@ export default function Header({
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            padding: '8px 16px',
+            padding: '8px 18px',
             borderRadius: '8px',
             border: 'none',
             fontSize: '0.84rem',
-            fontWeight: activeTab === 'map' ? 600 : 500,
+            fontWeight: activeTab === 'map' ? 700 : 500,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
-            background: activeTab === 'map' ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'transparent',
-            color: activeTab === 'map' ? '#ffffff' : 'var(--text-muted)',
-            boxShadow: activeTab === 'map' ? '0 4px 12px rgba(16, 185, 129, 0.3)' : 'none'
+            background: activeTab === 'map' ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'transparent',
+            color: activeTab === 'map' ? '#ffffff' : '#64748b',
+            boxShadow: activeTab === 'map' ? '0 2px 8px rgba(13, 148, 136, 0.3)' : 'none'
           }}
         >
           <Layers size={16} />
@@ -119,16 +120,16 @@ export default function Header({
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            padding: '8px 16px',
+            padding: '8px 18px',
             borderRadius: '8px',
             border: 'none',
             fontSize: '0.84rem',
-            fontWeight: activeTab === 'data' ? 600 : 500,
+            fontWeight: activeTab === 'data' ? 700 : 500,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
-            background: activeTab === 'data' ? 'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)' : 'transparent',
-            color: activeTab === 'data' ? '#ffffff' : 'var(--text-muted)',
-            boxShadow: activeTab === 'data' ? '0 4px 12px rgba(6, 182, 212, 0.3)' : 'none'
+            background: activeTab === 'data' ? 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)' : 'transparent',
+            color: activeTab === 'data' ? '#ffffff' : '#64748b',
+            boxShadow: activeTab === 'data' ? '0 2px 8px rgba(2, 132, 199, 0.3)' : 'none'
           }}
         >
           <Database size={16} />
@@ -145,8 +146,8 @@ export default function Header({
           gap: '8px',
           padding: '6px 12px',
           borderRadius: '9999px',
-          background: backendStatus.online ? 'rgba(16, 185, 129, 0.1)' : 'rgba(56, 189, 248, 0.1)',
-          border: `1px solid ${backendStatus.online ? 'rgba(16, 185, 129, 0.3)' : 'rgba(56, 189, 248, 0.3)'}`,
+          background: backendStatus.online ? 'rgba(13, 148, 136, 0.1)' : 'rgba(2, 132, 199, 0.1)',
+          border: `1px solid ${backendStatus.online ? 'rgba(13, 148, 136, 0.25)' : 'rgba(2, 132, 199, 0.25)'}`,
           fontSize: '0.75rem',
           fontFamily: 'var(--font-mono)'
         }}>
@@ -154,10 +155,10 @@ export default function Header({
             width: '8px',
             height: '8px',
             borderRadius: '50%',
-            backgroundColor: backendStatus.online ? '#10b981' : '#38bdf8',
-            boxShadow: `0 0 8px ${backendStatus.online ? '#10b981' : '#38bdf8'}`
+            backgroundColor: backendStatus.online ? '#0d9488' : '#0284c7',
+            boxShadow: `0 0 6px ${backendStatus.online ? '#0d9488' : '#0284c7'}`
           }} />
-          <span style={{ color: backendStatus.online ? '#34d399' : '#7dd3fc', fontWeight: 600 }}>
+          <span style={{ color: backendStatus.online ? '#0f766e' : '#0369a1', fontWeight: 700 }}>
             {backendStatus.online ? 'FastAPI Spatial Backend (Live)' : 'Embedded Spatial Cache'}
           </span>
         </div>
@@ -170,19 +171,20 @@ export default function Header({
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              padding: '7px 12px',
+              padding: '7px 14px',
               borderRadius: '8px',
-              border: isAddingClinic ? '1px solid #8b5cf6' : '1px solid var(--border-subtle)',
-              background: isAddingClinic ? 'rgba(139, 92, 246, 0.25)' : 'rgba(255, 255, 255, 0.04)',
-              color: isAddingClinic ? '#c4b5fd' : 'var(--text-secondary)',
-              fontSize: '0.78rem',
+              border: isAddingClinic ? '1px solid #7c3aed' : '1px solid #e2e8f0',
+              background: isAddingClinic ? 'rgba(124, 58, 237, 0.15)' : '#ffffff',
+              color: isAddingClinic ? '#7c3aed' : '#475569',
+              fontSize: '0.8rem',
               fontWeight: 600,
               cursor: 'pointer',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              boxShadow: 'var(--shadow-sm)'
             }}
             title="Nhấp vào bản đồ để thử nghiệm đặt thêm trạm y tế mới"
           >
-            <MapPin size={15} color={isAddingClinic ? '#a78bfa' : '#94a3b8'} />
+            <MapPin size={15} color={isAddingClinic ? '#7c3aed' : '#64748b'} />
             {isAddingClinic ? 'Đang bật: Nhấp bản đồ' : '+ Đặt Trạm Mới'}
           </button>
         )}
@@ -194,18 +196,19 @@ export default function Header({
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
-            padding: '7px 12px',
+            padding: '7px 14px',
             borderRadius: '8px',
-            border: '1px solid var(--border-subtle)',
-            background: 'rgba(255, 255, 255, 0.04)',
-            color: 'var(--text-secondary)',
-            fontSize: '0.78rem',
+            border: '1px solid #e2e8f0',
+            background: '#ffffff',
+            color: '#475569',
+            fontSize: '0.8rem',
             fontWeight: 600,
             cursor: 'pointer',
-            transition: 'all 0.2s ease'
+            transition: 'all 0.2s ease',
+            boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <FileText size={15} color="#94a3b8" />
+          <FileText size={15} color="#0d9488" />
           Tài Liệu Kỹ Thuật
         </button>
 
@@ -213,17 +216,18 @@ export default function Header({
         <button
           onClick={onRefresh}
           style={{
-            width: '34px',
-            height: '34px',
+            width: '36px',
+            height: '36px',
             borderRadius: '8px',
-            border: '1px solid var(--border-subtle)',
-            background: 'rgba(255, 255, 255, 0.04)',
-            color: 'var(--text-muted)',
+            border: '1px solid #e2e8f0',
+            background: '#ffffff',
+            color: '#64748b',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            transition: 'all 0.2s ease'
+            transition: 'all 0.2s ease',
+            boxShadow: 'var(--shadow-sm)'
           }}
           title="Đồng bộ dữ liệu từ server"
         >
