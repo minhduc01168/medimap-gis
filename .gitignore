@@ -13,6 +13,9 @@ __pycache__/
 venv/
 env/
 .pytest_cache/
+node_modules/
+dist/
+.vite/
 
 # Raw and Intermediate Big Data (Exceeds GitHub limits)
 data/01_raw/

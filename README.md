@@ -99,7 +99,23 @@ uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
 - **Tài liệu API Swagger UI:** Truy cập trực tiếp tại `http://localhost:8000/docs`
 - **Tài liệu API ReDoc:** Truy cập tại `http://localhost:8000/redoc`
 
-### 4. Chạy Kiểm Thử Tự Động (Test Suite)
+### 4. Khởi Động Frontend WebGIS Dashboard (React + Leaflet)
+```bash
+cd frontend
+npm install
+npm run dev
+```
+- **Ứng dụng WebGIS Dashboard:** Mở trình duyệt tại `http://localhost:3000`
+- **Tính năng trọng tâm:**
+  - Bản đồ tương tác CartoDB Dark Matter, Satellite ESRI, Topo OSM.
+  - Phân tầng 67 cơ sở y tế (Tuyến 1 Tỉnh, Tuyến 2 Huyện, Tuyến 3 Xã).
+  - Vùng đẳng thời Isochrones động (15m, 30m, 60m) theo hàm ma sát Tobler.
+  - Chế độ Vùng lõm y tế (>60 phút) cảnh báo 34,498 người dân nguy cơ cao.
+  - Bật/tắt 5 Trạm Y tế tối ưu P-Median/MCLP (giảm 85.7% dân số vùng lõm).
+  - Chế độ Click-to-Place tự đặt thêm trạm y tế trên bản đồ để mô phỏng tác động thời gian thực.
+  - Màn hình Quản trị dữ liệu CSYT tìm kiếm, lọc và xuất dữ liệu CSV.
+
+### 5. Chạy Kiểm Thử Tự Động (Test Suite)
 ```bash
 python -m pytest tests/ -v
 ```
