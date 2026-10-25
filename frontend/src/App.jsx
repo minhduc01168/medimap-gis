@@ -7,9 +7,21 @@ import DataManagementView from './components/DataManagementView';
 import ReportModal from './components/ReportModal';
 import { ApiService } from './services/api';
 import initialData from './data/initialData.json';
+import { translations } from './i18n/translations';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('map'); // 'map' | 'data'
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('medimap_lang') || 'vi';
+  });
+
+  const t = translations[language] || translations.vi;
+
+  const handleSetLanguage = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('medimap_lang', lang);
+  };
+
   const [backendStatus, setBackendStatus] = useState({ online: false });
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
@@ -132,6 +144,9 @@ export default function App() {
         isAddingClinic={isAddingClinic}
         setIsAddingClinic={setIsAddingClinic}
         onOpenReportModal={() => setIsReportModalOpen(true)}
+        language={language}
+        setLanguage={handleSetLanguage}
+        t={t}
       />
 
       {/* Main Content Area */}
@@ -153,6 +168,8 @@ export default function App() {
               onAddCustomClinic={handleAddCustomClinic}
               onRemoveCustomClinic={handleRemoveCustomClinic}
               selectedDistrict={selectedDistrict}
+              t={t}
+              language={language}
             />
 
             {/* Left Floating Simulation Control Panel */}
@@ -166,6 +183,7 @@ export default function App() {
               onResetSimulation={handleResetSimulation}
               customClinicsCount={customClinics.length}
               onClearCustomClinics={handleClearCustomClinics}
+              t={t}
             />
 
             {/* Right Floating KPI and Spatial Stats Panel */}
@@ -174,6 +192,8 @@ export default function App() {
               moranStats={moranStats}
               districtStats={districtStats}
               isProposedActive={layers.proposed}
+              t={t}
+              language={language}
             />
           </div>
         ) : (
@@ -181,6 +201,8 @@ export default function App() {
           <DataManagementView
             facilities={facilities}
             districtsStats={districtStats}
+            t={t}
+            language={language}
           />
         )}
       </main>
@@ -189,6 +211,8 @@ export default function App() {
       <ReportModal
         isOpen={isReportModalOpen}
         onClose={() => setIsReportModalOpen(false)}
+        t={t}
+        language={language}
       />
     </div>
   );

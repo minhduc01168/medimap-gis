@@ -2,18 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import { 
   Layers, 
-  Eye, 
-  EyeOff, 
-  Navigation, 
-  Map as MapIcon, 
   Compass, 
   PlusCircle, 
-  Trash2,
-  Sliders,
-  CheckCircle2,
-  AlertTriangle,
-  Flame,
-  Mountain
+  Mountain,
+  Map as MapIcon,
+  ChevronDown,
+  ChevronUp,
+  Info
 } from 'lucide-react';
 
 export default function MapContainer({
@@ -29,7 +24,9 @@ export default function MapContainer({
   customClinics = [],
   onAddCustomClinic,
   onRemoveCustomClinic,
-  selectedDistrict = ''
+  selectedDistrict = '',
+  t,
+  language
 }) {
   const mapRef = useRef(null);
   const leafletMapRef = useRef(null);
@@ -38,28 +35,47 @@ export default function MapContainer({
     isochrones: null,
     deserts: null,
     proposed: null,
-    custom: null
+    custom: null,
+    boundary: null
   });
 
   // Base Map: Default to high-res topographic terrain (Zero API key watermark)
   const [baseMap, setBaseMap] = useState('topo'); // 'topo' | 'street' | 'satellite'
   const [coordsHud, setCoordsHud] = useState({ lat: 22.3364, lon: 103.8441 });
+  const [isLegendOpen, setIsLegendOpen] = useState(true);
   const tileLayerRef = useRef(null);
 
-  // Initialize Map
+  // Initialize Map with strict bounds focused on Sa Pa, Bat Xat, Muong Khuong
   useEffect(() => {
     if (!mapRef.current) return;
     if (leafletMapRef.current) return;
 
-    // Center on Sa Pa / Bat Xat / Muong Khuong mountainous cluster
+    // Study Area Precise Bounds (Sa Pa, Bát Xát, Mường Khương + tight buffer)
+    const pilotBounds = L.latLngBounds(
+      [22.18, 103.48], // South-West (Sa Pa southern tip)
+      [22.88, 104.38]  // North-East (Mường Khương northern border)
+    );
+
+    const maxPanningBounds = L.latLngBounds(
+      [22.08, 103.35], // South-West max buffer
+      [22.98, 104.48]  // North-East max buffer
+    );
+
     const map = L.map(mapRef.current, {
-      center: [22.42, 103.95],
+      center: [22.50, 103.92],
       zoom: 10,
+      minZoom: 9.6,
+      maxZoom: 18,
+      maxBounds: maxPanningBounds,
+      maxBoundsViscosity: 0.95, // Prevent panning outside study area
       zoomControl: false,
       attributionControl: false
     });
 
-    L.control.zoom({ position: 'bottomright' }).addTo(map);
+    // Fit tightly to the 3 target districts
+    map.fitBounds(pilotBounds, { padding: [25, 25] });
+
+    L.control.zoom({ position: 'topright' }).addTo(map);
 
     // Initial Tile Layer: ESRI World Topo Map (No key required, bright, gorgeous contours)
     const topoTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -80,7 +96,9 @@ export default function MapContainer({
       if (window._isAddingClinicActive) {
         window._onAddCustomClinicCallback({
           id: `CUSTOM_${Date.now()}`,
-          name: `Trạm Y tế Đề xuất #${window._customClinicsCount + 1}`,
+          name: language === 'vi' 
+            ? `Trạm Y tế Đề xuất #${window._customClinicsCount + 1}`
+            : `Proposed Clinic #${window._customClinicsCount + 1}`,
           lat: Number(e.latlng.lat.toFixed(4)),
           lon: Number(e.latlng.lng.toFixed(4)),
           elevation_m: 850.0,
@@ -91,11 +109,23 @@ export default function MapContainer({
     });
 
     // Initialize Layer Groups
+    layersGroupRef.current.boundary = L.layerGroup().addTo(map);
     layersGroupRef.current.isochrones = L.layerGroup().addTo(map);
     layersGroupRef.current.deserts = L.layerGroup().addTo(map);
     layersGroupRef.current.facilities = L.layerGroup().addTo(map);
     layersGroupRef.current.proposed = L.layerGroup().addTo(map);
     layersGroupRef.current.custom = L.layerGroup().addTo(map);
+
+    // Draw Study Area Boundary Outline (Refined Bounding Zone)
+    const boundaryRect = L.rectangle(pilotBounds, {
+      color: '#0d9488',
+      weight: 2,
+      dashArray: '6, 6',
+      fillColor: '#0d9488',
+      fillOpacity: 0.02,
+      interactive: false
+    });
+    layersGroupRef.current.boundary.addLayer(boundaryRect);
 
     leafletMapRef.current = map;
 
@@ -150,16 +180,16 @@ export default function MapContainer({
 
     filtered.forEach(f => {
       let color = '#0d9488'; // Vibrant Teal
-      let tierLabel = 'Tuyến 3: Trạm Y tế Xã';
+      let tierLabel = language === 'vi' ? 'Tuyến 3: Trạm Y tế Xã' : 'Tier 3: Commune Health Station';
       let radius = 7;
 
       if (f.tier === 1) {
         color = '#d97706'; // Bold Amber
-        tierLabel = 'Tuyến 1: Bệnh viện Đa khoa Tỉnh';
+        tierLabel = language === 'vi' ? 'Tuyến 1: Bệnh viện Đa khoa Tỉnh' : 'Tier 1: Provincial General Hospital';
         radius = 11;
       } else if (f.tier === 2) {
         color = '#0284c7'; // Electric Sky Blue
-        tierLabel = 'Tuyến 2: BVĐK / TTYT Huyện';
+        tierLabel = language === 'vi' ? 'Tuyến 2: BVĐK / TTYT Huyện' : 'Tier 2: District Hospital / Health Center';
         radius = 9;
       }
 
@@ -188,19 +218,19 @@ export default function MapContainer({
           </p>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 11px;">
             <div>
-              <span style="color: #64748b;">Bác sĩ:</span> 
+              <span style="color: #64748b;">${t.popupDoctors}:</span> 
               <strong style="color: #0284c7; font-size: 13px; margin-left: 4px;">${f.doctors}</strong>
             </div>
             <div>
-              <span style="color: #64748b;">Giường bệnh:</span> 
+              <span style="color: #64748b;">${t.popupBeds}:</span> 
               <strong style="color: #0d9488; font-size: 13px; margin-left: 4px;">${f.beds}</strong>
             </div>
             <div>
-              <span style="color: #64748b;">Loại hình:</span> 
+              <span style="color: #64748b;">${t.popupType}:</span> 
               <strong style="color: #334155; margin-left: 4px;">${f.type}</strong>
             </div>
             <div>
-              <span style="color: #64748b;">Tọa độ:</span> 
+              <span style="color: #64748b;">${t.popupCoords}:</span> 
               <span style="color: #334155; font-family: monospace; margin-left: 2px;">${f.lat.toFixed(2)}, ${f.lon.toFixed(2)}</span>
             </div>
           </div>
@@ -209,7 +239,7 @@ export default function MapContainer({
 
       group.addLayer(marker);
     });
-  }, [facilities, showFacilities, selectedDistrict]);
+  }, [facilities, showFacilities, selectedDistrict, language, t]);
 
   // Render Isochrone Rings / Coverage Polygons
   useEffect(() => {
@@ -271,27 +301,27 @@ export default function MapContainer({
       circle.bindPopup(`
         <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; min-width: 200px; color: #0f172a;">
           <div style="display: flex; align-items: center; gap: 4px; color: #e11d48; font-weight: 700; margin-bottom: 4px;">
-            <span style="font-size: 13px;">⚠️</span> VÙNG LÕM Y TẾ (&gt;60 PHÚT)
+            <span style="font-size: 13px;">⚠️</span> ${t.popupDesertTitle}
           </div>
           <p style="margin: 0 0 6px 0; color: #475569; font-size: 11px;">
-            Mã ô dân cư: <strong style="color: #0f172a; font-family: monospace;">${d.id}</strong>
+            ${t.popupCellId}: <strong style="color: #0f172a; font-family: monospace;">${d.id}</strong>
           </p>
           <div style="padding: 8px; background: rgba(225, 29, 72, 0.06); border: 1px solid rgba(225, 29, 72, 0.2); border-radius: 6px; margin-bottom: 6px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
-              <span style="color: #64748b;">Thời gian di chuyển:</span>
-              <strong style="color: #e11d48; font-weight: 700;">${d.time_min.toFixed(1)} phút</strong>
+              <span style="color: #64748b;">${t.popupTravelTime}:</span>
+              <strong style="color: #e11d48; font-weight: 700;">${d.time_min.toFixed(1)} ${language === 'vi' ? 'phút' : 'min'}</strong>
             </div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
-              <span style="color: #64748b;">Quy mô dân cư vi mô:</span>
-              <strong style="color: #0f172a;">${d.pop} người</strong>
+              <span style="color: #64748b;">${t.popupMicroPop}:</span>
+              <strong style="color: #0f172a;">${d.pop} ${t.peopleUnit}</strong>
             </div>
             <div style="display: flex; justify-content: space-between;">
-              <span style="color: #64748b;">Độ cao địa hình DEM:</span>
+              <span style="color: #64748b;">${t.popupElevation}:</span>
               <span style="color: #334155; font-weight: 600;">${d.elev.toFixed(0)}m</span>
             </div>
           </div>
           <div style="font-size: 11px; color: #475569;">
-            Trạm gần nhất: <br/>
+            ${t.popupNearestFacility}: <br/>
             <span style="color: #0284c7; font-weight: 600;">${d.nearest}</span> (${d.district})
           </div>
         </div>
@@ -299,7 +329,7 @@ export default function MapContainer({
 
       group.addLayer(circle);
     });
-  }, [deserts, showDeserts]);
+  }, [deserts, showDeserts, language, t]);
 
   // Render 5 Proposed Clinics from P-Median Optimization (Purple Diamond Marker)
   useEffect(() => {
@@ -350,33 +380,33 @@ export default function MapContainer({
         <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; min-width: 230px; color: #0f172a;">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
             <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: rgba(124, 58, 237, 0.12); color: #7c3aed; border: 1px solid rgba(124, 58, 237, 0.25);">
-              ĐỀ XUẤT TỐI ƯU P-MEDIAN #${p.priority_rank}
+              ${t.popupProposedTitle} #${p.priority_rank}
             </span>
           </div>
           <h4 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: #0f172a; font-family: 'Outfit', sans-serif;">
             ${p.name}
           </h4>
           <p style="margin: 0 0 8px 0; font-size: 12px; color: #475569;">
-            📍 ${p.commune}, <strong>${p.district}</strong> (Cao độ: ${p.elevation_m.toFixed(0)}m)
+            📍 ${p.commune}, <strong>${p.district}</strong> (${t.popupElevation}: ${p.elevation_m.toFixed(0)}m)
           </p>
           <div style="padding: 8px; background: rgba(124, 58, 237, 0.06); border: 1px solid rgba(124, 58, 237, 0.2); border-radius: 6px; font-size: 11px; margin-bottom: 6px;">
             <div style="margin-bottom: 4px;">
-              <span style="color: #64748b;">Nhân lực đề xuất:</span> <br/>
+              <span style="color: #64748b;">${t.popupProposedStaff}:</span> <br/>
               <strong style="color: #5b21b6;">${p.proposed_staff}</strong>
             </div>
             <div>
-              <span style="color: #64748b;">Quy mô:</span> <strong style="color: #5b21b6;">${p.proposed_beds} giường lưu trú</strong>
+              <span style="color: #64748b;">${t.popupProposedBeds}:</span> <strong style="color: #5b21b6;">${p.proposed_beds} ${language === 'vi' ? 'giường' : 'beds'}</strong>
             </div>
           </div>
           <div style="color: #059669; font-size: 11px; font-weight: 700;">
-            ✓ Giảm 85.7% dân số vùng lõm lân cận
+            ${t.popupProposedGain}
           </div>
         </div>
       `);
 
       group.addLayer(marker);
     });
-  }, [proposedClinics, showProposed]);
+  }, [proposedClinics, showProposed, language, t]);
 
   // Render Custom Added Clinics
   useEffect(() => {
@@ -419,10 +449,10 @@ export default function MapContainer({
 
       marker.bindPopup(`
         <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; min-width: 190px; color: #0f172a;">
-          <span style="font-size: 10px; font-weight: 700; color: #0284c7;">TRẠM TỰ ĐẶT (MÔ PHỎNG)</span>
+          <span style="font-size: 10px; font-weight: 700; color: #0284c7;">${t.popupCustomTitle}</span>
           <h4 style="margin: 4px 0; font-size: 13px; font-weight: 700; color: #0f172a;">${c.name}</h4>
           <p style="margin: 0 0 6px 0; color: #64748b; font-size: 11px;">
-            Tọa độ: ${c.lat}, ${c.lon}
+            ${t.popupCoords}: ${c.lat}, ${c.lon}
           </p>
           <button 
             id="btn-remove-${c.id}"
@@ -438,7 +468,7 @@ export default function MapContainer({
               font-size: 11px;
             "
           >
-            Xóa trạm này
+            ${t.popupRemoveBtn}
           </button>
         </div>
       `);
@@ -452,7 +482,7 @@ export default function MapContainer({
 
       group.addLayer(marker);
     });
-  }, [customClinics, onRemoveCustomClinic]);
+  }, [customClinics, onRemoveCustomClinic, t]);
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
@@ -466,18 +496,19 @@ export default function MapContainer({
         }} 
       />
 
-      {/* Floating HUD: Base Map Switcher (Crisp & Free) */}
+      {/* Floating HUD: Base Map Switcher */}
       <div 
         className="glass-panel"
         style={{
           position: 'absolute',
-          top: '20px',
-          right: '20px',
+          top: '16px',
+          right: '54px', // Avoid overlapping topright Leaflet zoom control
           zIndex: 800,
-          padding: '6px',
+          padding: '4px',
           display: 'flex',
-          gap: '4px',
-          boxShadow: 'var(--shadow-lg)'
+          gap: '3px',
+          boxShadow: 'var(--shadow-md)',
+          background: 'rgba(255, 255, 255, 0.95)'
         }}
       >
         <button
@@ -485,21 +516,21 @@ export default function MapContainer({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            padding: '7px 14px',
-            fontSize: '0.78rem',
+            gap: '5px',
+            padding: '6px 12px',
+            fontSize: '0.74rem',
             fontWeight: baseMap === 'topo' ? 700 : 500,
             borderRadius: '6px',
             border: 'none',
             background: baseMap === 'topo' ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'transparent',
-            color: baseMap === 'topo' ? '#ffffff' : 'var(--text-secondary)',
+            color: baseMap === 'topo' ? '#ffffff' : '#475569',
             cursor: 'pointer',
             transition: 'all 0.15s ease',
-            boxShadow: baseMap === 'topo' ? '0 2px 8px rgba(13, 148, 136, 0.3)' : 'none'
+            boxShadow: baseMap === 'topo' ? '0 2px 6px rgba(13, 148, 136, 0.3)' : 'none'
           }}
         >
-          <Mountain size={14} />
-          Địa Hình (ESRI Topo)
+          <Mountain size={13} />
+          {t.mapBaseTopo}
         </button>
 
         <button
@@ -507,21 +538,21 @@ export default function MapContainer({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            padding: '7px 14px',
-            fontSize: '0.78rem',
+            gap: '5px',
+            padding: '6px 12px',
+            fontSize: '0.74rem',
             fontWeight: baseMap === 'street' ? 700 : 500,
             borderRadius: '6px',
             border: 'none',
             background: baseMap === 'street' ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'transparent',
-            color: baseMap === 'street' ? '#ffffff' : 'var(--text-secondary)',
+            color: baseMap === 'street' ? '#ffffff' : '#475569',
             cursor: 'pointer',
             transition: 'all 0.15s ease',
-            boxShadow: baseMap === 'street' ? '0 2px 8px rgba(13, 148, 136, 0.3)' : 'none'
+            boxShadow: baseMap === 'street' ? '0 2px 6px rgba(13, 148, 136, 0.3)' : 'none'
           }}
         >
-          <MapIcon size={14} />
-          Bản Đồ Mở (OSM)
+          <MapIcon size={13} />
+          {t.mapBaseStreet}
         </button>
 
         <button
@@ -529,111 +560,126 @@ export default function MapContainer({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            padding: '7px 14px',
-            fontSize: '0.78rem',
+            gap: '5px',
+            padding: '6px 12px',
+            fontSize: '0.74rem',
             fontWeight: baseMap === 'satellite' ? 700 : 500,
             borderRadius: '6px',
             border: 'none',
             background: baseMap === 'satellite' ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'transparent',
-            color: baseMap === 'satellite' ? '#ffffff' : 'var(--text-secondary)',
+            color: baseMap === 'satellite' ? '#ffffff' : '#475569',
             cursor: 'pointer',
             transition: 'all 0.15s ease',
-            boxShadow: baseMap === 'satellite' ? '0 2px 8px rgba(13, 148, 136, 0.3)' : 'none'
+            boxShadow: baseMap === 'satellite' ? '0 2px 6px rgba(13, 148, 136, 0.3)' : 'none'
           }}
         >
-          <Compass size={14} />
-          Vệ Tinh (ESRI)
+          <Compass size={13} />
+          {t.mapBaseSatellite}
         </button>
       </div>
 
-      {/* Floating HUD: Legend Bar */}
+      {/* Floating HUD: Collapsible Legend Dock (Bottom Left, No Overlap) */}
       <div
         className="glass-panel"
         style={{
           position: 'absolute',
-          bottom: '24px',
-          left: '20px',
+          bottom: '16px',
+          left: '16px',
           zIndex: 800,
-          padding: '14px 18px',
-          minWidth: '250px',
-          fontSize: '0.8rem'
+          padding: isLegendOpen ? '10px 14px' : '6px 10px',
+          maxWidth: '260px',
+          fontSize: '0.76rem',
+          background: 'rgba(255, 255, 255, 0.96)',
+          boxShadow: 'var(--shadow-md)',
+          transition: 'all 0.2s ease'
         }}
       >
-        <div style={{ 
-          fontFamily: 'var(--font-display)', 
-          fontWeight: 700, 
-          fontSize: '0.86rem', 
-          color: '#0f172a', 
-          marginBottom: '10px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px'
-        }}>
-          <Compass size={16} color="#0d9488" />
-          Chú Giải Phân Tầng Y Tế
+        <div 
+          onClick={() => setIsLegendOpen(!isLegendOpen)}
+          style={{ 
+            fontFamily: 'var(--font-display)', 
+            fontWeight: 700, 
+            fontSize: '0.8rem', 
+            color: '#0f172a', 
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            userSelect: 'none'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Compass size={14} color="#0d9488" />
+            <span>{t.legendTitle}</span>
+          </div>
+          {isLegendOpen ? <ChevronDown size={14} color="#64748b" /> : <ChevronUp size={14} color="#64748b" />}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#d97706', border: '2px solid #fff', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-            <span style={{ color: '#334155', fontWeight: 500 }}>Tuyến 1: Bệnh viện Đa khoa Tỉnh</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#0284c7', border: '2px solid #fff', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-            <span style={{ color: '#334155', fontWeight: 500 }}>Tuyến 2: BVĐK / TTYT Huyện</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0d9488', border: '2px solid #fff', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-            <span style={{ color: '#334155', fontWeight: 500 }}>Tuyến 3: Trạm Y tế Xã / PKĐK</span>
-          </div>
-
-          <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '4px 0' }} />
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#e11d48', border: '2px solid #fff', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-            <span style={{ color: '#e11d48', fontWeight: 700 }}>Vùng lõm y tế (&gt;60 phút)</span>
-          </div>
-
-          {showProposed && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ 
-                width: '11px', 
-                height: '11px', 
-                backgroundColor: '#7c3aed', 
-                transform: 'rotate(45deg)', 
-                border: '2px solid #fff',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.2)'
-              }} />
-              <span style={{ color: '#6d28d9', fontWeight: 700 }}>5 Vị trí tối ưu P-Median</span>
+        {isLegendOpen && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#d97706', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
+              <span style={{ color: '#334155' }}>{t.legendTier1}</span>
             </div>
-          )}
-
-          {customClinics.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#0284c7', border: '2px solid #fff' }} />
-              <span style={{ color: '#0369a1', fontWeight: 700 }}>Trạm tự đặt ({customClinics.length})</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
+              <span style={{ color: '#334155' }}>{t.legendTier2}</span>
             </div>
-          )}
-        </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0d9488', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
+              <span style={{ color: '#334155' }}>{t.legendTier3}</span>
+            </div>
+
+            <div style={{ height: '1px', background: '#e2e8f0', margin: '2px 0' }} />
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#e11d48', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
+              <span style={{ color: '#e11d48', fontWeight: 700 }}>{t.legendDesert}</span>
+            </div>
+
+            {showProposed && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ 
+                  width: '9px', 
+                  height: '9px', 
+                  backgroundColor: '#7c3aed', 
+                  transform: 'rotate(45deg)', 
+                  border: '1.5px solid #fff',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
+                }} />
+                <span style={{ color: '#6d28d9', fontWeight: 700 }}>{t.legendProposed}</span>
+              </div>
+            )}
+
+            {customClinics.length > 0 && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7', border: '1.5px solid #fff' }} />
+                <span style={{ color: '#0369a1', fontWeight: 700 }}>{t.legendCustom} ({customClinics.length})</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Coordinate HUD */}
+      {/* Coordinate & Focus Area HUD */}
       <div
         className="glass-panel"
         style={{
           position: 'absolute',
-          bottom: '24px',
-          right: '70px',
+          bottom: '16px',
+          right: '16px',
           zIndex: 800,
-          padding: '5px 12px',
+          padding: '4px 10px',
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.74rem',
-          color: 'var(--text-secondary)',
-          background: 'rgba(255, 255, 255, 0.95)'
+          fontSize: '0.72rem',
+          color: '#475569',
+          background: 'rgba(255, 255, 255, 0.95)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
         }}
       >
-        GPS: <strong style={{ color: '#0f172a' }}>{coordsHud.lat.toFixed(4)}°N</strong>, <strong style={{ color: '#0f172a' }}>{coordsHud.lon.toFixed(4)}°E</strong>
+        <span>{t.coordsLabel}: <strong style={{ color: '#0f172a' }}>{coordsHud.lat.toFixed(4)}°N, {coordsHud.lon.toFixed(4)}°E</strong></span>
       </div>
 
       {/* Banner indicator when in Add Clinic Mode */}
@@ -641,24 +687,24 @@ export default function MapContainer({
         <div
           style={{
             position: 'absolute',
-            top: '20px',
+            top: '16px',
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 900,
-            padding: '10px 22px',
+            padding: '8px 20px',
             borderRadius: '9999px',
             background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
             color: '#ffffff',
-            boxShadow: '0 10px 25px rgba(124, 58, 237, 0.4)',
+            boxShadow: '0 8px 20px rgba(124, 58, 237, 0.35)',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            fontSize: '0.86rem',
+            fontSize: '0.82rem',
             fontWeight: 700
           }}
         >
-          <PlusCircle size={17} />
-          Nhấp chuột vào vị trí bất kỳ trên bản đồ để thêm trạm y tế mới
+          <PlusCircle size={16} />
+          {t.clickToAddHint}
         </div>
       )}
     </div>
