@@ -42,21 +42,36 @@ Toàn bộ 5 tiêu chí nghiệm thu học thuật (**AC-1 đến AC-5**) đã �
 ```text
 medimap_gis/
 ├── data/
+├── backend/
+│   └── app/
+│       ├── api/v1/endpoints/   # Các endpoints (facilities, isochrone, deserts, optimization, e2sfca)
+│       ├── core/               # SpatialEngine & config
+│       ├── schemas/            # Pydantic v2 schemas
+│       └── main.py             # FastAPI entrypoint
+├── data/
 │   ├── 01_raw/                 # Dữ liệu gốc OSM, SRTM, danh bạ y tế
 │   ├── 02_intermediate/        # Bounding Box, ma trận DEM, đồ thị NetworkX GraphML
 │   ├── 03_primary/             # Tọa độ cơ sở y tế Ground-Truth & CSV Catalog
 │   └── 04_research_ready/      # GeoPackage (.gpkg), CSV danh sách vùng lõm y tế
 ├── docs/
-│   ├── dataset_research_plan.md      # Kế hoạch chi tiết 5 giai đoạn
+│   ├── backend_api_guide.md          # Hướng dẫn kỹ thuật & danh mục API FastAPI
+│   ├── phase_1_research_findings.md  # Báo cáo kết quả nghiên cứu Giai đoạn I
+│   ├── research_execution_plan.md    # Kế hoạch nghiên cứu khoa học & WebGIS
 │   ├── pipeline_handover_guide.md    # Hướng dẫn kỹ thuật bàn giao quy trình dữ liệu
-│   └── quality_assessment_report.md  # Báo cáo kiểm định chất lượng Acceptance Criteria
+│   ├── quality_assessment_report.md  # Báo cáo kiểm định chất lượng Acceptance Criteria
+│   └── dataset_research_plan.md      # Kế hoạch chi tiết 5 giai đoạn
 ├── scripts/
 │   ├── 01_download_boundaries.py
 │   ├── 02_ingest_health_facilities.py
 │   ├── 03_fetch_osm_network.py
 │   ├── 04_process_raster_elevation_pop.py
 │   ├── 05_topographic_impedance_builder.py
-│   └── 06_qa_ground_truth_validation.py
+│   ├── 06_qa_ground_truth_validation.py
+│   ├── research_01_e2sfca_model.py
+│   ├── research_02_location_allocation.py
+│   └── research_03_spatial_autocorrelation.py
+├── tests/
+│   └── test_api.py             # Test suite kiểm thử toàn diện 9 test cases
 ├── run_pipeline.py             # Script thực thi toàn bộ pipeline trong 1 dòng lệnh
 ├── docker-compose.yml          # Container PostgreSQL 16 + PostGIS 3.4
 ├── requirements.txt            # Thư viện Python GIS & Spatial Analysis
@@ -65,7 +80,7 @@ medimap_gis/
 
 ---
 
-## 🚀 Hướng Dẫn Tái Lập Bộ Dữ Liệu (Reproducibility)
+## 🚀 Hướng Dẫn Vận Hành & Khởi Chạy
 
 ### 1. Cài đặt Môi trường
 ```bash
@@ -77,14 +92,29 @@ pip install -r requirements.txt
 python run_pipeline.py
 ```
 
-### 3. Xem Tài Liệu Hướng Dẫn & Báo Cáo
-- 📊 **Báo cáo kết quả nghiên cứu Giai đoạn I:** [`docs/phase_1_research_findings.md`](docs/phase_1_research_findings.md) *(E2SFCA, P-Median -85.7% Vùng lõm, Moran's I = 0.9306)*
-- 🔬 **Kế hoạch nghiên cứu khoa học & WebGIS:** [`docs/research_execution_plan.md`](docs/research_execution_plan.md)
-- 🛠️ **Hướng dẫn kỹ thuật bàn giao chi tiết:** [`docs/pipeline_handover_guide.md`](docs/pipeline_handover_guide.md)
-- 📋 **Báo cáo kiểm định 5 tiêu chí nghiệm thu:** [`docs/quality_assessment_report.md`](docs/quality_assessment_report.md)
-- 📘 **Kế hoạch xây dựng bộ dữ liệu không gian:** [`docs/dataset_research_plan.md`](docs/dataset_research_plan.md)
+### 3. Khởi Động Backend Spatial API (FastAPI)
+```bash
+uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+- **Tài liệu API Swagger UI:** Truy cập trực tiếp tại `http://localhost:8000/docs`
+- **Tài liệu API ReDoc:** Truy cập tại `http://localhost:8000/redoc`
+
+### 4. Chạy Kiểm Thử Tự Động (Test Suite)
+```bash
+python -m pytest tests/ -v
+```
+
+---
+
+## 📑 Danh Mục Tài Liệu Nghiên Cứu & Bàn Giao
+1. 🌐 [Tài Liệu Kỹ Thuật & Danh Mục API Backend (FastAPI)](docs/backend_api_guide.md) — Chi tiết endpoints, schemas và hướng dẫn kết nối Frontend Next.js.
+2. 📊 [Báo Cáo Kết Quả Nghiên Cứu Giai Đoạn I](docs/phase_1_research_findings.md) — Phân tích định lượng E2SFCA, tối ưu P-Median (-85.7% vùng lõm), và kiểm định Moran's I = 0.9306.
+3. 🔬 [Kế Hoạch Nghiên Cứu Khoa Học & WebGIS](docs/research_execution_plan.md) — 4 câu hỏi nghiên cứu (RQs) và lộ trình 30 ngày.
+4. 🛠️ [Hướng Dẫn Kỹ Thuật Bàn Giao Dữ Liệu](docs/pipeline_handover_guide.md) — Hướng dẫn cài đặt, debug và mở rộng địa bàn.
+5. 📋 [Báo Cáo Nghiệm Thu Bộ Dữ Liệu (AC-1 -> AC-5)](docs/quality_assessment_report.md) — Báo cáo kiểm định 5 tiêu chí chấp thuận.
+6. 📘 [Kế Hoạch Xây Dựng Bộ Dữ Liệu](docs/dataset_research_plan.md) — Kế hoạch tổng thể ban đầu.
 
 ---
 
 ## ⚖️ Giấy phép & Trích Dẫn (Citation)
-Dự án được phát triển phục vụ mục đích nghiên cứu khoa học y tế công cộng và công nghệ GIS. Khi sử dụng bộ dữ liệu, vui lòng trích dẫn tài liệu trong thư mục `docs/`.
+Dự án được phát triển phục vụ mục đích nghiên cứu khoa học y tế công cộng và công nghệ GIS. Khi sử dụng bộ dữ liệu hoặc API, vui lòng trích dẫn tài liệu trong thư mục `docs/`.
