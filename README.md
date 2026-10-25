@@ -78,9 +78,10 @@ python run_pipeline.py
 ```
 
 ### 3. Xem Tài Liệu Hướng Dẫn & Báo Cáo
+- 🔬 **Kế hoạch nghiên cứu khoa học & WebGIS:** [`docs/research_execution_plan.md`](docs/research_execution_plan.md)
 - 🛠️ **Hướng dẫn kỹ thuật bàn giao chi tiết:** [`docs/pipeline_handover_guide.md`](docs/pipeline_handover_guide.md)
 - 📋 **Báo cáo kiểm định 5 tiêu chí nghiệm thu:** [`docs/quality_assessment_report.md`](docs/quality_assessment_report.md)
-- 📘 **Kế hoạch nghiên cứu không gian:** [`docs/dataset_research_plan.md`](docs/dataset_research_plan.md)
+- 📘 **Kế hoạch xây dựng bộ dữ liệu không gian:** [`docs/dataset_research_plan.md`](docs/dataset_research_plan.md)
 
 ---
 
