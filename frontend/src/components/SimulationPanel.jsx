@@ -1,9 +1,7 @@
-import React from 'react';
 import { 
   Sliders, 
   Bike, 
   Ambulance, 
-  Layers, 
   Sparkles, 
   Filter, 
   RotateCcw

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { 
   Sliders, 
   BarChart3, 
@@ -12,14 +12,10 @@ import {
   Layers, 
   Filter, 
   Globe2, 
-  Zap, 
-  AlertCircle, 
   Search, 
   Navigation, 
-  MapPin, 
   Users, 
   Bed,
-  CheckCircle2,
   TrendingDown
 } from 'lucide-react';
 
@@ -37,7 +33,6 @@ export default function UnifiedSidebar({
   
   // Stats Props
   simulationResult,
-  moranStats,
   districtStats = [],
   
   // Facilities Props
@@ -101,7 +96,7 @@ export default function UnifiedSidebar({
       {isCollapsed && (
         <button
           onClick={() => setIsCollapsed(false)}
-          className="glass-panel"
+          className="od-glass"
           style={{
             position: 'absolute',
             top: '16px',
@@ -109,56 +104,56 @@ export default function UnifiedSidebar({
             zIndex: 890,
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            padding: '10px 14px',
-            background: 'rgba(255, 255, 255, 0.98)',
-            border: '1px solid #cbd5e1',
-            borderRadius: '12px',
-            boxShadow: '0 8px 24px rgba(15, 23, 42, 0.12)',
+            gap: '10px',
+            padding: '10px 16px',
+            borderRadius: 'var(--radius-md)',
+            boxShadow: 'var(--shadow-float)',
             cursor: 'pointer',
-            color: '#0f172a',
+            color: 'var(--text-main)',
             fontWeight: 700,
             fontSize: '0.82rem',
             fontFamily: 'var(--font-display)',
-            transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+            border: '1px solid var(--border-subtle)',
+            transition: 'all var(--duration-fast) var(--ease-spring)'
           }}
           title={t.sidebarExpand}
         >
           <div style={{
-            width: '24px',
-            height: '24px',
-            borderRadius: '6px',
-            background: 'linear-gradient(135deg, #0d9488 0%, #0284c7 100%)',
+            width: '26px',
+            height: '26px',
+            borderRadius: 'var(--radius-sm)',
+            background: 'var(--primary)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#fff'
+            color: '#fff',
+            boxShadow: '0 2px 6px rgba(13, 148, 136, 0.3)'
           }}>
             <Sliders size={14} />
           </div>
           <span>{t.sidebarTabSimulation} / {t.sidebarTabAnalytics}</span>
-          <ChevronRight size={16} color="#0d9488" />
+          <ChevronRight size={16} color="var(--primary)" strokeWidth={2.4} />
         </button>
       )}
 
       {/* Main Unified Open-Design Sidebar Container */}
       <aside
-        className="glass-panel"
+        className="od-glass"
         style={{
           position: 'absolute',
           top: '16px',
           bottom: '16px',
           left: '16px',
-          width: '380px',
+          width: '400px',
           zIndex: 890,
           display: 'flex',
           flexDirection: 'column',
-          background: 'rgba(255, 255, 255, 0.97)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid #cbd5e1',
-          borderRadius: '16px',
-          boxShadow: '0 16px 40px -10px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(0,0,0,0.03)',
+          background: 'rgba(255, 255, 255, 0.96)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          border: '1px solid var(--border-subtle)',
+          borderRadius: 'var(--radius-lg)',
+          boxShadow: 'var(--shadow-float)',
           transform: isCollapsed ? 'translateX(calc(-100% - 24px))' : 'translateX(0)',
           transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
           overflow: 'hidden'
@@ -166,8 +161,8 @@ export default function UnifiedSidebar({
       >
         {/* Sidebar Header Bar */}
         <div style={{
-          padding: '12px 16px 10px 16px',
-          borderBottom: '1px solid #e2e8f0',
+          padding: '12px 18px',
+          borderBottom: '1px solid var(--border-subtle)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -179,15 +174,15 @@ export default function UnifiedSidebar({
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                background: '#0d9488',
+                background: 'var(--primary)',
                 boxShadow: '0 0 0 3px rgba(13, 148, 136, 0.2)'
               }} />
               <h2 style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: '0.95rem',
+                fontSize: '0.98rem',
                 fontWeight: 800,
-                color: '#0f172a',
-                letterSpacing: '-0.01em',
+                color: 'var(--text-main)',
+                letterSpacing: '-0.015em',
                 margin: 0
               }}>
                 MediMap Studio
@@ -196,7 +191,7 @@ export default function UnifiedSidebar({
             <p style={{
               margin: '2px 0 0 16px',
               fontSize: '0.72rem',
-              color: '#64748b',
+              color: 'var(--text-muted)',
               fontWeight: 500
             }}>
               {language === 'vi' ? 'Sa Pa • Bát Xát • Mường Khương' : 'Sa Pa • Bat Xat • Muong Khuong'}
@@ -206,19 +201,11 @@ export default function UnifiedSidebar({
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <button
               onClick={onResetSimulation}
+              className="od-btn od-btn-secondary"
               style={{
-                background: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                borderRadius: '8px',
-                color: '#64748b',
-                cursor: 'pointer',
-                padding: '5px 8px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px',
+                padding: '5px 10px',
                 fontSize: '0.72rem',
-                fontWeight: 600,
-                transition: 'all 0.15s ease'
+                borderRadius: 'var(--radius-sm)'
               }}
               title={t.simReset}
             >
@@ -228,17 +215,12 @@ export default function UnifiedSidebar({
 
             <button
               onClick={() => setIsCollapsed(true)}
+              className="od-btn od-btn-secondary"
               style={{
-                background: '#f1f5f9',
-                border: '1px solid #e2e8f0',
-                borderRadius: '8px',
-                color: '#475569',
-                cursor: 'pointer',
-                padding: '5px 7px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.15s ease'
+                width: '28px',
+                height: '28px',
+                padding: 0,
+                borderRadius: 'var(--radius-sm)'
               }}
               title={t.sidebarCollapse}
             >
@@ -247,90 +229,84 @@ export default function UnifiedSidebar({
           </div>
         </div>
 
-        {/* Segmented Tab Bar Switcher */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: '4px',
-          padding: '8px 12px',
-          background: '#f8fafc',
-          borderBottom: '1px solid #e2e8f0'
-        }}>
+        {/* Segmented Tab Bar Switcher (Open-Design Pill) */}
+        <nav
+          role="tablist"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
+            gap: '4px',
+            padding: '8px 14px',
+            background: 'var(--bg-surface-secondary)',
+            borderBottom: '1px solid var(--border-subtle)'
+          }}
+        >
           <button
+            role="tab"
+            aria-selected={activeTab === 'simulation'}
             onClick={() => setActiveTab('simulation')}
+            className="od-btn"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
               padding: '7px 4px',
-              borderRadius: '8px',
-              border: activeTab === 'simulation' ? '1px solid rgba(13, 148, 136, 0.3)' : '1px solid transparent',
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
               background: activeTab === 'simulation' ? '#ffffff' : 'transparent',
-              color: activeTab === 'simulation' ? '#0d9488' : '#64748b',
-              fontWeight: activeTab === 'simulation' ? 700 : 600,
+              color: activeTab === 'simulation' ? 'var(--primary)' : 'var(--text-muted)',
+              fontWeight: activeTab === 'simulation' ? 700 : 500,
               fontSize: '0.76rem',
-              cursor: 'pointer',
-              boxShadow: activeTab === 'simulation' ? '0 2px 6px rgba(0,0,0,0.04)' : 'none',
-              transition: 'all 0.15s ease'
+              boxShadow: activeTab === 'simulation' ? 'var(--shadow-xs)' : 'none'
             }}
           >
-            <Sliders size={14} />
+            <Sliders size={14} strokeWidth={activeTab === 'simulation' ? 2.4 : 1.8} />
             <span>{t.sidebarTabSimulation}</span>
           </button>
 
           <button
+            role="tab"
+            aria-selected={activeTab === 'analytics'}
             onClick={() => setActiveTab('analytics')}
+            className="od-btn"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
               padding: '7px 4px',
-              borderRadius: '8px',
-              border: activeTab === 'analytics' ? '1px solid rgba(2, 132, 199, 0.3)' : '1px solid transparent',
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
               background: activeTab === 'analytics' ? '#ffffff' : 'transparent',
-              color: activeTab === 'analytics' ? '#0284c7' : '#64748b',
-              fontWeight: activeTab === 'analytics' ? 700 : 600,
+              color: activeTab === 'analytics' ? 'var(--primary)' : 'var(--text-muted)',
+              fontWeight: activeTab === 'analytics' ? 700 : 500,
               fontSize: '0.76rem',
-              cursor: 'pointer',
-              boxShadow: activeTab === 'analytics' ? '0 2px 6px rgba(0,0,0,0.04)' : 'none',
-              transition: 'all 0.15s ease'
+              boxShadow: activeTab === 'analytics' ? 'var(--shadow-xs)' : 'none'
             }}
           >
-            <BarChart3 size={14} />
+            <BarChart3 size={14} strokeWidth={activeTab === 'analytics' ? 2.4 : 1.8} />
             <span>{t.sidebarTabAnalytics}</span>
           </button>
 
           <button
+            role="tab"
+            aria-selected={activeTab === 'facilities'}
             onClick={() => setActiveTab('facilities')}
+            className="od-btn"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
               padding: '7px 4px',
-              borderRadius: '8px',
-              border: activeTab === 'facilities' ? '1px solid rgba(124, 58, 237, 0.3)' : '1px solid transparent',
+              borderRadius: 'var(--radius-sm)',
+              border: 'none',
               background: activeTab === 'facilities' ? '#ffffff' : 'transparent',
-              color: activeTab === 'facilities' ? '#7c3aed' : '#64748b',
-              fontWeight: activeTab === 'facilities' ? 700 : 600,
+              color: activeTab === 'facilities' ? 'var(--primary)' : 'var(--text-muted)',
+              fontWeight: activeTab === 'facilities' ? 700 : 500,
               fontSize: '0.76rem',
-              cursor: 'pointer',
-              boxShadow: activeTab === 'facilities' ? '0 2px 6px rgba(0,0,0,0.04)' : 'none',
-              transition: 'all 0.15s ease'
+              boxShadow: activeTab === 'facilities' ? 'var(--shadow-xs)' : 'none'
             }}
           >
-            <Building2 size={14} />
+            <Building2 size={14} strokeWidth={activeTab === 'facilities' ? 2.4 : 1.8} />
             <span>{t.sidebarTabFacilities}</span>
           </button>
-        </div>
+        </nav>
 
         {/* Tab Body (Scrollable Container) */}
         <div style={{
           flex: 1,
           overflowY: 'auto',
-          padding: '14px',
+          padding: '16px',
           display: 'flex',
           flexDirection: 'column',
           gap: '14px'
@@ -341,26 +317,21 @@ export default function UnifiedSidebar({
           {activeTab === 'simulation' && (
             <>
               {/* Layer Visibility Section */}
-              <div style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '12px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
-              }}>
+              <div className="od-card" style={{ padding: '14px' }}>
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  marginBottom: '10px'
+                  marginBottom: '12px'
                 }}>
-                  <Layers size={14} color="#0d9488" />
+                  <Layers size={14} color="var(--primary)" strokeWidth={2.2} />
                   <span style={{
-                    fontSize: '0.74rem',
+                    fontSize: '0.72rem',
                     fontWeight: 700,
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
-                    color: '#475569'
+                    fontFamily: 'var(--font-mono)',
+                    color: 'var(--text-muted)'
                   }}>
                     {t.simLayerSection}
                   </span>
@@ -371,19 +342,20 @@ export default function UnifiedSidebar({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '6px 8px',
-                    borderRadius: '8px',
-                    background: layers.facilities ? '#f0fdfa' : '#f8fafc',
-                    border: `1px solid ${layers.facilities ? '#ccfbf1' : '#e2e8f0'}`,
+                    padding: '8px 10px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: layers.facilities ? 'var(--primary-50)' : 'var(--bg-surface-secondary)',
+                    border: `1px solid ${layers.facilities ? 'var(--primary-100)' : 'var(--border-subtle)'}`,
                     cursor: 'pointer',
-                    fontSize: '0.78rem'
+                    fontSize: '0.78rem',
+                    transition: 'all 0.15s ease'
                   }}>
-                    <span style={{ color: '#0f172a', fontWeight: 600 }}>{t.layerFacilities}</span>
+                    <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>{t.layerFacilities}</span>
                     <input
                       type="checkbox"
                       checked={layers.facilities}
                       onChange={(e) => setLayers({ ...layers, facilities: e.target.checked })}
-                      style={{ accentColor: '#0d9488', width: '16px', height: '16px', cursor: 'pointer' }}
+                      style={{ accentColor: 'var(--primary)', width: '16px', height: '16px', cursor: 'pointer' }}
                     />
                   </label>
 
@@ -391,19 +363,20 @@ export default function UnifiedSidebar({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '6px 8px',
-                    borderRadius: '8px',
-                    background: layers.isochrones ? '#f0f9ff' : '#f8fafc',
-                    border: `1px solid ${layers.isochrones ? '#e0f2fe' : '#e2e8f0'}`,
+                    padding: '8px 10px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: layers.isochrones ? 'var(--tier-2-bg)' : 'var(--bg-surface-secondary)',
+                    border: `1px solid ${layers.isochrones ? '#bae6fd' : 'var(--border-subtle)'}`,
                     cursor: 'pointer',
-                    fontSize: '0.78rem'
+                    fontSize: '0.78rem',
+                    transition: 'all 0.15s ease'
                   }}>
-                    <span style={{ color: '#0f172a', fontWeight: 600 }}>{t.layerIsochrones}</span>
+                    <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>{t.layerIsochrones}</span>
                     <input
                       type="checkbox"
                       checked={layers.isochrones}
                       onChange={(e) => setLayers({ ...layers, isochrones: e.target.checked })}
-                      style={{ accentColor: '#0284c7', width: '16px', height: '16px', cursor: 'pointer' }}
+                      style={{ accentColor: 'var(--tier-2-sky)', width: '16px', height: '16px', cursor: 'pointer' }}
                     />
                   </label>
 
@@ -411,60 +384,60 @@ export default function UnifiedSidebar({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '6px 8px',
-                    borderRadius: '8px',
-                    background: layers.deserts ? '#fff1f2' : '#f8fafc',
-                    border: `1px solid ${layers.deserts ? '#ffe4e6' : '#e2e8f0'}`,
+                    padding: '8px 10px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: layers.deserts ? 'var(--desert-bg)' : 'var(--bg-surface-secondary)',
+                    border: `1px solid ${layers.deserts ? '#fecdd3' : 'var(--border-subtle)'}`,
                     cursor: 'pointer',
-                    fontSize: '0.78rem'
+                    fontSize: '0.78rem',
+                    transition: 'all 0.15s ease'
                   }}>
-                    <span style={{ color: '#be123c', fontWeight: 700 }}>{t.layerDeserts}</span>
+                    <span style={{ color: 'var(--desert-rose-dark)', fontWeight: 700 }}>{t.layerDeserts}</span>
                     <input
                       type="checkbox"
                       checked={layers.deserts}
                       onChange={(e) => setLayers({ ...layers, deserts: e.target.checked })}
-                      style={{ accentColor: '#e11d48', width: '16px', height: '16px', cursor: 'pointer' }}
+                      style={{ accentColor: 'var(--desert-rose)', width: '16px', height: '16px', cursor: 'pointer' }}
                     />
                   </label>
                 </div>
               </div>
 
               {/* 5 P-Median Optimal Stations Feature Card */}
-              <div style={{
-                background: layers.proposed 
-                  ? 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%)' 
-                  : '#ffffff',
-                border: `1px solid ${layers.proposed ? '#e879f9' : '#e2e8f0'}`,
-                borderRadius: '12px',
-                padding: '12px',
-                boxShadow: layers.proposed ? '0 4px 16px rgba(168, 85, 247, 0.15)' : '0 1px 3px rgba(0,0,0,0.02)',
-                transition: 'all 0.2s ease'
-              }}>
+              <div 
+                className="od-card"
+                style={{
+                  background: layers.proposed ? 'var(--ai-purple-bg)' : '#ffffff',
+                  border: `1px solid ${layers.proposed ? 'rgba(124, 58, 237, 0.4)' : 'var(--border-subtle)'}`,
+                  padding: '14px',
+                  boxShadow: layers.proposed ? 'var(--shadow-md)' : 'var(--shadow-xs)'
+                }}
+              >
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  marginBottom: '8px'
+                  marginBottom: '10px'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <div style={{
-                      width: '24px',
-                      height: '24px',
-                      borderRadius: '6px',
-                      background: layers.proposed ? '#7c3aed' : '#f1f5f9',
+                      width: '26px',
+                      height: '26px',
+                      borderRadius: 'var(--radius-sm)',
+                      background: layers.proposed ? 'var(--ai-purple)' : 'var(--bg-surface-secondary)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: layers.proposed ? '#ffffff' : '#64748b'
+                      color: layers.proposed ? '#ffffff' : 'var(--text-muted)'
                     }}>
                       <Sparkles size={14} />
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#0f172a' }}>
+                      <div style={{ fontSize: '0.84rem', fontWeight: 800, color: 'var(--text-main)', fontFamily: 'var(--font-display)' }}>
                         {t.simProposedTitle}
                       </div>
-                      <div style={{ fontSize: '0.68rem', color: '#7c3aed', fontWeight: 700 }}>
-                        {language === 'vi' ? 'Thuật toán P-Median / MCLP' : 'P-Median & MCLP Algorithm'}
+                      <div style={{ fontSize: '0.68rem', color: 'var(--ai-purple)', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
+                        {language === 'vi' ? 'Mô hình Tối ưu P-Median & MCLP' : 'P-Median & MCLP Algorithm'}
                       </div>
                     </div>
                   </div>
@@ -476,7 +449,7 @@ export default function UnifiedSidebar({
                     style={{
                       width: '20px',
                       height: '20px',
-                      accentColor: '#7c3aed',
+                      accentColor: 'var(--ai-purple)',
                       cursor: 'pointer'
                     }}
                   />
@@ -485,8 +458,8 @@ export default function UnifiedSidebar({
                 <p style={{
                   margin: 0,
                   fontSize: '0.74rem',
-                  lineHeight: 1.45,
-                  color: layers.proposed ? '#581c87' : '#64748b',
+                  lineHeight: 1.5,
+                  color: layers.proposed ? '#581c87' : 'var(--text-muted)',
                   fontWeight: layers.proposed ? 600 : 400
                 }}>
                   {layers.proposed ? t.simProposedActiveDesc : t.simProposedInactiveDesc}
@@ -494,14 +467,14 @@ export default function UnifiedSidebar({
 
                 {layers.proposed && (
                   <div style={{
-                    marginTop: '8px',
+                    marginTop: '10px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    padding: '4px 8px',
-                    borderRadius: '6px',
-                    background: 'rgba(124, 58, 237, 0.1)',
-                    color: '#6d28d9',
+                    padding: '6px 10px',
+                    borderRadius: 'var(--radius-sm)',
+                    background: 'rgba(124, 58, 237, 0.12)',
+                    color: 'var(--ai-purple)',
                     fontSize: '0.72rem',
                     fontWeight: 700
                   }}>
@@ -512,20 +485,15 @@ export default function UnifiedSidebar({
               </div>
 
               {/* Vehicle Travel Mode Section */}
-              <div style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '12px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
-              }}>
+              <div className="od-card" style={{ padding: '14px' }}>
                 <div style={{
-                  fontSize: '0.74rem',
+                  fontSize: '0.72rem',
                   fontWeight: 700,
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
-                  color: '#475569',
-                  marginBottom: '8px'
+                  fontFamily: 'var(--font-mono)',
+                  color: 'var(--text-muted)',
+                  marginBottom: '10px'
                 }}>
                   {t.simVehicleSection}
                 </div>
@@ -533,74 +501,64 @@ export default function UnifiedSidebar({
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   <button
                     onClick={() => handleVehicleChange('motorbike')}
+                    className="od-btn"
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       gap: '4px',
                       padding: '10px 8px',
-                      borderRadius: '10px',
-                      border: params.vehicle_type === 'motorbike' ? '1.5px solid #0d9488' : '1px solid #e2e8f0',
-                      background: params.vehicle_type === 'motorbike' ? '#f0fdfa' : '#f8fafc',
-                      color: params.vehicle_type === 'motorbike' ? '#0f766e' : '#64748b',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease'
+                      borderRadius: 'var(--radius-md)',
+                      border: params.vehicle_type === 'motorbike' ? '1.5px solid var(--primary)' : '1px solid var(--border-subtle)',
+                      background: params.vehicle_type === 'motorbike' ? 'var(--primary-50)' : 'var(--bg-surface-secondary)',
+                      color: params.vehicle_type === 'motorbike' ? 'var(--primary-dark)' : 'var(--text-muted)'
                     }}
                   >
-                    <Bike size={20} color={params.vehicle_type === 'motorbike' ? '#0d9488' : '#94a3b8'} />
+                    <Bike size={20} color={params.vehicle_type === 'motorbike' ? 'var(--primary)' : 'var(--text-muted)'} />
                     <span style={{ fontSize: '0.76rem', fontWeight: 700 }}>{t.vehicleMotorbike}</span>
-                    <span style={{ fontSize: '0.68rem', fontFamily: 'var(--font-mono)', color: '#64748b' }}>32 km/h</span>
+                    <span style={{ fontSize: '0.68rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>32 km/h</span>
                   </button>
 
                   <button
                     onClick={() => handleVehicleChange('ambulance')}
+                    className="od-btn"
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       gap: '4px',
                       padding: '10px 8px',
-                      borderRadius: '10px',
-                      border: params.vehicle_type === 'ambulance' ? '1.5px solid #0284c7' : '1px solid #e2e8f0',
-                      background: params.vehicle_type === 'ambulance' ? '#f0f9ff' : '#f8fafc',
-                      color: params.vehicle_type === 'ambulance' ? '#0369a1' : '#64748b',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease'
+                      borderRadius: 'var(--radius-md)',
+                      border: params.vehicle_type === 'ambulance' ? '1.5px solid var(--tier-2-sky)' : '1px solid var(--border-subtle)',
+                      background: params.vehicle_type === 'ambulance' ? 'var(--tier-2-bg)' : 'var(--bg-surface-secondary)',
+                      color: params.vehicle_type === 'ambulance' ? '#0369a1' : 'var(--text-muted)'
                     }}
                   >
-                    <Ambulance size={20} color={params.vehicle_type === 'ambulance' ? '#0284c7' : '#94a3b8'} />
+                    <Ambulance size={20} color={params.vehicle_type === 'ambulance' ? 'var(--tier-2-sky)' : 'var(--text-muted)'} />
                     <span style={{ fontSize: '0.76rem', fontWeight: 700 }}>{t.vehicleAmbulance}</span>
-                    <span style={{ fontSize: '0.68rem', fontFamily: 'var(--font-mono)', color: '#64748b' }}>42 km/h</span>
+                    <span style={{ fontSize: '0.68rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>42 km/h</span>
                   </button>
                 </div>
               </div>
 
               {/* Sliders: Base Speed & Tobler Friction Weight */}
-              <div style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '12px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px'
-              }}>
+              <div className="od-card" style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {/* Speed Slider */}
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                    <span style={{ fontSize: '0.76rem', fontWeight: 600, color: '#334155' }}>
+                    <span style={{ fontSize: '0.76rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
                       {t.simSpeedLabel}
                     </span>
                     <span style={{
                       fontSize: '0.74rem',
                       fontFamily: 'var(--font-mono)',
                       fontWeight: 700,
-                      color: '#0d9488',
-                      background: '#f0fdfa',
+                      color: 'var(--primary)',
+                      background: 'var(--primary-50)',
                       padding: '2px 8px',
-                      borderRadius: '6px',
-                      border: '1px solid #ccfbf1'
+                      borderRadius: 'var(--radius-xs)',
+                      border: '1px solid var(--primary-100)',
+                      fontVariantNumeric: 'tabular-nums'
                     }}>
                       {params.base_speed_kmh.toFixed(1)} km/h
                     </span>
@@ -613,29 +571,30 @@ export default function UnifiedSidebar({
                     value={params.base_speed_kmh}
                     onChange={handleSpeedChange}
                   />
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '0.66rem', color: '#94a3b8' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '0.66rem', color: 'var(--text-dim)' }}>
                     <span>{t.simSpeedMin}</span>
                     <span>{t.simSpeedMax}</span>
                   </div>
                 </div>
 
-                <div style={{ height: '1px', background: '#f1f5f9' }} />
+                <div style={{ height: '1px', background: 'var(--border-subtle)' }} />
 
                 {/* Tobler Slope Weight Slider */}
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                    <span style={{ fontSize: '0.76rem', fontWeight: 600, color: '#334155' }}>
+                    <span style={{ fontSize: '0.76rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
                       {t.simSlopeLabel}
                     </span>
                     <span style={{
                       fontSize: '0.74rem',
                       fontFamily: 'var(--font-mono)',
                       fontWeight: 700,
-                      color: '#d97706',
-                      background: '#fffbeb',
+                      color: 'var(--tier-1-amber)',
+                      background: 'var(--tier-1-bg)',
                       padding: '2px 8px',
-                      borderRadius: '6px',
-                      border: '1px solid #fef3c7'
+                      borderRadius: 'var(--radius-xs)',
+                      border: '1px solid #fef3c7',
+                      fontVariantNumeric: 'tabular-nums'
                     }}>
                       α = {params.slope_friction_weight.toFixed(1)}
                     </span>
@@ -648,7 +607,7 @@ export default function UnifiedSidebar({
                     value={params.slope_friction_weight}
                     onChange={handleSlopeWeightChange}
                   />
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '0.66rem', color: '#94a3b8' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '0.66rem', color: 'var(--text-dim)' }}>
                     <span>{t.simSlopeMin}</span>
                     <span>{t.simSlopeMax}</span>
                   </div>
@@ -656,26 +615,21 @@ export default function UnifiedSidebar({
               </div>
 
               {/* District Spatial Filter */}
-              <div style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '12px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
-              }}>
+              <div className="od-card" style={{ padding: '14px' }}>
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  marginBottom: '8px'
+                  marginBottom: '10px'
                 }}>
-                  <Filter size={14} color="#0284c7" />
+                  <Filter size={14} color="var(--primary)" />
                   <span style={{
-                    fontSize: '0.74rem',
+                    fontSize: '0.72rem',
                     fontWeight: 700,
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
-                    color: '#475569'
+                    fontFamily: 'var(--font-mono)',
+                    color: 'var(--text-muted)'
                   }}>
                     {t.simDistrictFilter}
                   </span>
@@ -686,11 +640,11 @@ export default function UnifiedSidebar({
                   onChange={(e) => setSelectedDistrict(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '8px 10px',
-                    borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    background: '#f8fafc',
-                    color: '#0f172a',
+                    padding: '8px 12px',
+                    borderRadius: 'var(--radius-sm)',
+                    border: '1px solid var(--border-strong)',
+                    background: 'var(--bg-surface)',
+                    color: 'var(--text-main)',
                     fontSize: '0.78rem',
                     fontWeight: 600,
                     outline: 'none',
@@ -706,29 +660,30 @@ export default function UnifiedSidebar({
 
               {/* Custom Added Clinics Notice */}
               {customClinicsCount > 0 && (
-                <div style={{
-                  background: '#f0f9ff',
-                  border: '1px solid #bae6fd',
-                  borderRadius: '10px',
-                  padding: '10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}>
+                <div 
+                  className="od-card"
+                  style={{
+                    background: 'var(--tier-2-bg)',
+                    borderColor: '#bae6fd',
+                    padding: '10px 14px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
                   <div style={{ fontSize: '0.76rem', color: '#0369a1', fontWeight: 600 }}>
                     📍 <strong>{customClinicsCount}</strong> {t.customClinicsActive}
                   </div>
                   <button
                     onClick={onClearCustomClinics}
+                    className="od-btn"
                     style={{
                       background: '#ffffff',
-                      border: '1px solid #0284c7',
-                      color: '#0284c7',
-                      borderRadius: '6px',
+                      border: '1px solid var(--tier-2-sky)',
+                      color: 'var(--tier-2-sky)',
                       padding: '4px 8px',
                       fontSize: '0.7rem',
-                      fontWeight: 700,
-                      cursor: 'pointer'
+                      fontWeight: 700
                     }}
                   >
                     {t.btnClearCustom}
@@ -744,35 +699,30 @@ export default function UnifiedSidebar({
           {activeTab === 'analytics' && (
             <>
               {/* Accessibility Distribution Multi-Segment Bar */}
-              <div style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '12px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '0.76rem', fontWeight: 700, color: '#334155' }}>
+              <div className="od-card" style={{ padding: '14px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-main)', fontFamily: 'var(--font-display)' }}>
                     {t.statsAccessTitle}
                   </span>
-                  <span style={{ fontSize: '0.72rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
                     {totalPop.toLocaleString()} {t.peopleUnit}
                   </span>
                 </div>
 
-                {/* Progress bar */}
+                {/* Multi-segment Progress bar */}
                 <div style={{
                   display: 'flex',
                   height: '10px',
-                  borderRadius: '9999px',
+                  borderRadius: 'var(--radius-full)',
                   overflow: 'hidden',
-                  background: '#e2e8f0',
+                  background: 'var(--bg-surface-secondary)',
+                  border: '1px solid var(--border-subtle)',
                   marginBottom: '12px'
                 }}>
                   <div 
                     style={{ 
                       width: `${popData.less_than_15min.percentage}%`, 
-                      background: 'linear-gradient(90deg, #0f766e, #0d9488)',
+                      background: 'var(--primary)',
                       transition: 'width 0.3s ease'
                     }} 
                     title={`<15m: ${popData.less_than_15min.percentage}%`}
@@ -780,7 +730,7 @@ export default function UnifiedSidebar({
                   <div 
                     style={{ 
                       width: `${popData.between_15_and_30min.percentage}%`, 
-                      background: 'linear-gradient(90deg, #0369a1, #0284c7)',
+                      background: 'var(--tier-2-sky)',
                       transition: 'width 0.3s ease'
                     }} 
                     title={`15-30m: ${popData.between_15_and_30min.percentage}%`}
@@ -788,7 +738,7 @@ export default function UnifiedSidebar({
                   <div 
                     style={{ 
                       width: `${popData.between_30_and_60min.percentage}%`, 
-                      background: 'linear-gradient(90deg, #b45309, #d97706)',
+                      background: 'var(--tier-1-amber)',
                       transition: 'width 0.3s ease'
                     }} 
                     title={`30-60m: ${popData.between_30_and_60min.percentage}%`}
@@ -796,7 +746,7 @@ export default function UnifiedSidebar({
                   <div 
                     style={{ 
                       width: `${popData.greater_than_60min_deserts.percentage}%`, 
-                      background: 'linear-gradient(90deg, #be123c, #e11d48)',
+                      background: 'var(--desert-rose)',
                       transition: 'width 0.3s ease'
                     }} 
                     title={`>60m: ${popData.greater_than_60min_deserts.percentage}%`}
@@ -806,41 +756,41 @@ export default function UnifiedSidebar({
                 {/* Detailed Band List */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0d9488' }} />
-                      <span style={{ color: '#334155' }}>{t.bandUnder15}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)' }} />
+                      <span style={{ color: 'var(--text-secondary)' }}>{t.bandUnder15}</span>
                     </div>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#0d9488' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary)', fontVariantNumeric: 'tabular-nums' }}>
                       {popData.less_than_15min.population.toLocaleString()} ({popData.less_than_15min.percentage}%)
                     </span>
                   </div>
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0284c7' }} />
-                      <span style={{ color: '#334155' }}>{t.band15to30}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--tier-2-sky)' }} />
+                      <span style={{ color: 'var(--text-secondary)' }}>{t.band15to30}</span>
                     </div>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#0284c7' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--tier-2-sky)', fontVariantNumeric: 'tabular-nums' }}>
                       {popData.between_15_and_30min.population.toLocaleString()} ({popData.between_15_and_30min.percentage}%)
                     </span>
                   </div>
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#d97706' }} />
-                      <span style={{ color: '#334155' }}>{t.band30to60}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--tier-1-amber)' }} />
+                      <span style={{ color: 'var(--text-secondary)' }}>{t.band30to60}</span>
                     </div>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#d97706' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--tier-1-amber)', fontVariantNumeric: 'tabular-nums' }}>
                       {popData.between_30_and_60min.population.toLocaleString()} ({popData.between_30_and_60min.percentage}%)
                     </span>
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', background: '#fff1f2', padding: '4px 6px', borderRadius: '6px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#e11d48' }} />
-                      <span style={{ color: '#be123c', fontWeight: 700 }}>{t.bandOver60}</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.74rem', background: 'var(--desert-bg)', padding: '5px 8px', borderRadius: 'var(--radius-sm)', border: '1px solid #fecdd3' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--desert-rose)' }} />
+                      <span style={{ color: 'var(--desert-rose-dark)', fontWeight: 700 }}>{t.bandOver60}</span>
                     </div>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#e11d48' }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--desert-rose)', fontVariantNumeric: 'tabular-nums' }}>
                       {popData.greater_than_60min_deserts.population.toLocaleString()} ({popData.greater_than_60min_deserts.percentage}%)
                     </span>
                   </div>
@@ -849,66 +799,60 @@ export default function UnifiedSidebar({
 
               {/* 4 Metric Quick Cards (2x2 Grid) */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px' }}>
-                  <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 600 }}>
-                    {language === 'vi' ? 'Tiếp cận <30 phút' : 'Access <30 min'}
+                <div className="od-card" style={{ padding: '12px' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                    {language === 'vi' ? 'Tiếp cận an toàn (<30p)' : 'Safe Access (<30m)'}
                   </div>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0d9488', fontFamily: 'var(--font-display)', marginTop: '2px' }}>
+                  <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--primary)', fontFamily: 'var(--font-display)', marginTop: '2px', fontVariantNumeric: 'tabular-nums' }}>
                     {(popData.less_than_15min.percentage + popData.between_15_and_30min.percentage).toFixed(1)}%
                   </div>
-                  <div style={{ fontSize: '0.66rem', color: '#94a3b8' }}>
+                  <div style={{ fontSize: '0.66rem', color: 'var(--text-dim)', fontVariantNumeric: 'tabular-nums' }}>
                     {(popData.less_than_15min.population + popData.between_15_and_30min.population).toLocaleString()} {t.peopleUnit}
                   </div>
                 </div>
 
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px' }}>
-                  <div style={{ fontSize: '0.68rem', color: '#be123c', fontWeight: 600 }}>
+                <div className="od-card" style={{ padding: '12px', background: 'var(--desert-bg)', borderColor: '#fecdd3' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--desert-rose-dark)', fontWeight: 700 }}>
                     {language === 'vi' ? 'Dân số vùng lõm' : 'Desert Population'}
                   </div>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#e11d48', fontFamily: 'var(--font-display)', marginTop: '2px' }}>
+                  <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--desert-rose)', fontFamily: 'var(--font-display)', marginTop: '2px', fontVariantNumeric: 'tabular-nums' }}>
                     {popData.greater_than_60min_deserts.percentage}%
                   </div>
-                  <div style={{ fontSize: '0.66rem', color: '#94a3b8' }}>
+                  <div style={{ fontSize: '0.66rem', color: 'var(--desert-rose-dark)', fontVariantNumeric: 'tabular-nums' }}>
                     {popData.greater_than_60min_deserts.population.toLocaleString()} {t.peopleUnit}
                   </div>
                 </div>
 
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px' }}>
-                  <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 600 }}>
+                <div className="od-card" style={{ padding: '12px' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                     {language === 'vi' ? 'Tổng mạng lưới CSYT' : 'Total Facilities'}
                   </div>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0284c7', fontFamily: 'var(--font-display)', marginTop: '2px' }}>
+                  <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--tier-2-sky)', fontFamily: 'var(--font-display)', marginTop: '2px', fontVariantNumeric: 'tabular-nums' }}>
                     67
                   </div>
-                  <div style={{ fontSize: '0.66rem', color: '#94a3b8' }}>
-                    100% {language === 'vi' ? 'đối soát vệ tinh' : 'verified'}
+                  <div style={{ fontSize: '0.66rem', color: 'var(--text-dim)' }}>
+                    100% {language === 'vi' ? 'chuẩn hóa GIS' : 'GIS verified'}
                   </div>
                 </div>
 
-                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '10px' }}>
-                  <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 600 }}>
+                <div className="od-card" style={{ padding: '12px' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                     {language === 'vi' ? 'Mật độ BS trung bình' : 'Avg Doctor Density'}
                   </div>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#7c3aed', fontFamily: 'var(--font-display)', marginTop: '2px' }}>
+                  <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--ai-purple)', fontFamily: 'var(--font-display)', marginTop: '2px', fontVariantNumeric: 'tabular-nums' }}>
                     0.68
                   </div>
-                  <div style={{ fontSize: '0.66rem', color: '#94a3b8' }}>
+                  <div style={{ fontSize: '0.66rem', color: 'var(--text-dim)' }}>
                     {language === 'vi' ? 'BS / 1.000 dân' : 'MD / 1k pop'}
                   </div>
                 </div>
               </div>
 
               {/* Spatial Autocorrelation: Moran's I Card */}
-              <div style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '12px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-                  <Globe2 size={15} color="#0284c7" />
-                  <span style={{ fontSize: '0.76rem', fontWeight: 700, color: '#0f172a' }}>
+              <div className="od-card" style={{ padding: '14px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
+                  <Globe2 size={15} color="var(--primary)" />
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-main)', fontFamily: 'var(--font-display)' }}>
                     {t.moranTitle}
                   </span>
                 </div>
@@ -917,59 +861,53 @@ export default function UnifiedSidebar({
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
                   gap: '8px',
-                  background: '#f8fafc',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '8px',
-                  padding: '8px',
-                  marginBottom: '8px'
+                  background: 'var(--bg-surface-secondary)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-sm)',
+                  padding: '10px',
+                  marginBottom: '10px'
                 }}>
                   <div>
-                    <div style={{ fontSize: '0.66rem', color: '#64748b' }}>Moran's I</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0284c7', fontFamily: 'var(--font-mono)' }}>
+                    <div style={{ fontSize: '0.66rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>Moran&apos;s I Index</div>
+                    <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--tier-2-sky)', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
                       0.9306
                     </div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.66rem', color: '#64748b' }}>Z-Score (p &lt; 0.001)</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0d9488', fontFamily: 'var(--font-mono)' }}>
+                    <div style={{ fontSize: '0.66rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>Z-Score (p &lt; 0.001)</div>
+                    <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--primary)', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
                       +298.29
                     </div>
                   </div>
                 </div>
 
-                <p style={{ margin: 0, fontSize: '0.72rem', color: '#475569', lineHeight: 1.45 }}>
+                <p style={{ margin: 0, fontSize: '0.72rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                   {t.moranDesc}
                 </p>
               </div>
 
               {/* District E2SFCA Table */}
-              <div style={{
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                padding: '12px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
-              }}>
-                <div style={{ fontSize: '0.76rem', fontWeight: 700, color: '#0f172a', marginBottom: '8px' }}>
+              <div className="od-card" style={{ padding: '14px' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-main)', fontFamily: 'var(--font-display)', marginBottom: '10px' }}>
                   {t.districtTableTitle}
                 </div>
 
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.72rem' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.74rem' }}>
                   <thead>
-                    <tr style={{ borderBottom: '1px solid #e2e8f0', color: '#64748b', textAlign: 'left' }}>
-                      <th style={{ padding: '4px 6px' }}>{t.colDistrict}</th>
-                      <th style={{ padding: '4px 6px', textAlign: 'right' }}>{t.colPop}</th>
-                      <th style={{ padding: '4px 6px', textAlign: 'right' }}>{t.colDocPer1k}</th>
+                    <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-muted)', textAlign: 'left' }}>
+                      <th style={{ padding: '6px 8px', fontWeight: 600 }}>{t.colDistrict}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'right', fontWeight: 600 }}>{t.colPop}</th>
+                      <th style={{ padding: '6px 8px', textAlign: 'right', fontWeight: 600 }}>{t.colDocPer1k}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {districtStats.map((d, idx) => (
-                      <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                        <td style={{ padding: '6px', fontWeight: 600, color: '#0f172a' }}>{d.district}</td>
-                        <td style={{ padding: '6px', textAlign: 'right', fontFamily: 'var(--font-mono)', color: '#475569' }}>
+                      <tr key={idx} style={{ borderBottom: '1px solid var(--bg-surface-secondary)' }}>
+                        <td style={{ padding: '8px', fontWeight: 600, color: 'var(--text-main)' }}>{d.district}</td>
+                        <td style={{ padding: '8px', textAlign: 'right', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', fontVariantNumeric: 'tabular-nums' }}>
                           {d.population?.toLocaleString()}
                         </td>
-                        <td style={{ padding: '6px', textAlign: 'right', fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#0d9488' }}>
+                        <td style={{ padding: '8px', textAlign: 'right', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--primary)', fontVariantNumeric: 'tabular-nums' }}>
                           {d.e2sfca_mean ? d.e2sfca_mean.toFixed(2) : '0.65'}
                         </td>
                       </tr>
@@ -988,7 +926,7 @@ export default function UnifiedSidebar({
               {/* Search & Tier Filter Bar */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <div style={{ position: 'relative' }}>
-                  <Search size={14} color="#94a3b8" style={{ position: 'absolute', left: '10px', top: '10px' }} />
+                  <Search size={14} color="var(--text-dim)" style={{ position: 'absolute', left: '12px', top: '11px' }} />
                   <input
                     type="text"
                     placeholder={t.searchFacilitiesHint}
@@ -996,12 +934,14 @@ export default function UnifiedSidebar({
                     onChange={(e) => setFacilitySearch(e.target.value)}
                     style={{
                       width: '100%',
-                      padding: '8px 10px 8px 32px',
-                      borderRadius: '8px',
-                      border: '1px solid #cbd5e1',
-                      background: '#ffffff',
+                      padding: '8px 12px 8px 34px',
+                      borderRadius: 'var(--radius-sm)',
+                      border: '1px solid var(--border-strong)',
+                      background: 'var(--bg-surface)',
                       fontSize: '0.78rem',
-                      outline: 'none'
+                      color: 'var(--text-main)',
+                      outline: 'none',
+                      transition: 'border-color 0.15s ease'
                     }}
                   />
                 </div>
@@ -1012,17 +952,16 @@ export default function UnifiedSidebar({
                     <button
                       key={tier}
                       onClick={() => setFacilityFilterTier(tier)}
+                      className="od-btn"
                       style={{
                         flex: 1,
-                        padding: '4px 0',
+                        padding: '5px 0',
                         fontSize: '0.68rem',
                         fontWeight: 700,
-                        borderRadius: '6px',
-                        border: facilityFilterTier === tier ? '1px solid #0d9488' : '1px solid #e2e8f0',
-                        background: facilityFilterTier === tier ? '#f0fdfa' : '#ffffff',
-                        color: facilityFilterTier === tier ? '#0f766e' : '#64748b',
-                        cursor: 'pointer',
-                        transition: 'all 0.15s ease'
+                        borderRadius: 'var(--radius-xs)',
+                        border: facilityFilterTier === tier ? '1px solid var(--primary)' : '1px solid var(--border-subtle)',
+                        background: facilityFilterTier === tier ? 'var(--primary-50)' : '#ffffff',
+                        color: facilityFilterTier === tier ? 'var(--primary-dark)' : 'var(--text-muted)'
                       }}
                     >
                       {tier === 'all' ? (language === 'vi' ? 'Tất cả' : 'All') : `${language === 'vi' ? 'Tuyến' : 'Tier'} ${tier}`}
@@ -1030,7 +969,7 @@ export default function UnifiedSidebar({
                   ))}
                 </div>
 
-                <div style={{ fontSize: '0.7rem', color: '#64748b' }}>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
                   {language === 'vi' ? `Hiển thị ${filteredFacilities.length} / ${facilities.length} trạm y tế` : `Showing ${filteredFacilities.length} / ${facilities.length} facilities`}
                 </div>
               </div>
@@ -1038,39 +977,38 @@ export default function UnifiedSidebar({
               {/* Facility Cards List */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {filteredFacilities.map((f) => {
-                  let badgeColor = '#0d9488';
+                  let badgeColor = 'var(--primary)';
+                  let badgeBg = 'var(--primary-50)';
                   let tierText = language === 'vi' ? 'Tuyến 3 (Xã)' : 'Tier 3 (Commune)';
                   if (f.tier === 1) {
-                    badgeColor = '#d97706';
+                    badgeColor = 'var(--tier-1-amber)';
+                    badgeBg = 'var(--tier-1-bg)';
                     tierText = language === 'vi' ? 'Tuyến 1 (Tỉnh)' : 'Tier 1 (Provincial)';
                   } else if (f.tier === 2) {
-                    badgeColor = '#0284c7';
+                    badgeColor = 'var(--tier-2-sky)';
+                    badgeBg = 'var(--tier-2-bg)';
                     tierText = language === 'vi' ? 'Tuyến 2 (Huyện)' : 'Tier 2 (District)';
                   }
 
                   return (
                     <div
                       key={f.id}
+                      className="od-card"
                       style={{
-                        background: '#ffffff',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: '10px',
-                        padding: '10px',
+                        padding: '12px',
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: '6px',
-                        boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
-                        transition: 'all 0.15s ease'
+                        gap: '8px'
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px' }}>
                         <div>
                           <span style={{
                             fontSize: '0.64rem',
                             fontWeight: 700,
-                            padding: '2px 6px',
-                            borderRadius: '4px',
-                            background: `${badgeColor}15`,
+                            padding: '2px 8px',
+                            borderRadius: 'var(--radius-xs)',
+                            background: badgeBg,
                             color: badgeColor,
                             border: `1px solid ${badgeColor}35`
                           }}>
@@ -1078,32 +1016,27 @@ export default function UnifiedSidebar({
                           </span>
                           <h4 style={{
                             margin: '4px 0 2px 0',
-                            fontSize: '0.82rem',
+                            fontSize: '0.84rem',
                             fontWeight: 700,
-                            color: '#0f172a',
-                            fontFamily: 'var(--font-display)'
+                            color: 'var(--text-main)',
+                            fontFamily: 'var(--font-display)',
+                            letterSpacing: '-0.01em'
                           }}>
                             {f.name}
                           </h4>
-                          <p style={{ margin: 0, fontSize: '0.72rem', color: '#64748b' }}>
+                          <p style={{ margin: 0, fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                             📍 {f.commune}, <strong>{f.district}</strong>
                           </p>
                         </div>
 
                         <button
                           onClick={() => onFlyToFacility && onFlyToFacility(f)}
+                          className="od-btn od-btn-primary"
                           style={{
-                            background: '#f0fdfa',
-                            border: '1px solid #ccfbf1',
-                            color: '#0d9488',
-                            borderRadius: '6px',
-                            padding: '4px 8px',
+                            padding: '5px 9px',
                             fontSize: '0.68rem',
                             fontWeight: 700,
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '3px',
+                            borderRadius: 'var(--radius-xs)',
                             flexShrink: 0
                           }}
                           title={t.flyToFacility}
@@ -1116,21 +1049,21 @@ export default function UnifiedSidebar({
                       <div style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px',
+                        gap: '14px',
                         fontSize: '0.68rem',
-                        color: '#64748b',
-                        paddingTop: '4px',
-                        borderTop: '1px solid #f1f5f9'
+                        color: 'var(--text-muted)',
+                        paddingTop: '6px',
+                        borderTop: '1px solid var(--border-subtle)'
                       }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                          <Users size={12} color="#0284c7" />
-                          <span>{f.doctors} {t.popupDoctors}</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <Users size={12} color="var(--tier-2-sky)" />
+                          <span style={{ fontVariantNumeric: 'tabular-nums' }}>{f.doctors} {t.popupDoctors}</span>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                          <Bed size={12} color="#0d9488" />
-                          <span>{f.beds} {t.popupBeds}</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <Bed size={12} color="var(--primary)" />
+                          <span style={{ fontVariantNumeric: 'tabular-nums' }}>{f.beds} {t.popupBeds}</span>
                         </div>
-                        <div style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', color: '#94a3b8' }}>
+                        <div style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', fontVariantNumeric: 'tabular-nums' }}>
                           {f.lat.toFixed(2)}, {f.lon.toFixed(2)}
                         </div>
                       </div>

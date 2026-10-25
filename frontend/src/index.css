@@ -1,50 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Clean, Bright, Premium Medical Theme */
-  --bg-app: #f1f5f9;
+  /* ===================================================================== */
+  /* OPEN-DESIGN DESIGN SYSTEM TOKENS - ALPINE HEALTHCARE GIS               */
+  /* ===================================================================== */
+
+  /* Surface & Background Neutrals (Slate Clean Palette) */
+  --bg-app: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-secondary: #f1f5f9;
+  --bg-surface-muted: #e2e8f0;
   --bg-card: rgba(255, 255, 255, 0.94);
-  --bg-card-hover: #ffffff;
-  --bg-card-solid: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.92);
   --bg-panel: rgba(255, 255, 255, 0.97);
-  
-  --border-subtle: #e2e8f0;
-  --border-highlight: #cbd5e1;
+
+  /* Borders */
+  --border-subtle: rgba(226, 232, 240, 0.9);
+  --border-strong: #cbd5e1;
   --border-primary: rgba(13, 148, 136, 0.35);
-  
+  --border-glow: rgba(13, 148, 136, 0.5);
+
+  /* Primary Brand (Teal - Authority, Healthcare, Spatial Relief) */
   --primary: #0d9488;
   --primary-light: #14b8a6;
   --primary-dark: #0f766e;
-  --primary-glow: rgba(13, 148, 136, 0.2);
+  --primary-50: #f0fdfa;
+  --primary-100: #ccfbf1;
+  --primary-glow: rgba(13, 148, 136, 0.16);
+
+  /* Semantic Accent Colors */
+  --tier-1-amber: #d97706;
+  --tier-1-bg: #fffbeb;
+  --tier-2-sky: #0284c7;
+  --tier-2-bg: #f0f9ff;
+  --tier-3-teal: #0d9488;
+  --tier-3-bg: #f0fdfa;
   
-  --cyan: #0284c7;
-  --cyan-glow: rgba(2, 132, 199, 0.2);
-  --amber: #d97706;
-  --amber-glow: rgba(217, 119, 6, 0.2);
-  --rose: #e11d48;
-  --rose-glow: rgba(225, 29, 72, 0.25);
-  --purple: #7c3aed;
-  --purple-glow: rgba(124, 58, 237, 0.25);
-  
-  --text-main: #0f172a;
+  --desert-rose: #e11d48;
+  --desert-rose-dark: #be123c;
+  --desert-bg: #fff1f2;
+  --desert-glow: rgba(225, 29, 72, 0.22);
+
+  --ai-purple: #7c3aed;
+  --ai-purple-light: #8b5cf6;
+  --ai-purple-bg: #faf5ff;
+  --ai-purple-glow: rgba(124, 58, 237, 0.22);
+
+  /* High-Contrast Typography Hierarchy */
+  --text-main: #0b1329;
   --text-secondary: #334155;
   --text-muted: #64748b;
   --text-dim: #94a3b8;
-  
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  --text-inverse: #ffffff;
+
+  /* Typography Families */
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 22px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
-  
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 12px 28px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-  --shadow-glow: 0 0 20px rgba(13, 148, 136, 0.15);
+
+  /* Elevation Shadows (Soft tinted shadows, avoiding flat black mud) */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 2px 6px -1px rgba(15, 23, 42, 0.06), 0 1px 4px -1px rgba(15, 23, 42, 0.03);
+  --shadow-md: 0 8px 18px -3px rgba(15, 23, 42, 0.08), 0 3px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 16px 36px -6px rgba(15, 23, 42, 0.12), 0 6px 12px -3px rgba(15, 23, 42, 0.05);
+  --shadow-float: 0 20px 45px -10px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(15, 23, 42, 0.04);
+  --shadow-glow: 0 0 24px rgba(13, 148, 136, 0.2);
+
+  /* Transition timings */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
 }
 
 * {
@@ -61,18 +95,26 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow: hidden;
   height: 100vh;
   width: 100vw;
+  user-select: none;
 }
 
-/* Custom Scrollbars */
+/* Tabular Numerals for Numerical Data & Coordinates */
+.tabular-nums,
+[data-tabular="true"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Custom Minimalist Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
@@ -82,26 +124,122 @@ body {
   background: #94a3b8;
 }
 
-/* Glassmorphism Utility (Bright & Crisp) */
-.glass-panel {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* ===================================================================== */
+/* OPEN-DESIGN GLASSMORPHISM & CARD UTILITIES                            */
+/* ===================================================================== */
+.od-card {
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--duration-fast) var(--ease-spring);
+}
+.od-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
 }
 
-.glass-panel-elevated {
-  background: var(--bg-panel);
+.od-glass {
+  background: var(--bg-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  box-shadow: 0 16px 36px -10px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--shadow-float);
 }
 
-/* Leaflet Container & Popup Styling for Bright Modern Theme */
+.od-glass-elevated {
+  background: var(--bg-panel);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+}
+
+/* Interactive Spring Buttons */
+.od-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-spring);
+  outline: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.od-btn:hover {
+  transform: translateY(-1px);
+}
+.od-btn:active {
+  transform: scale(0.97);
+}
+.od-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.od-btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary-dark);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.28);
+}
+.od-btn-primary:hover {
+  background: var(--primary-light);
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.38);
+}
+
+.od-btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-xs);
+}
+.od-btn-secondary:hover {
+  background: var(--bg-surface-secondary);
+  color: var(--text-main);
+  border-color: #94a3b8;
+}
+
+/* Pulse Animations for GIS Indicators */
+@keyframes od-pulse-emerald {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(13, 148, 136, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
+}
+
+@keyframes od-pulse-rose {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 9px rgba(225, 29, 72, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+}
+
+@keyframes od-pulse-purple {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(124, 58, 237, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+}
+
+.animate-pulse-green {
+  animation: od-pulse-emerald 2s infinite ease-in-out;
+}
+.animate-pulse-rose {
+  animation: od-pulse-rose 2s infinite ease-in-out;
+}
+.animate-pulse-purple {
+  animation: od-pulse-purple 2s infinite ease-in-out;
+}
+
+/* ===================================================================== */
+/* LEAFLET WORKSTATION MAP STYLING                                       */
+/* ===================================================================== */
 .leaflet-container {
   width: 100%;
   height: 100%;
@@ -112,10 +250,11 @@ body {
 .leaflet-popup-content-wrapper {
   background: #ffffff !important;
   color: var(--text-main) !important;
-  border: 1px solid var(--border-subtle) !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
   border-radius: var(--radius-md) !important;
-  box-shadow: 0 16px 32px -4px rgba(15, 23, 42, 0.18) !important;
+  box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
   padding: 0 !important;
+  overflow: hidden;
 }
 
 .leaflet-popup-content {
@@ -129,42 +268,14 @@ body {
 
 .leaflet-container a.leaflet-popup-close-button {
   color: var(--text-muted) !important;
-  padding: 8px 8px 0 0 !important;
+  padding: 10px 10px 0 0 !important;
+  transition: color 0.15s ease;
 }
 .leaflet-container a.leaflet-popup-close-button:hover {
   color: var(--text-main) !important;
 }
 
-/* Pulse Animations */
-@keyframes pulse-emerald {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.6); }
-  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(13, 148, 136, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
-}
-
-@keyframes pulse-rose {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.6); }
-  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
-}
-
-@keyframes pulse-purple {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 14px rgba(124, 58, 237, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
-}
-
-.animate-pulse-green {
-  animation: pulse-emerald 2s infinite ease-in-out;
-}
-.animate-pulse-rose {
-  animation: pulse-rose 2s infinite ease-in-out;
-}
-.animate-pulse-purple {
-  animation: pulse-purple 2s infinite ease-in-out;
-}
-
-/* Range input styling (Bright & Modern) */
+/* Range input styling (Smooth & Minimal) */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -183,12 +294,25 @@ input[type="range"]::-webkit-slider-thumb {
   height: 18px;
   border-radius: 50%;
   background: var(--primary);
+  border: 2px solid #ffffff;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(13, 148, 136, 0.4);
-  transition: transform 0.15s ease, background-color 0.15s ease;
+  transition: transform 0.15s var(--ease-spring), background-color 0.15s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
   background: var(--primary-light);
 }
+
+/* Reduced Motion Override (WCAG AA Compliance) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

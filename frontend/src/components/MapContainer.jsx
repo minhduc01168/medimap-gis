@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import L from 'leaflet';
 import { 
   Layers, 
@@ -6,12 +6,9 @@ import {
   PlusCircle, 
   Mountain,
   Map as MapIcon,
-  ChevronDown,
-  ChevronUp,
   Maximize2,
   ZoomIn,
   ZoomOut,
-  Info,
   Check
 } from 'lucide-react';
 
@@ -25,6 +22,7 @@ export default function MapContainer({
   showFacilities = true,
   simulationResult = null,
   isAddingClinic = false,
+  setIsAddingClinic,
   customClinics = [],
   onAddCustomClinic,
   onRemoveCustomClinic,
@@ -245,35 +243,35 @@ export default function MapContainer({
       });
 
       marker.bindPopup(`
-        <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; min-width: 220px; color: #0f172a;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-            <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: ${color}18; color: ${color}; border: 1px solid ${color}35;">
+        <div style="font-family: var(--font-body); font-size: 13px; min-width: 230px; color: var(--text-main);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: ${color}15; color: ${color}; border: 1px solid ${color}35;">
               ${tierLabel}
             </span>
-            <span style="font-size: 11px; color: #64748b; font-family: monospace; font-weight: 600;">${f.id}</span>
+            <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); font-weight: 600;">${f.id}</span>
           </div>
-          <h4 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: #0f172a; font-family: 'Outfit', sans-serif;">
+          <h4 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: var(--text-main); font-family: var(--font-display); letter-spacing: -0.01em;">
             ${f.name}
           </h4>
-          <p style="margin: 0 0 8px 0; font-size: 12px; color: #475569;">
+          <p style="margin: 0 0 10px 0; font-size: 12px; color: var(--text-muted);">
             📍 ${f.commune}, <strong>${f.district}</strong>
           </p>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 11px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; background: var(--bg-surface-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; font-size: 11px;">
             <div>
-              <span style="color: #64748b;">${t.popupDoctors}:</span> 
-              <strong style="color: #0284c7; font-size: 13px; margin-left: 4px;">${f.doctors}</strong>
+              <span style="color: var(--text-muted);">${t.popupDoctors}:</span> 
+              <strong style="color: var(--tier-2-sky); font-size: 13px; margin-left: 4px; font-variant-numeric: tabular-nums;">${f.doctors}</strong>
             </div>
             <div>
-              <span style="color: #64748b;">${t.popupBeds}:</span> 
-              <strong style="color: #0d9488; font-size: 13px; margin-left: 4px;">${f.beds}</strong>
+              <span style="color: var(--text-muted);">${t.popupBeds}:</span> 
+              <strong style="color: var(--primary); font-size: 13px; margin-left: 4px; font-variant-numeric: tabular-nums;">${f.beds}</strong>
             </div>
             <div>
-              <span style="color: #64748b;">${t.popupType}:</span> 
-              <strong style="color: #334155; margin-left: 4px;">${f.type}</strong>
+              <span style="color: var(--text-muted);">${t.popupType}:</span> 
+              <strong style="color: var(--text-secondary); margin-left: 4px;">${f.type}</strong>
             </div>
             <div>
-              <span style="color: #64748b;">${t.popupCoords}:</span> 
-              <span style="color: #334155; font-family: monospace; margin-left: 2px;">${f.lat.toFixed(2)}, ${f.lon.toFixed(2)}</span>
+              <span style="color: var(--text-muted);">${t.popupCoords}:</span> 
+              <span style="color: var(--text-secondary); font-family: var(--font-mono); margin-left: 2px; font-variant-numeric: tabular-nums;">${f.lat.toFixed(2)}, ${f.lon.toFixed(2)}</span>
             </div>
           </div>
         </div>
@@ -553,223 +551,198 @@ export default function MapContainer({
       }}>
         {/* Vertical Action Dock */}
         <div 
-          className="glass-panel"
+          className="od-glass"
           style={{
             display: 'flex',
             flexDirection: 'column',
-            background: 'rgba(255, 255, 255, 0.98)',
-            border: '1px solid #cbd5e1',
-            borderRadius: '12px',
-            boxShadow: '0 8px 24px rgba(15, 23, 42, 0.1)',
-            overflow: 'hidden'
+            borderRadius: 'var(--radius-md)',
+            overflow: 'hidden',
+            padding: '2px'
           }}
         >
           {/* Zoom In */}
           <button
             onClick={handleZoomIn}
+            className="od-btn"
             style={{
-              width: '38px',
-              height: '38px',
+              width: '36px',
+              height: '36px',
+              padding: 0,
               border: 'none',
               background: 'transparent',
-              color: '#334155',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'background-color 0.15s ease'
+              color: 'var(--text-secondary)'
             }}
             title="Zoom in"
           >
-            <ZoomIn size={18} />
+            <ZoomIn size={17} strokeWidth={2} />
           </button>
 
-          <div style={{ height: '1px', background: '#e2e8f0' }} />
+          <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '0 4px' }} />
 
           {/* Zoom Out */}
           <button
             onClick={handleZoomOut}
+            className="od-btn"
             style={{
-              width: '38px',
-              height: '38px',
+              width: '36px',
+              height: '36px',
+              padding: 0,
               border: 'none',
               background: 'transparent',
-              color: '#334155',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'background-color 0.15s ease'
+              color: 'var(--text-secondary)'
             }}
             title="Zoom out"
           >
-            <ZoomOut size={18} />
+            <ZoomOut size={17} strokeWidth={2} />
           </button>
 
-          <div style={{ height: '1px', background: '#e2e8f0' }} />
+          <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '0 4px' }} />
 
           {/* Re-center bounds */}
           <button
             onClick={handleRecenter}
+            className="od-btn"
             style={{
-              width: '38px',
-              height: '38px',
+              width: '36px',
+              height: '36px',
+              padding: 0,
               border: 'none',
               background: 'transparent',
-              color: '#0d9488',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'background-color 0.15s ease'
+              color: 'var(--primary)'
             }}
             title={t.mapRecenter}
           >
-            <Maximize2 size={17} />
+            <Maximize2 size={16} strokeWidth={2.2} />
           </button>
 
-          <div style={{ height: '1px', background: '#e2e8f0' }} />
+          <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '0 4px' }} />
 
           {/* Base Layer Switcher Button */}
           <button
             onClick={() => setIsBaseMapMenuOpen(!isBaseMapMenuOpen)}
+            className="od-btn"
             style={{
-              width: '38px',
-              height: '38px',
+              width: '36px',
+              height: '36px',
+              padding: 0,
               border: 'none',
-              background: isBaseMapMenuOpen ? '#f0fdfa' : 'transparent',
-              color: isBaseMapMenuOpen ? '#0d9488' : '#334155',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'all 0.15s ease'
+              background: isBaseMapMenuOpen ? 'var(--primary-50)' : 'transparent',
+              color: isBaseMapMenuOpen ? 'var(--primary)' : 'var(--text-secondary)'
             }}
             title="Base Map Layer"
           >
-            <Layers size={18} />
+            <Layers size={17} strokeWidth={2} />
           </button>
 
-          <div style={{ height: '1px', background: '#e2e8f0' }} />
+          <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '0 4px' }} />
 
           {/* Legend Toggle Button */}
           <button
             onClick={() => setIsLegendOpen(!isLegendOpen)}
+            className="od-btn"
             style={{
-              width: '38px',
-              height: '38px',
+              width: '36px',
+              height: '36px',
+              padding: 0,
               border: 'none',
-              background: isLegendOpen ? '#f0fdfa' : 'transparent',
-              color: isLegendOpen ? '#0d9488' : '#334155',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'all 0.15s ease'
+              background: isLegendOpen ? 'var(--primary-50)' : 'transparent',
+              color: isLegendOpen ? 'var(--primary)' : 'var(--text-secondary)'
             }}
             title={t.mapLegendToggle}
           >
-            <Compass size={18} />
+            <Compass size={17} strokeWidth={2} />
           </button>
         </div>
 
         {/* Base Layer Selector Popover Menu */}
         {isBaseMapMenuOpen && (
           <div
-            className="glass-panel"
+            className="od-card"
             style={{
-              width: '180px',
+              width: '190px',
               padding: '6px',
-              background: 'rgba(255, 255, 255, 0.98)',
-              border: '1px solid #cbd5e1',
-              borderRadius: '12px',
-              boxShadow: '0 12px 28px rgba(15, 23, 42, 0.15)',
+              boxShadow: 'var(--shadow-float)',
               display: 'flex',
               flexDirection: 'column',
-              gap: '4px'
+              gap: '3px'
             }}
           >
             <div style={{
               fontSize: '0.68rem',
               fontWeight: 700,
+              fontFamily: 'var(--font-mono)',
               textTransform: 'uppercase',
               letterSpacing: '0.04em',
-              color: '#64748b',
-              padding: '4px 8px'
+              color: 'var(--text-muted)',
+              padding: '5px 8px'
             }}>
-              {language === 'vi' ? 'Bản Đồ Nền' : 'Base Map'}
+              {language === 'vi' ? 'Bản Đồ Nền GIS' : 'Base Map Layer'}
             </div>
 
             <button
               onClick={() => { setBaseMap('topo'); setIsBaseMapMenuOpen(false); }}
+              className="od-btn"
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                width: '100%',
                 justifyContent: 'space-between',
-                padding: '6px 10px',
-                borderRadius: '8px',
+                padding: '7px 10px',
+                borderRadius: 'var(--radius-sm)',
                 border: 'none',
-                background: baseMap === 'topo' ? '#f0fdfa' : 'transparent',
-                color: baseMap === 'topo' ? '#0f766e' : '#334155',
+                background: baseMap === 'topo' ? 'var(--primary-50)' : 'transparent',
+                color: baseMap === 'topo' ? 'var(--primary-dark)' : 'var(--text-secondary)',
                 fontWeight: baseMap === 'topo' ? 700 : 500,
-                fontSize: '0.76rem',
-                cursor: 'pointer',
-                textAlign: 'left'
+                fontSize: '0.78rem'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Mountain size={14} color={baseMap === 'topo' ? '#0d9488' : '#64748b'} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Mountain size={15} color={baseMap === 'topo' ? 'var(--primary)' : 'var(--text-muted)'} />
                 <span>{t.mapBaseTopo}</span>
               </div>
-              {baseMap === 'topo' && <Check size={14} color="#0d9488" />}
+              {baseMap === 'topo' && <Check size={14} color="var(--primary)" strokeWidth={2.4} />}
             </button>
 
             <button
               onClick={() => { setBaseMap('street'); setIsBaseMapMenuOpen(false); }}
+              className="od-btn"
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                width: '100%',
                 justifyContent: 'space-between',
-                padding: '6px 10px',
-                borderRadius: '8px',
+                padding: '7px 10px',
+                borderRadius: 'var(--radius-sm)',
                 border: 'none',
-                background: baseMap === 'street' ? '#f0fdfa' : 'transparent',
-                color: baseMap === 'street' ? '#0f766e' : '#334155',
+                background: baseMap === 'street' ? 'var(--primary-50)' : 'transparent',
+                color: baseMap === 'street' ? 'var(--primary-dark)' : 'var(--text-secondary)',
                 fontWeight: baseMap === 'street' ? 700 : 500,
-                fontSize: '0.76rem',
-                cursor: 'pointer',
-                textAlign: 'left'
+                fontSize: '0.78rem'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <MapIcon size={14} color={baseMap === 'street' ? '#0d9488' : '#64748b'} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <MapIcon size={15} color={baseMap === 'street' ? 'var(--primary)' : 'var(--text-muted)'} />
                 <span>{t.mapBaseStreet}</span>
               </div>
-              {baseMap === 'street' && <Check size={14} color="#0d9488" />}
+              {baseMap === 'street' && <Check size={14} color="var(--primary)" strokeWidth={2.4} />}
             </button>
 
             <button
               onClick={() => { setBaseMap('satellite'); setIsBaseMapMenuOpen(false); }}
+              className="od-btn"
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                width: '100%',
                 justifyContent: 'space-between',
-                padding: '6px 10px',
-                borderRadius: '8px',
+                padding: '7px 10px',
+                borderRadius: 'var(--radius-sm)',
                 border: 'none',
-                background: baseMap === 'satellite' ? '#f0fdfa' : 'transparent',
-                color: baseMap === 'satellite' ? '#0f766e' : '#334155',
+                background: baseMap === 'satellite' ? 'var(--primary-50)' : 'transparent',
+                color: baseMap === 'satellite' ? 'var(--primary-dark)' : 'var(--text-secondary)',
                 fontWeight: baseMap === 'satellite' ? 700 : 500,
-                fontSize: '0.76rem',
-                cursor: 'pointer',
-                textAlign: 'left'
+                fontSize: '0.78rem'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Compass size={14} color={baseMap === 'satellite' ? '#0d9488' : '#64748b'} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Compass size={15} color={baseMap === 'satellite' ? 'var(--primary)' : 'var(--text-muted)'} />
                 <span>{t.mapBaseSatellite}</span>
               </div>
-              {baseMap === 'satellite' && <Check size={14} color="#0d9488" />}
+              {baseMap === 'satellite' && <Check size={14} color="var(--primary)" strokeWidth={2.4} />}
             </button>
           </div>
         )}
@@ -777,79 +750,79 @@ export default function MapContainer({
         {/* Legend Drawer Card */}
         {isLegendOpen && (
           <div
-            className="glass-panel"
+            className="od-glass"
             style={{
-              width: '260px',
-              padding: '12px 14px',
-              background: 'rgba(255, 255, 255, 0.98)',
-              border: '1px solid #cbd5e1',
-              borderRadius: '12px',
-              boxShadow: '0 12px 32px rgba(15, 23, 42, 0.16)',
-              fontSize: '0.76rem'
+              width: '270px',
+              padding: '14px 16px',
+              fontSize: '0.76rem',
+              boxShadow: 'var(--shadow-float)'
             }}
           >
             <div style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '8px',
+              marginBottom: '10px',
               fontWeight: 800,
               fontFamily: 'var(--font-display)',
-              color: '#0f172a'
+              color: 'var(--text-main)',
+              fontSize: '0.82rem'
             }}>
               <span>{t.legendTitle}</span>
               <button
                 onClick={() => setIsLegendOpen(false)}
+                className="od-btn"
                 style={{
                   background: 'transparent',
                   border: 'none',
-                  color: '#94a3b8',
-                  cursor: 'pointer',
-                  padding: '2px'
+                  color: 'var(--text-muted)',
+                  padding: '2px',
+                  width: '20px',
+                  height: '20px'
                 }}
               >
                 ✕
               </button>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#d97706', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
-                <span style={{ color: '#334155' }}>{t.legendTier1}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--tier-1-amber)', border: '2px solid #fff', boxShadow: 'var(--shadow-xs)' }} />
+                <span style={{ color: 'var(--text-secondary)' }}>{t.legendTier1}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
-                <span style={{ color: '#334155' }}>{t.legendTier2}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+                <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: 'var(--tier-2-sky)', border: '2px solid #fff', boxShadow: 'var(--shadow-xs)' }} />
+                <span style={{ color: 'var(--text-secondary)' }}>{t.legendTier2}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0d9488', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
-                <span style={{ color: '#334155' }}>{t.legendTier3}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--primary)', border: '2px solid #fff', boxShadow: 'var(--shadow-xs)' }} />
+                <span style={{ color: 'var(--text-secondary)' }}>{t.legendTier3}</span>
               </div>
 
-              <div style={{ height: '1px', background: '#e2e8f0', margin: '4px 0' }} />
+              <div style={{ height: '1px', background: 'var(--border-subtle)', margin: '4px 0' }} />
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#e11d48', border: '1.5px solid #fff', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' }} />
-                <span style={{ color: '#e11d48', fontWeight: 700 }}>{t.legendDesert}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+                <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: 'var(--desert-rose)', border: '2px solid #fff', boxShadow: 'var(--shadow-xs)' }} />
+                <span style={{ color: 'var(--desert-rose-dark)', fontWeight: 700 }}>{t.legendDesert}</span>
               </div>
 
               {showProposed && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
                   <span style={{ 
                     width: '9px', 
                     height: '9px', 
-                    backgroundColor: '#7c3aed', 
+                    backgroundColor: 'var(--ai-purple)', 
                     transform: 'rotate(45deg)', 
                     border: '1.5px solid #fff',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
+                    boxShadow: 'var(--shadow-xs)'
                   }} />
-                  <span style={{ color: '#6d28d9', fontWeight: 700 }}>{t.legendProposed}</span>
+                  <span style={{ color: 'var(--ai-purple)', fontWeight: 700 }}>{t.legendProposed}</span>
                 </div>
               )}
 
               {customClinics.length > 0 && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7', border: '1.5px solid #fff' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: 'var(--tier-2-sky)', border: '1.5px solid #fff' }} />
                   <span style={{ color: '#0369a1', fontWeight: 700 }}>{t.legendCustom} ({customClinics.length})</span>
                 </div>
               )}
@@ -860,32 +833,29 @@ export default function MapContainer({
 
       {/* Coordinate & Focus Area HUD Pill (Bottom Right) */}
       <div
-        className="glass-panel"
+        className="od-glass"
         style={{
           position: 'absolute',
           bottom: '16px',
           right: '16px',
           zIndex: 800,
-          padding: '6px 12px',
+          padding: '6px 14px',
           fontFamily: 'var(--font-mono)',
           fontSize: '0.72rem',
-          color: '#475569',
-          background: 'rgba(255, 255, 255, 0.95)',
-          border: '1px solid #cbd5e1',
-          borderRadius: '9999px',
-          boxShadow: '0 4px 12px rgba(15, 23, 42, 0.08)',
+          color: 'var(--text-secondary)',
+          borderRadius: 'var(--radius-full)',
           display: 'flex',
           alignItems: 'center',
           gap: '8px'
         }}
       >
-        <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#0d9488' }} />
-        <span>{t.coordsLabel}: <strong style={{ color: '#0f172a' }}>{coordsHud.lat.toFixed(4)}°N, {coordsHud.lon.toFixed(4)}°E</strong></span>
-        <span style={{ color: '#cbd5e1' }}>|</span>
-        <span style={{ color: '#0d9488', fontWeight: 600 }}>Lào Cai</span>
+        <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--primary)' }} />
+        <span>{t.coordsLabel}: <strong style={{ color: 'var(--text-main)', fontVariantNumeric: 'tabular-nums' }}>{coordsHud.lat.toFixed(4)}°N, {coordsHud.lon.toFixed(4)}°E</strong></span>
+        <span style={{ color: 'var(--border-strong)' }}>|</span>
+        <span style={{ color: 'var(--primary)', fontWeight: 700 }}>Lào Cai GIS</span>
       </div>
 
-      {/* Banner indicator when in Add Clinic Mode */}
+      {/* Banner indicator when in Add Clinic Mode with Cancel Action */}
       {isAddingClinic && (
         <div
           style={{
@@ -894,20 +864,40 @@ export default function MapContainer({
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 900,
-            padding: '8px 20px',
-            borderRadius: '9999px',
-            background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
+            padding: '8px 16px',
+            borderRadius: 'var(--radius-full)',
+            background: 'var(--ai-purple)',
             color: '#ffffff',
-            boxShadow: '0 8px 24px rgba(124, 58, 237, 0.4)',
+            boxShadow: '0 8px 25px rgba(124, 58, 237, 0.45)',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
+            gap: '12px',
             fontSize: '0.82rem',
-            fontWeight: 700
+            fontWeight: 600
           }}
         >
-          <PlusCircle size={16} />
-          {t.clickToAddHint}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <PlusCircle size={16} strokeWidth={2.4} />
+            <span>{t.clickToAddHint}</span>
+          </div>
+          {setIsAddingClinic && (
+            <button
+              onClick={() => setIsAddingClinic(false)}
+              style={{
+                background: 'rgba(255, 255, 255, 0.22)',
+                border: 'none',
+                color: '#ffffff',
+                padding: '3px 10px',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'background-color 0.15s ease'
+              }}
+            >
+              {language === 'vi' ? 'Hủy' : 'Cancel'}
+            </button>
+          )}
         </div>
       )}
     </div>

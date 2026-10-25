@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import MapContainer from './components/MapContainer';
 import UnifiedSidebar from './components/UnifiedSidebar';
@@ -26,7 +26,7 @@ export default function App() {
 
   // Core Data
   const [facilities, setFacilities] = useState(initialData.facilities || []);
-  const [deserts, setDeserts] = useState(initialData.desert_sample || []);
+  const [deserts] = useState(initialData.desert_sample || []);
   const [proposedClinics, setProposedClinics] = useState(initialData.proposed_clinics || []);
   const [moranStats, setMoranStats] = useState(initialData.moran_summary || null);
   const [districtStats, setDistrictStats] = useState(initialData.districts_stats || []);
@@ -176,6 +176,7 @@ export default function App() {
               showProposed={layers.proposed}
               simulationResult={simulationResult}
               isAddingClinic={isAddingClinic}
+              setIsAddingClinic={setIsAddingClinic}
               customClinics={customClinics}
               onAddCustomClinic={handleAddCustomClinic}
               onRemoveCustomClinic={handleRemoveCustomClinic}

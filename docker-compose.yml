@@ -1,6 +1,9 @@
 version: '3.8'
 
 services:
+  # ------------------------------------------
+  # 1. Cơ sở dữ liệu PostGIS (Spatial Database)
+  # ------------------------------------------
   postgis:
     image: postgis/postgis:16-3.4
     container_name: medimap_postgis
@@ -14,6 +17,50 @@ services:
       - postgis_data:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
     restart: unless-stopped
+    networks:
+      - medimap_net
+
+  # ------------------------------------------
+  # 2. Backend Spatial API (FastAPI)
+  # ------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: medimap_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATABASE_URL=postgresql://medimap_user:medimap_secret_password@postgis:5432/medimap_gis
+    volumes:
+      - ./backend:/app/backend
+      - ./data:/app/data
+    depends_on:
+      - postgis
+    restart: unless-stopped
+    networks:
+      - medimap_net
+
+  # ------------------------------------------
+  # 3. Frontend WebGIS Dashboard (React + Nginx)
+  # ------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: medimap_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - medimap_net
 
 volumes:
   postgis_data:
+
+networks:
+  medimap_net:
+    driver: bridge

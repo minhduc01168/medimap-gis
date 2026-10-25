@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
   Search, 
   Download, 
   CheckCircle
 } from 'lucide-react';
 
-export default function DataManagementView({ facilities = [], districtsStats = [], t, language }) {
+export default function DataManagementView({ facilities = [], t, language }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [districtFilter, setDistrictFilter] = useState('');
   const [tierFilter, setTierFilter] = useState('');
@@ -60,20 +60,20 @@ export default function DataManagementView({ facilities = [], districtsStats = [
 
   return (
     <div style={{
-      padding: '20px 24px',
-      maxWidth: '1400px',
+      padding: '24px 28px',
+      maxWidth: '1440px',
       margin: '0 auto',
       height: 'calc(100vh - 75px)',
       overflowY: 'auto'
     }}>
       {/* Top Banner / Summary */}
-      <div className="glass-panel-elevated" style={{ padding: '20px 24px', marginBottom: '16px', background: '#ffffff' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
+      <div className="od-card" style={{ padding: '24px', marginBottom: '20px', background: '#ffffff', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', fontWeight: 800, color: 'var(--text-main)', margin: 0, letterSpacing: '-0.02em' }}>
               {t.dmTitle}
             </h2>
-            <p style={{ color: '#64748b', fontSize: '0.82rem', margin: '3px 0 0 0' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', margin: '4px 0 0 0', fontWeight: 500 }}>
               {t.dmSubtitle}
             </p>
           </div>
@@ -81,61 +81,52 @@ export default function DataManagementView({ facilities = [], districtsStats = [
           <div style={{ display: 'flex', gap: '10px' }}>
             <button
               onClick={handleExportCSV}
+              className="od-btn od-btn-primary"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '8px 16px',
-                borderRadius: '8px',
-                background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)',
-                border: 'none',
-                color: '#ffffff',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                boxShadow: '0 2px 8px rgba(13, 148, 136, 0.3)'
+                padding: '9px 18px',
+                fontSize: '0.82rem'
               }}
             >
-              <Download size={15} />
-              {t.dmExportBtn}
+              <Download size={15} strokeWidth={2.2} />
+              <span>{t.dmExportBtn}</span>
             </button>
           </div>
         </div>
 
         {/* 3 Overview Stat Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginTop: '16px' }}>
-          <div style={{ padding: '14px 18px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-            <div style={{ fontSize: '0.72rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 700 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px', marginTop: '20px' }}>
+          <div className="od-card" style={{ padding: '16px 20px', background: 'var(--bg-surface-secondary)' }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
               {t.dmStatFacilities}
             </div>
-            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: '#0d9488', fontFamily: 'var(--font-mono)', margin: '3px 0' }}>
+            <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--primary)', fontFamily: 'var(--font-display)', margin: '4px 0', fontVariantNumeric: 'tabular-nums' }}>
               67 {t.dmTotalSites}
             </div>
-            <div style={{ fontSize: '0.74rem', color: '#334155', fontWeight: 500 }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
               19 Sa Pa • 28 Bát Xát • 20 Mường Khương
             </div>
           </div>
 
-          <div style={{ padding: '14px 18px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-            <div style={{ fontSize: '0.72rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 700 }}>
+          <div className="od-card" style={{ padding: '16px 20px', background: 'var(--bg-surface-secondary)' }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
               {t.dmStatDoctors}
             </div>
-            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: '#0284c7', fontFamily: 'var(--font-mono)', margin: '3px 0' }}>
+            <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--tier-2-sky)', fontFamily: 'var(--font-display)', margin: '4px 0', fontVariantNumeric: 'tabular-nums' }}>
               209 {language === 'vi' ? 'Bác sĩ' : 'Physicians'}
             </div>
-            <div style={{ fontSize: '0.74rem', color: '#334155', fontWeight: 500 }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
               {language === 'vi' ? 'Tỷ lệ bình quân 0.954 BS / 1.000 dân' : 'Avg 0.954 Doctors / 1,000 Pop'}
             </div>
           </div>
 
-          <div style={{ padding: '14px 18px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-            <div style={{ fontSize: '0.72rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 700 }}>
+          <div className="od-card" style={{ padding: '16px 20px', background: 'var(--bg-surface-secondary)' }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
               {t.dmStatBeds}
             </div>
-            <div style={{ fontSize: '1.65rem', fontWeight: 800, color: '#d97706', fontFamily: 'var(--font-mono)', margin: '3px 0' }}>
+            <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--tier-1-amber)', fontFamily: 'var(--font-display)', margin: '4px 0', fontVariantNumeric: 'tabular-nums' }}>
               945 {language === 'vi' ? 'Giường' : 'Beds'}
             </div>
-            <div style={{ fontSize: '0.74rem', color: '#334155', fontWeight: 500 }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
               {language === 'vi' ? 'Đáp ứng 4.31 giường / 1.000 dân' : 'Capacity 4.31 Beds / 1,000 Pop'}
             </div>
           </div>
@@ -143,10 +134,10 @@ export default function DataManagementView({ facilities = [], districtsStats = [
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="glass-panel" style={{ padding: '14px 18px', marginBottom: '16px', display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap', background: '#ffffff' }}>
+      <div className="od-card" style={{ padding: '14px 20px', marginBottom: '20px', display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap', background: '#ffffff' }}>
         {/* Search */}
         <div style={{ flex: '1 1 280px', position: 'relative' }}>
-          <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+          <Search size={16} color="var(--text-dim)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
           <input
             type="text"
             placeholder={t.dmSearchPlaceholder}
@@ -154,13 +145,14 @@ export default function DataManagementView({ facilities = [], districtsStats = [
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
               width: '100%',
-              padding: '8px 12px 8px 36px',
-              background: '#f8fafc',
-              border: '1px solid #cbd5e1',
-              borderRadius: '7px',
-              color: '#0f172a',
+              padding: '9px 12px 9px 38px',
+              background: 'var(--bg-surface-secondary)',
+              border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--radius-sm)',
+              color: 'var(--text-main)',
               fontSize: '0.82rem',
-              outline: 'none'
+              outline: 'none',
+              transition: 'border-color 0.15s ease'
             }}
           />
         </div>
@@ -172,11 +164,11 @@ export default function DataManagementView({ facilities = [], districtsStats = [
             onChange={(e) => setDistrictFilter(e.target.value)}
             style={{
               width: '100%',
-              padding: '8px 10px',
-              background: '#f8fafc',
-              border: '1px solid #cbd5e1',
-              borderRadius: '7px',
-              color: '#0f172a',
+              padding: '9px 12px',
+              background: 'var(--bg-surface-secondary)',
+              border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--radius-sm)',
+              color: 'var(--text-main)',
               fontSize: '0.8rem',
               outline: 'none',
               cursor: 'pointer',
@@ -197,11 +189,11 @@ export default function DataManagementView({ facilities = [], districtsStats = [
             onChange={(e) => setTierFilter(e.target.value)}
             style={{
               width: '100%',
-              padding: '8px 10px',
-              background: '#f8fafc',
-              border: '1px solid #cbd5e1',
-              borderRadius: '7px',
-              color: '#0f172a',
+              padding: '9px 12px',
+              background: 'var(--bg-surface-secondary)',
+              border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--radius-sm)',
+              color: 'var(--text-main)',
               fontSize: '0.8rem',
               outline: 'none',
               cursor: 'pointer',
@@ -215,36 +207,39 @@ export default function DataManagementView({ facilities = [], districtsStats = [
           </select>
         </div>
 
-        <div style={{ fontSize: '0.8rem', color: '#64748b' }}>
-          {t.dmShowing}: <strong style={{ color: '#0f172a' }}>{filteredFacilities.length}</strong> / {facilities.length} {t.dmTotalSites}
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+          {t.dmShowing}: <strong style={{ color: 'var(--text-main)', fontVariantNumeric: 'tabular-nums' }}>{filteredFacilities.length}</strong> / {facilities.length} {t.dmTotalSites}
         </div>
       </div>
 
       {/* Main Table */}
-      <div className="glass-panel" style={{ overflow: 'hidden', background: '#ffffff' }}>
+      <div className="od-card" style={{ overflow: 'hidden', background: '#ffffff' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.8rem' }}>
             <thead>
-              <tr style={{ background: '#f8fafc', color: '#475569', borderBottom: '1px solid #e2e8f0', fontWeight: 700 }}>
-                <th style={{ padding: '10px 14px' }}>{t.dmColId}</th>
-                <th style={{ padding: '10px 14px' }}>{t.dmColName}</th>
-                <th style={{ padding: '10px 14px' }}>{t.dmColLocation}</th>
-                <th style={{ padding: '10px 14px' }}>{t.dmColTier}</th>
-                <th style={{ padding: '10px 14px', textAlign: 'right' }}>{t.dmColDoctors}</th>
-                <th style={{ padding: '10px 14px', textAlign: 'right' }}>{t.dmColBeds}</th>
-                <th style={{ padding: '10px 14px', textAlign: 'center' }}>{t.dmColCoords}</th>
-                <th style={{ padding: '10px 14px', textAlign: 'center' }}>{t.dmColVerified}</th>
+              <tr style={{ background: 'var(--bg-surface-secondary)', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-subtle)', fontWeight: 700 }}>
+                <th style={{ padding: '12px 16px' }}>{t.dmColId}</th>
+                <th style={{ padding: '12px 16px' }}>{t.dmColName}</th>
+                <th style={{ padding: '12px 16px' }}>{t.dmColLocation}</th>
+                <th style={{ padding: '12px 16px' }}>{t.dmColTier}</th>
+                <th style={{ padding: '12px 16px', textAlign: 'right' }}>{t.dmColDoctors}</th>
+                <th style={{ padding: '12px 16px', textAlign: 'right' }}>{t.dmColBeds}</th>
+                <th style={{ padding: '12px 16px', textAlign: 'center' }}>{t.dmColCoords}</th>
+                <th style={{ padding: '12px 16px', textAlign: 'center' }}>{t.dmColVerified}</th>
               </tr>
             </thead>
             <tbody>
               {filteredFacilities.map((f, idx) => {
-                let badgeColor = '#0d9488';
+                let badgeColor = 'var(--primary)';
+                let badgeBg = 'var(--primary-50)';
                 let tierText = language === 'vi' ? 'Tuyến 3 (Xã)' : 'Tier 3 (Commune)';
                 if (f.tier === 1) {
-                  badgeColor = '#d97706';
+                  badgeColor = 'var(--tier-1-amber)';
+                  badgeBg = 'var(--tier-1-bg)';
                   tierText = language === 'vi' ? 'Tuyến 1 (Tỉnh)' : 'Tier 1 (Provincial)';
                 } else if (f.tier === 2) {
-                  badgeColor = '#0284c7';
+                  badgeColor = 'var(--tier-2-sky)';
+                  badgeBg = 'var(--tier-2-bg)';
                   tierText = language === 'vi' ? 'Tuyến 2 (Huyện)' : 'Tier 2 (District)';
                 }
 
@@ -252,44 +247,44 @@ export default function DataManagementView({ facilities = [], districtsStats = [
                   <tr 
                     key={f.id} 
                     style={{ 
-                      borderBottom: '1px solid #f1f5f9',
-                      background: idx % 2 === 0 ? '#ffffff' : '#f8fafc',
+                      borderBottom: '1px solid var(--border-subtle)',
+                      background: idx % 2 === 0 ? '#ffffff' : 'var(--bg-surface-secondary)',
                       transition: 'background 0.15s ease'
                     }}
                   >
-                    <td style={{ padding: '10px 14px', fontFamily: 'var(--font-mono)', color: '#64748b' }}>
+                    <td style={{ padding: '12px 16px', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', fontSize: '0.76rem' }}>
                       {f.id}
                     </td>
-                    <td style={{ padding: '10px 14px', color: '#0f172a', fontWeight: 700 }}>
+                    <td style={{ padding: '12px 16px', color: 'var(--text-main)', fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: '0.84rem' }}>
                       {f.name}
                     </td>
-                    <td style={{ padding: '10px 14px', color: '#334155' }}>
-                      📍 {f.commune}, <span style={{ color: '#0284c7', fontWeight: 600 }}>{f.district}</span>
+                    <td style={{ padding: '12px 16px', color: 'var(--text-secondary)' }}>
+                      📍 {f.commune}, <span style={{ color: 'var(--tier-2-sky)', fontWeight: 600 }}>{f.district}</span>
                     </td>
-                    <td style={{ padding: '10px 14px' }}>
+                    <td style={{ padding: '12px 16px' }}>
                       <span style={{
                         padding: '3px 8px',
-                        borderRadius: '4px',
-                        background: `${badgeColor}15`,
+                        borderRadius: 'var(--radius-xs)',
+                        background: badgeBg,
                         color: badgeColor,
                         fontWeight: 700,
                         fontSize: '0.72rem',
-                        border: `1px solid ${badgeColor}30`
+                        border: `1px solid ${badgeColor}35`
                       }}>
                         {tierText}
                       </span>
                     </td>
-                    <td style={{ padding: '10px 14px', textAlign: 'right', fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#0284c7' }}>
+                    <td style={{ padding: '12px 16px', textAlign: 'right', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--tier-2-sky)', fontVariantNumeric: 'tabular-nums' }}>
                       {f.doctors}
                     </td>
-                    <td style={{ padding: '10px 14px', textAlign: 'right', fontFamily: 'var(--font-mono)', fontWeight: 800, color: '#0d9488' }}>
+                    <td style={{ padding: '12px 16px', textAlign: 'right', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--primary)', fontVariantNumeric: 'tabular-nums' }}>
                       {f.beds}
                     </td>
-                    <td style={{ padding: '10px 14px', textAlign: 'center', fontFamily: 'var(--font-mono)', color: '#64748b', fontSize: '0.72rem' }}>
+                    <td style={{ padding: '12px 16px', textAlign: 'center', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', fontSize: '0.72rem', fontVariantNumeric: 'tabular-nums' }}>
                       {f.lat.toFixed(4)}, {f.lon.toFixed(4)}
                     </td>
-                    <td style={{ padding: '10px 14px', textAlign: 'center' }}>
-                      <span style={{ color: '#059669', fontSize: '0.74rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontWeight: 700 }}>
+                    <td style={{ padding: '12px 16px', textAlign: 'center' }}>
+                      <span style={{ color: 'var(--primary)', fontSize: '0.74rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontWeight: 700 }}>
                         <CheckCircle size={14} /> 100%
                       </span>
                     </td>

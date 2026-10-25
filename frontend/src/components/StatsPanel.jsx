@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
   BarChart3, 
   ChevronRight, 
@@ -13,8 +13,7 @@ export default function StatsPanel({
   moranStats,
   districtStats = [],
   isProposedActive,
-  t,
-  language
+  t
 }) {
   const [collapsed, setCollapsed] = useState(false);
 

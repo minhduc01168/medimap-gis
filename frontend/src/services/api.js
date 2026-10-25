@@ -11,7 +11,7 @@ export const ApiService = {
         const data = await res.json();
         return { online: true, ...data };
       }
-    } catch (err) {
+    } catch {
       // Backend is offline, return fallback
     }
     return {
@@ -33,7 +33,7 @@ export const ApiService = {
       if (res.ok) {
         return await res.json();
       }
-    } catch (e) {
+    } catch {
       // Fallback
     }
 
@@ -69,7 +69,7 @@ export const ApiService = {
       if (res.ok) {
         return await res.json();
       }
-    } catch (e) {
+    } catch {
       // Client-side fallback simulation engine
     }
 
@@ -82,7 +82,6 @@ export const ApiService = {
     let baselineDeserts = 34498;
     let baselineLessThan15 = 78723;
     let baseline15to30 = 57754;
-    let baseline30to60 = 48119;
     const totalPop = 219094;
 
     let desertReductionFactor = 1.0;
@@ -152,7 +151,7 @@ export const ApiService = {
       if (res.ok) {
         return await res.json();
       }
-    } catch (e) {
+    } catch {
       // Fallback
     }
     return {
@@ -171,7 +170,7 @@ export const ApiService = {
         const districts = distRes.ok ? await distRes.json() : initialData.districts_stats;
         return { moran, districts };
       }
-    } catch (e) {
+    } catch {
       // Fallback
     }
     return {
@@ -187,7 +186,7 @@ export const ApiService = {
       if (res.ok) {
         return await res.json();
       }
-    } catch (e) {
+    } catch {
       // Fallback
     }
     return {

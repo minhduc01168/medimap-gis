@@ -1,12 +1,10 @@
-import React from 'react';
 import { 
   Activity, 
   MapPin, 
   Layers, 
   Database, 
   FileText, 
-  RefreshCw, 
-  Languages
+  RefreshCw 
 } from 'lucide-react';
 
 export default function Header({ 
@@ -22,17 +20,18 @@ export default function Header({
   t
 }) {
   return (
-    <header className="glass-panel-elevated" style={{
-      margin: '10px 14px 0 14px',
-      padding: '8px 16px',
+    <header className="od-glass-elevated" style={{
+      margin: '12px 16px 0 16px',
+      padding: '8px 18px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       zIndex: 1000,
       position: 'relative',
-      background: 'rgba(255, 255, 255, 0.97)',
-      border: '1px solid #e2e8f0',
-      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.04)'
+      background: 'rgba(255, 255, 255, 0.95)',
+      border: '1px solid var(--border-subtle)',
+      borderRadius: 'var(--radius-lg)',
+      boxShadow: 'var(--shadow-sm)'
     }}>
       {/* Brand & Project Identity */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -40,36 +39,37 @@ export default function Header({
           width: '38px',
           height: '38px',
           borderRadius: '10px',
-          background: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0284c7 100%)',
+          background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 3px 10px rgba(13, 148, 136, 0.3)',
+          boxShadow: '0 4px 12px rgba(13, 148, 136, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
           flexShrink: 0
         }}>
-          <Activity size={22} color="#ffffff" strokeWidth={2.5} />
+          <Activity size={20} color="#ffffff" strokeWidth={2.4} />
         </div>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <h1 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: '1.2rem',
+              fontSize: '1.18rem',
               fontWeight: 800,
-              letterSpacing: '-0.02em',
-              color: '#0f172a',
-              margin: 0
+              letterSpacing: '-0.025em',
+              color: 'var(--text-main)',
+              margin: 0,
+              lineHeight: 1.2
             }}>
               {t.appTitle}
             </h1>
             <span style={{
-              fontSize: '0.66rem',
-              fontFamily: 'var(--font-body)',
+              fontSize: '0.68rem',
+              fontFamily: 'var(--font-mono)',
               fontWeight: 700,
               padding: '2px 8px',
-              borderRadius: '9999px',
-              background: 'rgba(13, 148, 136, 0.1)',
-              color: '#0d9488',
-              border: '1px solid rgba(13, 148, 136, 0.25)',
+              borderRadius: 'var(--radius-full)',
+              background: 'var(--primary-50)',
+              color: 'var(--primary)',
+              border: '1px solid var(--primary-100)',
               whiteSpace: 'nowrap'
             }}>
               {t.pilotBadge}
@@ -77,8 +77,8 @@ export default function Header({
           </div>
           <p style={{
             fontSize: '0.74rem',
-            color: '#64748b',
-            margin: '1px 0 0 0',
+            color: 'var(--text-muted)',
+            margin: '2px 0 0 0',
             fontWeight: 500
           }}>
             {t.appSubtitle}
@@ -86,83 +86,91 @@ export default function Header({
         </div>
       </div>
 
-      {/* Main Tabs Navigation */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        background: '#f1f5f9',
-        padding: '3px',
-        borderRadius: '10px',
-        border: '1px solid #e2e8f0'
-      }}>
+      {/* Main Tabs Navigation (Open-Design Segmented Pill) */}
+      <nav 
+        role="tablist"
+        aria-label="Chế độ làm việc"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          background: 'var(--bg-surface-secondary)',
+          padding: '4px',
+          borderRadius: 'var(--radius-md)',
+          border: '1px solid var(--border-subtle)'
+        }}
+      >
         <button
+          role="tab"
+          aria-selected={activeTab === 'map'}
           onClick={() => setActiveTab('map')}
+          className="od-btn"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '7px',
-            padding: '7px 16px',
-            borderRadius: '7px',
+            padding: '7px 18px',
+            borderRadius: 'var(--radius-sm)',
             border: 'none',
             fontSize: '0.82rem',
             fontWeight: activeTab === 'map' ? 700 : 500,
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            background: activeTab === 'map' ? 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' : 'transparent',
-            color: activeTab === 'map' ? '#ffffff' : '#64748b',
-            boxShadow: activeTab === 'map' ? '0 2px 6px rgba(13, 148, 136, 0.25)' : 'none'
+            background: activeTab === 'map' ? '#ffffff' : 'transparent',
+            color: activeTab === 'map' ? 'var(--primary)' : 'var(--text-muted)',
+            boxShadow: activeTab === 'map' ? 'var(--shadow-xs)' : 'none',
+            transition: 'all var(--duration-fast) var(--ease-spring)'
           }}
         >
-          <Layers size={15} />
-          {t.tabMap}
+          <Layers size={15} strokeWidth={activeTab === 'map' ? 2.3 : 1.8} />
+          <span>{t.tabMap}</span>
         </button>
 
         <button
+          role="tab"
+          aria-selected={activeTab === 'data'}
           onClick={() => setActiveTab('data')}
+          className="od-btn"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '7px',
-            padding: '7px 16px',
-            borderRadius: '7px',
+            padding: '7px 18px',
+            borderRadius: 'var(--radius-sm)',
             border: 'none',
             fontSize: '0.82rem',
             fontWeight: activeTab === 'data' ? 700 : 500,
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            background: activeTab === 'data' ? 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)' : 'transparent',
-            color: activeTab === 'data' ? '#ffffff' : '#64748b',
-            boxShadow: activeTab === 'data' ? '0 2px 6px rgba(2, 132, 199, 0.25)' : 'none'
+            background: activeTab === 'data' ? '#ffffff' : 'transparent',
+            color: activeTab === 'data' ? 'var(--primary)' : 'var(--text-muted)',
+            boxShadow: activeTab === 'data' ? 'var(--shadow-xs)' : 'none',
+            transition: 'all var(--duration-fast) var(--ease-spring)'
           }}
         >
-          <Database size={15} />
-          {t.tabData}
+          <Database size={15} strokeWidth={activeTab === 'data' ? 2.3 : 1.8} />
+          <span>{t.tabData}</span>
         </button>
-      </div>
+      </nav>
 
       {/* Control Actions & Status */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        {/* Backend Connection Indicator */}
+        {/* Backend Connection Indicator with Live Breathing Ring */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '7px',
-          padding: '5px 10px',
-          borderRadius: '9999px',
-          background: backendStatus.online ? 'rgba(13, 148, 136, 0.08)' : 'rgba(2, 132, 199, 0.08)',
-          border: `1px solid ${backendStatus.online ? 'rgba(13, 148, 136, 0.2)' : 'rgba(2, 132, 199, 0.2)'}`,
+          gap: '8px',
+          padding: '5px 12px',
+          borderRadius: 'var(--radius-full)',
+          background: backendStatus.online ? 'var(--primary-50)' : 'var(--tier-2-bg)',
+          border: `1px solid ${backendStatus.online ? 'var(--primary-100)' : '#bae6fd'}`,
           fontSize: '0.72rem',
-          fontFamily: 'var(--font-body)',
+          fontFamily: 'var(--font-mono)',
           whiteSpace: 'nowrap'
         }}>
-          <span style={{
-            width: '7px',
-            height: '7px',
-            borderRadius: '50%',
-            backgroundColor: backendStatus.online ? '#0d9488' : '#0284c7',
-            boxShadow: `0 0 6px ${backendStatus.online ? '#0d9488' : '#0284c7'}`
-          }} />
-          <span style={{ color: backendStatus.online ? '#0f766e' : '#0369a1', fontWeight: 700 }}>
+          <span 
+            className={backendStatus.online ? 'animate-pulse-green' : ''}
+            style={{
+              width: '7px',
+              height: '7px',
+              borderRadius: '50%',
+              backgroundColor: backendStatus.online ? 'var(--primary)' : 'var(--tier-2-sky)',
+              display: 'inline-block'
+            }} 
+          />
+          <span style={{ 
+            color: backendStatus.online ? 'var(--primary-dark)' : '#0369a1', 
+            fontWeight: 700 
+          }}>
             {backendStatus.online ? t.statusBackendLive : t.statusCacheLocal}
           </span>
         </div>
@@ -171,71 +179,61 @@ export default function Header({
         {activeTab === 'map' && (
           <button
             onClick={() => setIsAddingClinic(!isAddingClinic)}
+            className="od-btn"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '6px 12px',
-              borderRadius: '7px',
-              border: isAddingClinic ? '1px solid #7c3aed' : '1px solid #e2e8f0',
-              background: isAddingClinic ? 'rgba(124, 58, 237, 0.12)' : '#ffffff',
-              color: isAddingClinic ? '#7c3aed' : '#475569',
+              padding: '6px 14px',
+              borderRadius: 'var(--radius-sm)',
+              border: isAddingClinic ? '1px solid var(--ai-purple)' : '1px solid var(--border-strong)',
+              background: isAddingClinic ? 'var(--ai-purple-bg)' : '#ffffff',
+              color: isAddingClinic ? 'var(--ai-purple)' : 'var(--text-secondary)',
               fontSize: '0.78rem',
               fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all 0.15s ease'
+              boxShadow: isAddingClinic ? '0 0 12px rgba(124, 58, 237, 0.2)' : 'var(--shadow-xs)'
             }}
             title={t.clickToAddHint}
           >
-            <MapPin size={14} color={isAddingClinic ? '#7c3aed' : '#64748b'} />
-            {isAddingClinic ? t.btnAddClinicActive : t.btnAddClinic}
+            <MapPin size={14} color={isAddingClinic ? 'var(--ai-purple)' : 'var(--text-muted)'} />
+            <span>{isAddingClinic ? t.btnAddClinicActive : t.btnAddClinic}</span>
           </button>
         )}
 
         {/* Scientific Paper / Brief Modal */}
         <button
           onClick={onOpenReportModal}
+          className="od-btn od-btn-secondary"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '6px 12px',
-            borderRadius: '7px',
-            border: '1px solid #e2e8f0',
-            background: '#ffffff',
-            color: '#475569',
+            padding: '6px 14px',
+            borderRadius: 'var(--radius-sm)',
             fontSize: '0.78rem',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.15s ease'
+            fontWeight: 600
           }}
         >
-          <FileText size={14} color="#0d9488" />
-          {t.btnDocReport}
+          <FileText size={14} color="var(--primary)" />
+          <span>{t.btnDocReport}</span>
         </button>
 
-        {/* Unified Language Switcher */}
+        {/* Unified Language Switcher (Segmented Pill) */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          background: '#f1f5f9',
+          background: 'var(--bg-surface-secondary)',
           padding: '2px',
-          borderRadius: '7px',
-          border: '1px solid #e2e8f0'
+          borderRadius: 'var(--radius-sm)',
+          border: '1px solid var(--border-subtle)'
         }}>
           <button
             onClick={() => setLanguage('vi')}
             style={{
-              padding: '4px 8px',
-              borderRadius: '5px',
+              padding: '4px 9px',
+              borderRadius: '6px',
               border: 'none',
               fontSize: '0.72rem',
               fontWeight: language === 'vi' ? 700 : 500,
               background: language === 'vi' ? '#ffffff' : 'transparent',
-              color: language === 'vi' ? '#0d9488' : '#64748b',
+              color: language === 'vi' ? 'var(--primary)' : 'var(--text-muted)',
               cursor: 'pointer',
-              boxShadow: language === 'vi' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
-              transition: 'all 0.15s ease'
+              boxShadow: language === 'vi' ? 'var(--shadow-xs)' : 'none',
+              transition: 'all var(--duration-fast) var(--ease-spring)'
             }}
             title="Giao diện tiếng Việt chuẩn hóa"
           >
@@ -244,16 +242,16 @@ export default function Header({
           <button
             onClick={() => setLanguage('en')}
             style={{
-              padding: '4px 8px',
-              borderRadius: '5px',
+              padding: '4px 9px',
+              borderRadius: '6px',
               border: 'none',
               fontSize: '0.72rem',
               fontWeight: language === 'en' ? 700 : 500,
               background: language === 'en' ? '#ffffff' : 'transparent',
-              color: language === 'en' ? '#0d9488' : '#64748b',
+              color: language === 'en' ? 'var(--primary)' : 'var(--text-muted)',
               cursor: 'pointer',
-              boxShadow: language === 'en' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
-              transition: 'all 0.15s ease'
+              boxShadow: language === 'en' ? 'var(--shadow-xs)' : 'none',
+              transition: 'all var(--duration-fast) var(--ease-spring)'
             }}
             title="English Interface"
           >
@@ -264,24 +262,19 @@ export default function Header({
         {/* Refresh Sync */}
         <button
           onClick={onRefresh}
+          className="od-btn od-btn-secondary"
           style={{
             width: '32px',
             height: '32px',
-            borderRadius: '7px',
-            border: '1px solid #e2e8f0',
-            background: '#ffffff',
-            color: '#64748b',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease'
+            padding: 0,
+            borderRadius: 'var(--radius-sm)'
           }}
           title={t.btnSync}
         >
-          <RefreshCw size={14} />
+          <RefreshCw size={14} color="var(--text-muted)" />
         </button>
       </div>
     </header>
   );
 }
+
