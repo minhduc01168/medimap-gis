@@ -7,24 +7,30 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- KaTeX for high quality math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <style>
     :root {
-      --bg-dark: #0B132B;
-      --bg-card: rgba(28, 37, 65, 0.85);
-      --bg-card-border: rgba(42, 59, 92, 0.6);
-      --accent-cyan: #00F5D4;
-      --accent-crimson: #FF2A54;
-      --accent-amber: #FF9F1C;
-      --accent-blue: #38BDF8;
-      --accent-purple: #A855F7;
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --code-bg: #070D1F;
+      --bg-stage: #F0FDF4;
+      --bg-card: #FFFFFF;
+      --bg-card-border: #E2E8F0;
+      --accent-teal: #0D9488;
+      --accent-emerald: #059669;
+      --accent-primary: #0284C7;
+      --accent-crimson: #EF4444;
+      --accent-amber: #D97706;
+      --accent-blue: #2563EB;
+      --accent-purple: #7C3AED;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --code-bg: #F8FAFC;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 50% 20%, #064E3B 0%, #0B132B 65%, #050814 100%);
+      background: linear-gradient(135deg, #ECFDF5 0%, #EFF6FF 40%, #F8FAFC 75%, #F0FDFA 100%);
       color: var(--text-main);
       overflow: hidden;
       width: 100vw;
@@ -35,28 +41,29 @@
 
     #progress-container {
       width: 100%;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.08);
+      height: 6px;
+      background: #E2E8F0;
       position: relative;
       z-index: 100;
     }
     #progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), #10B981);
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-teal), #10B981);
       width: 0%;
       transition: width 0.3s ease;
-      box-shadow: 0 0 10px var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
     }
 
     .deck-header {
-      padding: 12px 32px;
+      padding: 14px 36px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(11, 19, 43, 0.6);
-      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #E2E8F0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
       z-index: 50;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .brand {
       display: flex;
@@ -64,24 +71,26 @@
       gap: 12px;
       font-size: 0.95rem;
       font-weight: 700;
+      color: var(--text-main);
     }
     .badge {
-      background: rgba(0, 245, 212, 0.15);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(0, 245, 212, 0.3);
-      padding: 2px 10px;
+      background: #CCFBF1;
+      color: var(--accent-teal);
+      border: 1px solid #99F6E4;
+      padding: 4px 12px;
       border-radius: 999px;
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 700;
     }
     .slide-counter {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
-      color: var(--accent-cyan);
-      background: rgba(0, 0, 0, 0.3);
-      padding: 4px 14px;
+      color: var(--accent-teal);
+      background: #F0FDF4;
+      padding: 5px 16px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid #CCFBF1;
+      font-weight: 600;
     }
 
     #slide-stage {
@@ -101,8 +110,7 @@
       border: 1px solid var(--bg-card-border);
       border-radius: 20px;
       padding: 44px 56px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 245, 212, 0.05);
-      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.1), 0 4px 16px rgba(0, 0, 0, 0.04);
       display: flex;
       flex-direction: column;
       opacity: 0;
@@ -122,27 +130,28 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: var(--accent-cyan);
+      color: var(--accent-teal);
       margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
+      font-weight: 700;
     }
     .slide-category::before {
       content: '';
       display: inline-block;
       width: 8px;
       height: 8px;
-      background: var(--accent-cyan);
+      background: var(--accent-teal);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent-cyan);
+      box-shadow: 0 0 8px rgba(13, 148, 136, 0.5);
     }
     h1.slide-title {
       font-size: 2.1rem;
       font-weight: 800;
       line-height: 1.25;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, #FFFFFF 30%, var(--accent-cyan) 80%, var(--accent-blue) 100%);
+      margin-bottom: 22px;
+      background: linear-gradient(135deg, #0F172A 20%, #0D9488 75%, #0284C7 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -158,22 +167,23 @@
     .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; flex: 1; }
 
     .card {
-      background: rgba(15, 23, 42, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
       border-radius: 14px;
       padding: 22px;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s, border-color 0.2s;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .card:hover {
-      border-color: rgba(0, 245, 212, 0.35);
+      border-color: #99F6E4;
+      box-shadow: 0 8px 24px rgba(13, 148, 136, 0.08);
       transform: translateY(-2px);
     }
     .card-header {
       font-weight: 700;
       font-size: 1.05rem;
-      color: #FFFFFF;
+      color: var(--text-main);
       margin-bottom: 10px;
       display: flex;
       align-items: center;
@@ -181,24 +191,27 @@
     }
     .card-body {
       font-size: 0.92rem;
-      color: var(--text-muted);
+      color: #334155;
       line-height: 1.6;
     }
     .card-body ul { margin-left: 20px; margin-top: 8px; }
     .card-body li { margin-bottom: 6px; }
 
     .stat-box {
-      background: rgba(0, 0, 0, 0.35);
-      border-left: 4px solid var(--accent-cyan);
+      background: #F0FDF4;
+      border-left: 4px solid var(--accent-teal);
       border-radius: 0 12px 12px 0;
       padding: 16px 20px;
       margin-bottom: 16px;
+      border-top: 1px solid #E2E8F0;
+      border-right: 1px solid #E2E8F0;
+      border-bottom: 1px solid #E2E8F0;
     }
     .stat-number {
       font-family: 'JetBrains Mono', monospace;
       font-size: 2.2rem;
       font-weight: 800;
-      color: var(--accent-cyan);
+      color: var(--accent-teal);
       line-height: 1.1;
     }
     .stat-label {
@@ -207,6 +220,7 @@
       letter-spacing: 0.5px;
       color: var(--text-muted);
       margin-top: 4px;
+      font-weight: 600;
     }
 
     .alert-box {
@@ -220,38 +234,38 @@
       line-height: 1.5;
     }
     .alert-success {
-      background: rgba(0, 245, 212, 0.1);
-      border: 1px solid rgba(0, 245, 212, 0.35);
-      color: #B2F5EA;
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      color: #166534;
     }
     .alert-warning {
-      background: rgba(255, 159, 28, 0.12);
-      border: 1px solid rgba(255, 159, 28, 0.35);
-      color: #FFE0A3;
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      color: #92400E;
     }
     .alert-danger {
-      background: rgba(255, 42, 84, 0.12);
-      border: 1px solid rgba(255, 42, 84, 0.35);
-      color: #FFB3C1;
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #991B1B;
     }
 
     pre.code-block {
       background: var(--code-bg);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid #E2E8F0;
       border-radius: 12px;
       padding: 18px 22px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
       line-height: 1.6;
-      color: #E2E8F0;
+      color: #1E293B;
       overflow-x: auto;
       margin-bottom: 16px;
     }
-    .code-comment { color: #64748B; }
-    .code-keyword { color: #F43F5E; font-weight: 600; }
-    .code-fn { color: #38BDF8; }
-    .code-str { color: #A3E635; }
-    .code-num { color: #F59E0B; }
+    .code-comment { color: #94A3B8; }
+    .code-keyword { color: #DC2626; font-weight: 600; }
+    .code-fn { color: #0284C7; font-weight: 600; }
+    .code-str { color: #16A34A; }
+    .code-num { color: #D97706; }
 
     table.styled-table {
       width: 100%;
@@ -260,24 +274,24 @@
       margin-top: 8px;
     }
     table.styled-table th {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--accent-cyan);
-      font-weight: 600;
+      background: #F1F5F9;
+      color: var(--accent-teal);
+      font-weight: 700;
       text-align: left;
-      padding: 10px 14px;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+      padding: 12px 14px;
+      border-bottom: 2px solid #CBD5E1;
     }
     table.styled-table td {
       padding: 10px 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      color: #CBD5E1;
+      border-bottom: 1px solid #E2E8F0;
+      color: #334155;
     }
-    table.styled-table tr:hover td { background: rgba(255, 255, 255, 0.03); }
+    table.styled-table tr:hover td { background: #F8FAFC; }
 
     /* Custom SVG Chart Containers */
     .chart-container {
-      background: rgba(11, 19, 43, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
       border-radius: 14px;
       padding: 20px;
       display: flex;
@@ -285,24 +299,26 @@
       align-items: center;
       justify-content: center;
       position: relative;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
     .deck-controls {
-      padding: 14px 32px;
+      padding: 14px 36px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(11, 19, 43, 0.8);
-      backdrop-filter: blur(8px);
+      border-top: 1px solid #E2E8F0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
       z-index: 50;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.02);
     }
     .btn-group { display: flex; gap: 12px; }
     button.nav-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #FFFFFF;
-      padding: 8px 18px;
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      color: #1E293B;
+      padding: 9px 20px;
       border-radius: 10px;
       font-size: 0.85rem;
       font-weight: 600;
@@ -313,18 +329,27 @@
       transition: all 0.2s;
     }
     button.nav-btn:hover {
-      background: rgba(0, 245, 212, 0.2);
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
+      background: #CCFBF1;
+      border-color: var(--accent-teal);
+      color: var(--accent-teal);
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.15);
     }
-    button.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    button.nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      background: #F8FAFC;
+      border-color: #E2E8F0;
+      color: #94A3B8;
+    }
     .key-hints { font-size: 0.78rem; color: var(--text-muted); }
     .key-hints kbd {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
+      background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      padding: 3px 7px;
+      border-radius: 5px;
       font-family: 'JetBrains Mono', monospace;
-      color: var(--accent-cyan);
+      color: var(--accent-teal);
+      font-weight: 600;
     }
   </style>
 </head>
@@ -349,13 +374,13 @@
       <p class="lead">Làm chủ kiến trúc hệ thống 3 tầng hiệu năng cao: FastAPI Spatial Microservice với bộ nhớ đệm In-Memory RAM Cache đạt độ trễ &lt; 50ms, giao diện WebGIS tương tác React Leaflet và bộ 4 biểu đồ dữ liệu khoa học.</p>
 
       <div class="grid-3" style="margin-top: 20px;">
-        <div class="card" style="border-top: 3px solid var(--accent-cyan);">
+        <div class="card" style="border-top: 3px solid var(--accent-teal);">
           <div class="card-header">⚡ Tốc Độ Thần Tốc</div>
           <div class="card-body">
             Độ trễ API <strong>&lt; 50ms</strong> nhờ nạp sẵn đồ thị và chỉ mục R-Tree vào RAM lúc Startup, phản hồi tức thì cho bản đồ WebGIS.
           </div>
         </div>
-        <div class="card" style="border-top: 3px solid var(--accent-blue);">
+        <div class="card" style="border-top: 3px solid var(--accent-primary);">
           <div class="card-header">🗺️ WebGIS Tương Tác</div>
           <div class="card-body">
             Dashboard React 18 + Leaflet hỗ trợ hiển thị 67 CSYT phân tầng, vùng đệm Isochrone động và tính năng Click-to-Place trạm mới.
@@ -412,7 +437,7 @@
       <p class="lead">Sự phân tách mạch lạc giữa tầng giao diện hiển thị, tầng vi dịch vụ xử lý không gian và tầng lưu trữ bền vững.</p>
 
       <div class="grid-3">
-        <div class="card" style="border-top: 3px solid var(--accent-blue);">
+        <div class="card" style="border-top: 3px solid var(--accent-primary);">
           <div class="card-header">TẦNG 1: WEB CLIENT</div>
           <div class="card-body">
             <ul>
@@ -423,7 +448,7 @@
           </div>
         </div>
 
-        <div class="card" style="border-top: 3px solid var(--accent-cyan);">
+        <div class="card" style="border-top: 3px solid var(--accent-teal);">
           <div class="card-header">TẦNG 2: SPATIAL GATEWAY</div>
           <div class="card-body">
             <ul>
@@ -645,7 +670,7 @@ nearest_facility = facilities[idx]</pre>
             Lớp điểm dân cư vùng lõm màu đỏ neon cảnh báo 34,498 người dân nguy cấp. Render bằng Canvas để không giật lag.
           </div>
         </div>
-        <div class="card" style="border-top: 3px solid var(--accent-cyan);">
+        <div class="card" style="border-top: 3px solid var(--accent-teal);">
           <div class="card-header" style="font-size: 0.95rem;">LỚP 4: CSYT MARKERS</div>
           <div class="card-body" style="font-size: 0.85rem;">
             67 biểu tượng CSYT phân màu theo cấp bậc (Tier 1/2/3). Nhấp chuột hiển thị Popup số giường, số bác sĩ và độ cao trạm.
@@ -702,7 +727,7 @@ nearest_facility = facilities[idx]</pre>
         <div class="chart-container">
           <!-- Inline SVG Donut Chart -->
           <svg width="340" height="340" viewBox="0 0 42 42" class="donut">
-            <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="rgba(255,255,255,0.08)" stroke-width="6"></circle>
+            <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#E2E8F0" stroke-width="6"></circle>
             <!-- Segment 1: <15m (35.93%) -->
             <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#00F5D4" stroke-width="6" stroke-dasharray="35.93 64.07" stroke-dashoffset="25"></circle>
             <!-- Segment 2: 15-30m (26.36%) -->
@@ -712,8 +737,8 @@ nearest_facility = facilities[idx]</pre>
             <!-- Segment 4: >60m (15.75%) -->
             <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#FF2A54" stroke-width="6.5" stroke-dasharray="15.75 84.25" stroke-dashoffset="-59.25"></circle>
             <g class="donut-text">
-              <text x="50%" y="46%" text-anchor="middle" fill="#FFFFFF" font-size="3.5" font-weight="bold">219,094</text>
-              <text x="50%" y="56%" text-anchor="middle" fill="#94A3B8" font-size="2">DÂN CƯ VI MÔ</text>
+              <text x="50%" y="46%" text-anchor="middle" fill="#0F172A" font-size="3.5" font-weight="bold">219,094</text>
+              <text x="50%" y="56%" text-anchor="middle" fill="#64748B" font-size="2" font-weight="600">DÂN CƯ VI MÔ</text>
             </g>
           </svg>
         </div>
@@ -780,19 +805,19 @@ nearest_facility = facilities[idx]</pre>
           <!-- Inline SVG Bar Chart -->
           <svg width="460" height="280" viewBox="0 0 460 280">
             <!-- Trục ngang -->
-            <line x1="60" y1="220" x2="420" y2="220" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+            <line x1="60" y1="220" x2="420" y2="220" stroke="#CBD5E1" stroke-width="2"/>
             
             <!-- Cột Trước quy hoạch (34,498 dân) -->
             <rect x="110" y="50" width="90" height="170" fill="#FF2A54" rx="6"></rect>
             <text x="155" y="40" text-anchor="middle" fill="#FF2A54" font-weight="bold" font-size="16">34,498 (15.7%)</text>
-            <text x="155" y="244" text-anchor="middle" fill="#FFFFFF" font-size="14">HIỆN TRẠNG</text>
+            <text x="155" y="244" text-anchor="middle" fill="#0F172A" font-size="14" font-weight="bold">HIỆN TRẠNG</text>
             
             <!-- Cột Sau quy hoạch (4,924 dân) -->
             <rect x="270" y="195" width="90" height="25" fill="#00F5D4" rx="6"></rect>
             <text x="315" y="185" text-anchor="middle" fill="#00F5D4" font-weight="bold" font-size="16">4,924 (2.2%)</text>
-            <text x="315" y="244" text-anchor="middle" fill="#FFFFFF" font-size="14">SAU 5 TRẠM MỚI</text>
+            <text x="315" y="244" text-anchor="middle" fill="#0F172A" font-size="14" font-weight="bold">SAU 5 TRẠM MỚI</text>
           </svg>
-          <div style="color: var(--accent-cyan); font-weight: 700; margin-top: 6px;">
+          <div style="color: var(--accent-teal); font-weight: 700; margin-top: 6px;">
             GIẢI CỨU THÀNH CÔNG 85.7% DÂN SỐ VÙNG LÕM Y TẾ
           </div>
         </div>
@@ -873,8 +898,8 @@ nearest_facility = facilities[idx]</pre>
           <!-- Inline SVG Moran Scatterplot -->
           <svg width="400" height="280" viewBox="0 0 400 280">
             <!-- Trục tọa độ -->
-            <line x1="200" y1="20" x2="200" y2="260" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-            <line x1="30" y1="140" x2="370" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+            <line x1="200" y1="20" x2="200" y2="260" stroke="#CBD5E1" stroke-width="1.5"/>
+            <line x1="30" y1="140" x2="370" y2="140" stroke="#CBD5E1" stroke-width="1.5"/>
             <!-- Đường hồi quy dốc Moran I = 0.9306 -->
             <line x1="50" y1="240" x2="350" y2="40" stroke="#00F5D4" stroke-width="3" stroke-dasharray="4"/>
             <!-- Cụm High-High (Góc trên phải) -->
@@ -888,7 +913,7 @@ nearest_facility = facilities[idx]</pre>
             <circle cx="95" cy="225" r="4" fill="#00F5D4" opacity="0.7"/>
             <text x="90" y="255" fill="#00F5D4" font-size="12" font-weight="bold">Q3: Low-Low (An Toàn)</text>
           </svg>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; color: var(--accent-cyan); margin-top: 4px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; color: var(--accent-teal); margin-top: 4px;">
             Moran's I = 0.9306 | Z-score = 298.29 | p &lt; 0.001
           </div>
         </div>
@@ -917,9 +942,9 @@ nearest_facility = facilities[idx]</pre>
           <!-- Inline SVG Radar Chart -->
           <svg width="360" height="280" viewBox="0 0 360 280">
             <!-- Các vòng tròn đồng tâm -->
-            <polygon points="180,30 290,110 250,230 110,230 70,110" fill="transparent" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-            <polygon points="180,60 255,115 228,198 132,198 105,115" fill="transparent" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-            <polygon points="180,90 220,120 206,166 154,166 140,120" fill="transparent" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <polygon points="180,30 290,110 250,230 110,230 70,110" fill="transparent" stroke="#E2E8F0" stroke-width="1.5"/>
+            <polygon points="180,60 255,115 228,198 132,198 105,115" fill="transparent" stroke="#CBD5E1" stroke-width="1.5"/>
+            <polygon points="180,90 220,120 206,166 154,166 140,120" fill="transparent" stroke="#E2E8F0" stroke-width="1.5"/>
             
             <!-- Đa giác Sa Pa (Màu Cyan) -->
             <polygon points="180,40 270,112 240,215 130,210 85,112" fill="rgba(0, 245, 212, 0.25)" stroke="#00F5D4" stroke-width="2"/>
@@ -927,15 +952,15 @@ nearest_facility = facilities[idx]</pre>
             <polygon points="180,105 210,125 190,165 145,170 120,125" fill="rgba(255, 42, 84, 0.25)" stroke="#FF2A54" stroke-width="2"/>
             
             <!-- Nhãn trục -->
-            <text x="180" y="20" text-anchor="middle" fill="#FFFFFF" font-size="11">Bác sĩ / 1k dân</text>
-            <text x="305" y="115" fill="#FFFFFF" font-size="11">Giường bệnh</text>
-            <text x="260" y="250" fill="#FFFFFF" font-size="11">% Dân &lt; 30p</text>
-            <text x="70" y="250" fill="#FFFFFF" font-size="11">Độ dốc thấp</text>
-            <text x="40" y="115" fill="#FFFFFF" font-size="11">Tốc độ cấp cứu</text>
+            <text x="180" y="20" text-anchor="middle" fill="#0F172A" font-size="11" font-weight="600">Bác sĩ / 1k dân</text>
+            <text x="305" y="115" fill="#0F172A" font-size="11" font-weight="600">Giường bệnh</text>
+            <text x="260" y="250" fill="#0F172A" font-size="11" font-weight="600">% Dân &lt; 30p</text>
+            <text x="70" y="250" fill="#0F172A" font-size="11" font-weight="600">Độ dốc thấp</text>
+            <text x="40" y="115" fill="#0F172A" font-size="11" font-weight="600">Tốc độ cấp cứu</text>
           </svg>
           <div style="display: flex; gap: 20px; font-size: 0.85rem; margin-top: 4px;">
-            <span style="color: #00F5D4;">■ Thị xã Sa Pa</span>
-            <span style="color: #FF2A54;">■ Huyện Mường Khương</span>
+            <span style="color: #0D9488; font-weight: 700;">■ Thị xã Sa Pa</span>
+            <span style="color: #EF4444; font-weight: 700;">■ Huyện Mường Khương</span>
           </div>
         </div>
 
@@ -1031,7 +1056,7 @@ docker compose ps
       <p class="lead">Nhìn lại toàn bộ chuỗi giá trị mà học viên đã làm chủ qua 3 buổi học thực chiến.</p>
 
       <div class="grid-3">
-        <div class="card" style="border-top: 3px solid var(--accent-cyan);">
+        <div class="card" style="border-top: 3px solid var(--accent-teal);">
           <div class="card-header">BUỔI 1: DATA PIPELINE</div>
           <div class="card-body">
             <ul>
@@ -1055,7 +1080,7 @@ docker compose ps
           </div>
         </div>
 
-        <div class="card" style="border-top: 3px solid var(--accent-blue);">
+        <div class="card" style="border-top: 3px solid var(--accent-primary);">
           <div class="card-header">BUỔI 3: MICROSERVICE & WEBGIS</div>
           <div class="card-body">
             <ul>
@@ -1150,6 +1175,19 @@ docker compose ps
     });
 
     updateDeck();
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (typeof renderMathInElement === "function") {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    });
   </script>
 </body>
 </html>

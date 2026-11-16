@@ -9,19 +9,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #0B132B;
-      --bg-card: rgba(28, 37, 65, 0.7);
-      --accent-cyan: #00F5D4;
-      --accent-crimson: #FF2A54;
-      --accent-amber: #FF9F1C;
-      --accent-blue: #38BDF8;
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
+      --bg-stage: #F8FAFC;
+      --bg-card: #FFFFFF;
+      --accent-cyan: #0284C7;
+      --accent-teal: #0D9488;
+      --accent-crimson: #EF4444;
+      --accent-amber: #EA580C;
+      --accent-blue: #2563EB;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 50% 0%, #172554 0%, #0B132B 55%, #050814 100%);
+      background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 40%, #F0FDF4 80%, #FFFBEB 100%);
       color: var(--text-main);
       min-height: 100vh;
       padding: 48px 24px;
@@ -39,12 +40,12 @@
     }
     .badge {
       display: inline-block;
-      background: rgba(0, 245, 212, 0.15);
+      background: #E0F2FE;
       color: var(--accent-cyan);
-      border: 1px solid rgba(0, 245, 212, 0.3);
-      padding: 4px 16px;
+      border: 1px solid #BAE6FD;
+      padding: 6px 18px;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -53,7 +54,7 @@
     h1 {
       font-size: 2.8rem;
       font-weight: 900;
-      background: linear-gradient(135deg, #FFFFFF 40%, var(--accent-cyan) 100%);
+      background: linear-gradient(135deg, #0F172A 30%, #0284C7 80%, #0D9488 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 14px;
@@ -73,22 +74,21 @@
       margin-bottom: 48px;
     }
     .course-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
       border-radius: 20px;
       padding: 32px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
     }
     .course-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(0, 245, 212, 0.4);
-      box-shadow: 0 25px 50px rgba(0, 245, 212, 0.1);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+      border-color: #BAE6FD;
     }
     .card-tag {
       font-family: 'JetBrains Mono', monospace;
@@ -100,7 +100,7 @@
     h2 {
       font-size: 1.4rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #0F172A;
       margin-bottom: 14px;
       line-height: 1.35;
     }
@@ -121,7 +121,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #CBD5E1;
+      color: #334155;
+      font-weight: 500;
     }
     .launch-btn {
       display: inline-flex;
@@ -129,7 +130,7 @@
       justify-content: center;
       gap: 8px;
       width: 100%;
-      background: linear-gradient(135deg, rgba(0, 245, 212, 0.2), rgba(56, 189, 248, 0.2));
+      background: #F0F9FF;
       border: 1px solid var(--accent-cyan);
       color: var(--accent-cyan);
       padding: 14px 20px;
@@ -140,13 +141,13 @@
     }
     .launch-btn:hover {
       background: var(--accent-cyan);
-      color: #0B132B;
-      box-shadow: 0 0 20px rgba(0, 245, 212, 0.4);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
     }
     .footer-box {
       text-align: center;
       padding: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid #E2E8F0;
       font-size: 0.9rem;
       color: var(--text-muted);
     }
