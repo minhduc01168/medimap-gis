@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediMap GIS - Buổi 1: Xây Dựng Spatial Data Pipeline Từ Đa Nguồn Kết Hợp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0B132B;
+      --bg-card: rgba(28, 37, 65, 0.85);
+      --bg-card-border: rgba(42, 59, 92, 0.6);
+      --accent-cyan: #00F5D4;
+      --accent-crimson: #FF2A54;
+      --accent-amber: #FF9F1C;
+      --accent-blue: #4CC9F0;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --code-bg: #070D1F;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 50% 20%, #172554 0%, #0B132B 65%, #050814 100%);
+      color: var(--text-main);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top progress bar */
+    #progress-container {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 100;
+    }
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+      width: 0%;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px var(--accent-cyan);
+    }
+
+    /* Top header */
+    .deck-header {
+      padding: 12px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(11, 19, 43, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .badge {
+      background: rgba(0, 245, 212, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 245, 212, 0.3);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .slide-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Slide Stage */
+    #slide-stage {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 40px;
+    }
+    .slide {
+      position: absolute;
+      width: min(1360px, 94vw);
+      height: min(780px, 86vh);
+      background: var(--bg-card);
+      border: 1px solid var(--bg-card-border);
+      border-radius: 20px;
+      padding: 44px 56px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 245, 212, 0.05);
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateX(60px) scale(0.98);
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      pointer-events: all;
+    }
+
+    /* Typography */
+    .slide-category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .slide-category::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-cyan);
+    }
+    h1.slide-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--accent-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    /* Grid & Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      flex: 1;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      flex: 1;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(0, 245, 212, 0.35);
+      transform: translateY(-2px);
+    }
+    .card-header {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-body {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .card-body ul {
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+    .card-body li { margin-bottom: 6px; }
+
+    /* Highlights & Metrics */
+    .stat-box {
+      background: rgba(0, 0, 0, 0.35);
+      border-left: 4px solid var(--accent-cyan);
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .alert-box {
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .alert-danger {
+      background: rgba(255, 42, 84, 0.12);
+      border: 1px solid rgba(255, 42, 84, 0.35);
+      color: #FFB3C1;
+    }
+    .alert-warning {
+      background: rgba(255, 159, 28, 0.12);
+      border: 1px solid rgba(255, 159, 28, 0.35);
+      color: #FFE0A3;
+    }
+    .alert-success {
+      background: rgba(0, 245, 212, 0.1);
+      border: 1px solid rgba(0, 245, 212, 0.35);
+      color: #B2F5EA;
+    }
+
+    /* Code Block */
+    pre.code-block {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 18px 22px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #E2E8F0;
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+    .code-comment { color: #64748B; }
+    .code-keyword { color: #F43F5E; font-weight: 600; }
+    .code-fn { color: #38BDF8; }
+    .code-str { color: #A3E635; }
+    .code-num { color: #F59E0B; }
+
+    /* Tables */
+    table.styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 8px;
+    }
+    table.styled-table th {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--accent-cyan);
+      font-weight: 600;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+    }
+    table.styled-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #CBD5E1;
+    }
+    table.styled-table tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Bottom navigation controls */
+    .deck-controls {
+      padding: 14px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(11, 19, 43, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+    }
+    button.nav-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    button.nav-btn:hover {
+      background: rgba(0, 245, 212, 0.2);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+    button.nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .key-hints {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .key-hints kbd {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <header class="deck-header">
+    <div class="brand">
+      <span>🏔️ MEDIMAP GIS</span>
+      <span class="badge">BUỔI 1: DATA PIPELINE ĐA NGUỒN</span>
+    </div>
+    <div class="slide-counter" id="counter">Slide 1 / 17</div>
+  </header>
+
+  <main id="slide-stage">
+
+    <!-- SLIDE 1: Title -->
+    <section class="slide active">
+      <div class="slide-category">ĐỒ ÁN SPATIAL DATA SCIENCE & WEBGIS VÙNG CAO</div>
+      <h1 class="slide-title">Xây Dựng Spatial Data Pipeline Từ Đa Nguồn Kết Hợp</h1>
+      <p class="lead">Làm chủ quy trình thu thập, chuẩn hóa tọa độ trạm y tế, trích xuất mạng lưới đường bộ OSM, cao độ số NASA DEM 30m và lưới dân số vi mô WorldPop 100m.</p>
+      
+      <div class="grid-3" style="margin-top: 20px;">
+        <div class="card" style="border-top: 3px solid var(--accent-cyan);">
+          <div class="card-header">🎯 Mục Tiêu Đào Tạo</div>
+          <div class="card-body">
+            Xây dựng hoàn chỉnh một Data Pipeline tự động 6 bước, có khả năng tái lập 100% bằng Python, GeoPandas và OGC GeoPackage.
+          </div>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--accent-amber);">
+          <div class="card-header">📍 Địa Bàn Nghiên Cứu</div>
+          <div class="card-body">
+            Cụm 3 huyện hiểm trở Tây Bắc Lào Cai: <strong>Thị xã Sa Pa, Huyện Bát Xát, Huyện Mường Khương</strong> (Độ dốc trung bình 14.8%).
+          </div>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--accent-crimson);">
+          <div class="card-header">📦 Sản Phẩm Đầu Ra</div>
+          <div class="card-body">
+            Gói dữ liệu OGC chuẩn quốc tế <code>medimap_laocai_pilot_v1.gpkg</code> sẵn sàng phục vụ phân tích ma sát Tobler và mô hình E2SFCA.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Thách thức địa hình -->
+    <section class="slide">
+      <div class="slide-category">BỐI CẢNH THỰC ĐỊA & NỖI ĐAU DỰ ÁN</div>
+      <h1 class="slide-title">Thách Thức Địa Hình Khắc Nghiệt Hoàng Liên Sơn</h1>
+      <p class="lead">Khu vực nghiên cứu có cấu trúc địa lý chia cắt mạnh nhất Việt Nam, nơi các công cụ tính toán đồng bằng hoàn toàn vô hiệu.</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="stat-box">
+            <div class="stat-number">80.0m - 3,116.7m</div>
+            <div class="stat-label">Khoảng Chênh Cao Địa Hình Cực Đoan (DEM SRTM)</div>
+          </div>
+          <div class="stat-box" style="border-color: var(--accent-amber);">
+            <div class="stat-number" style="color: var(--accent-amber);">14.8% (Max > 45%)</div>
+            <div class="stat-label">Độ Dốc Trung Bình Trên Hệ Thống Đường Giao Thông</div>
+          </div>
+          <div class="stat-box" style="border-color: var(--accent-crimson);">
+            <div class="stat-number" style="color: var(--accent-crimson);">1.75x</div>
+            <div class="stat-label">Hệ Số Quanh Co Đường Đèo (Detour Sinuosity Index)</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">⚠️ Tại Sao Địa Hình Vùng Núi Khó Xử Lý?</div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Địa hình bậc thang & thung lũng sâu:</strong> Hai bản làng cách nhau 2km theo đường chim bay nhưng bị ngăn cách bởi vách vực 600m, phải đi đường đèo vòng mất 2.5 giờ.</li>
+              <li><strong>Hạ tầng giao thông manh mún:</strong> Tỷ lệ đường liên thôn rải đá, đường đất và đường mòn dân sinh chiếm trên 65% tổng mạng lưới đường.</li>
+              <li><strong>Sai lệch nghiêm trọng của GPS thương mại:</strong> Các bản đồ thông thường giả định vận tốc 40-50 km/h khiến thời gian di chuyển ước tính bị sai lệch từ 200% đến 400%.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Sự thất bại của đường chim bay -->
+    <section class="slide">
+      <div class="slide-category">BẢN CHẤT HỌC THUẬT & TOÁN HỌC</div>
+      <h1 class="slide-title">Sự Thất Bại Của "Khoảng Cách Đường Chim Bay"</h1>
+      <p class="lead">Vì sao bán kính hình tròn phẳng (Euclidean Buffer) là một sự "ngụy tạo thống kê" trong đánh giá y tế công cộng vùng cao?</p>
+
+      <div class="grid-2">
+        <div class="card" style="border-color: rgba(255, 42, 84, 0.4);">
+          <div class="card-header" style="color: var(--accent-crimson);">❌ Phương Pháp Truyền Thống (Đường Chim Bay)</div>
+          <div class="card-body">
+            <ul>
+              <li>Vẽ các vòng bán kính đệm phẳng 5km, 10km quanh trạm y tế.</li>
+              <li>Giả định người dân có thể di chuyển xuyên núi như trực thăng.</li>
+              <li><strong>Hậu quả:</strong> Báo cáo ghi nhận "100% người dân được bao phủ y tế trong 5km", nhưng thực tế người dân đi bộ mất nửa ngày mới tới nơi!</li>
+              <li>Bỏ sót hàng chục nghìn đồng bào trong các "Vùng lõm y tế nguy cấp".</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: rgba(0, 245, 212, 0.4);">
+          <div class="card-header" style="color: var(--accent-cyan);">✅ Phương Pháp MediMap GIS (Spatial Friction)</div>
+          <div class="card-body">
+            <ul>
+              <li>Chuyển đổi từ <strong>Khoảng cách Kilômét vô nghĩa</strong> sang <strong>Thời gian di chuyển thực tế (Phút)</strong>.</li>
+              <li>Tích hợp hàm ma sát độ dốc Tobler lên từng mét đường đèo thực tế.</li>
+              <li>Tính đúng trở lực sườn dốc và vận tốc suy giảm của xe máy / người đi bộ.</li>
+              <li>Xác định chính xác từng cụm dân cư nằm ngoài "Giờ vàng cấp cứu" (>60 phút).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Kiến trúc Pipeline tổng quan -->
+    <section class="slide">
+      <div class="slide-category">KIẾN TRÚC DỮ LIỆU & LUỒNG XỬ LÝ</div>
+      <h1 class="slide-title">Kiến Trúc Pipeline Xử Lý Dữ Liệu 6 Bước</h1>
+      <p class="lead">Dữ liệu chảy tuần tự theo nguyên tắc Unidirectional Pipeline (Dữ liệu một chiều, kiểm tra chặt chẽ từng chặng, không vòng lặp).</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header">① Xác Lập Phạm Vi</div>
+          <div class="card-body">
+            <code>01_download_boundaries.py</code><br>
+            Cắt Bounding Box 3 huyện, thiết lập vùng đệm an toàn, cơ chế Fallback chống sập Nominatim API.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">② Chuẩn Hóa CSYT</div>
+          <div class="card-body">
+            <code>02_ingest_health_facilities.py</code><br>
+            Nạp danh bạ 67 CSYT Sở Y tế, phân cấp Tier 1/2/3, chuẩn hóa tọa độ cổng trạm Ground-Truth.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">③ Crawl Đồ Thị OSM</div>
+          <div class="card-body">
+            <code>03_fetch_osm_network.py</code><br>
+            Overpass QL trích xuất 708K nodes, 11,618 km đường, tính khoảng cách Haversine và xử lý 2 chiều.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">④ Raster DEM & Dân Cư</div>
+          <div class="card-body">
+            <code>04_process_raster_elevation_pop.py</code><br>
+            Gắn ma trận cao độ SRTM 30m, phân bổ WorldPop 100m, lọc bỏ vách núi >2,400m không người ở.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">⑤ Mô Hình Ma Sát Tobler</div>
+          <div class="card-body">
+            <code>05_topographic_impedance_builder.py</code><br>
+            Tính thời gian di chuyển từng cụm dân cư, bóc tách danh mục vùng lõm y tế (>60 phút).
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">⑥ Nghiệm Thu & Đóng Gói</div>
+          <div class="card-body">
+            <code>06_qa_ground_truth_validation.py</code><br>
+            Kiểm tra 5 tiêu chí AC-1 -> AC-5, xuất bản file OGC GeoPackage <code>medimap_laocai.gpkg</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Nguồn 1 - 67 CSYT Ground-Truth -->
+    <section class="slide">
+      <div class="slide-category">NGUỒN DỮ LIỆU 1 / 4: CƠ SỞ Y TẾ GROUND-TRUTH</div>
+      <h1 class="slide-title">Chuẩn Hóa Danh Mục 67 Cơ Sở Y Tế Tuyến Cơ Sở</h1>
+      <p class="lead">Nguồn gốc: Sở Y tế tỉnh Lào Cai, kết hợp đối soát thủ công bằng ảnh vệ tinh độ phân giải cao Google Earth & Sentinel-2.</p>
+
+      <div class="grid-2">
+        <div>
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Phân Cấp (Tier)</th>
+                <th>Quy Mô Cơ Sở</th>
+                <th>Số Lượng</th>
+                <th>Năng Lực Phục Vụ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge" style="color: #FF5964;">Tier 1</span></td>
+                <td>Bệnh viện Đa khoa tỉnh</td>
+                <td>1 trạm</td>
+                <td>500+ giường, 120+ bác sĩ</td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="color: var(--accent-amber);">Tier 2</span></td>
+                <td>BVĐK thị xã / TTYT huyện</td>
+                <td>3 trạm</td>
+                <td>120-150 giường, 28-35 bác sĩ</td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="color: var(--accent-cyan);">Tier 3</span></td>
+                <td>Trạm y tế xã / PKĐKKV</td>
+                <td>63 trạm</td>
+                <td>5-15 giường, 1-4 bác sĩ</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="stat-box" style="margin-top: 18px;">
+            <div class="stat-number">67 / 67 (100%)</div>
+            <div class="stat-label">Cơ sở y tế đạt nhãn xác thực vệ tinh Ground-Truth</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">📋 Cấu Trúc Thuộc Tính Dữ Liệu CSYT</div>
+          <div class="card-body">
+            <pre class="code-block">{
+  <span class="code-str">"facility_id"</span>: <span class="code-str">"LC_SP_H01"</span>,
+  <span class="code-str">"name"</span>: <span class="code-str">"BVĐK thị xã Sa Pa"</span>,
+  <span class="code-str">"district"</span>: <span class="code-str">"Thị xã Sa Pa"</span>,
+  <span class="code-str">"commune"</span>: <span class="code-str">"Phường Sa Pa"</span>,
+  <span class="code-str">"tier_level"</span>: <span class="code-num">2</span>,
+  <span class="code-str">"beds_capacity"</span>: <span class="code-num">150</span>,
+  <span class="code-str">"doctors_count"</span>: <span class="code-num">35</span>,
+  <span class="code-str">"elevation_m"</span>: <span class="code-num">1540.0</span>,
+  <span class="code-str">"coordinates"</span>: [<span class="code-num">103.8441</span>, <span class="code-num">22.3364</span>]
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Kỹ thuật Gate Snapping -->
+    <section class="slide">
+      <div class="slide-category">KỸ THUẬT GIS THỰC CHIẾN</div>
+      <h1 class="slide-title">Kỹ Thuật "Gate Snapping": Cổng Trạm vs Tâm Xã</h1>
+      <p class="lead">Bài học xương máu trong GIS y tế: Sai một tọa độ trạm y tế là bệnh nhân phải leo vách đá 300 mét.</p>
+
+      <div class="grid-2">
+        <div class="card" style="border-color: rgba(255, 42, 84, 0.4);">
+          <div class="card-header" style="color: var(--accent-crimson);">🚫 Lỗi Phổ Biến: Lấy Tọa Độ UBND Xã</div>
+          <div class="card-body">
+            <ul>
+              <li>Nhiều nghiên cứu GIS lấy tọa độ hành chính xã làm tọa độ trạm y tế.</li>
+              <li>Ở vùng núi, trạm y tế thường nằm cách trụ sở xã 2 - 5 km đường đèo.</li>
+              <li><strong>Hệ quả:</strong> Sai số thời gian tiếp cận lên tới <strong>30 - 45 phút</strong>, làm đảo lộn hoàn toàn kết luận y tế công cộng!</li>
+              <li>Nếu lấy tâm nhà (polygon centroid), điểm có thể rơi vào sườn dốc không tiếp giáp mặt đường xe chạy.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: rgba(0, 245, 212, 0.4);">
+          <div class="card-header" style="color: var(--accent-cyan);">🎯 Giải Pháp MediMap: Gate Snapping Vào Mạng Đường</div>
+          <div class="card-body">
+            <ul>
+              <li>Định vị chính xác <strong>Cổng trạm tiếp giáp mặt đường xe ô tô/xe máy</strong> qua ảnh vệ tinh.</li>
+              <li>Chạy thuật toán <code>Nearest Edge Snapping</code> (k-d tree) chiếu vuông góc tọa độ vào tim đường OSM gần nhất trong bán kính &lt;100m.</li>
+              <li>Đảm bảo thuật toán định tuyến luôn tìm được đường ra vào thông suốt mà không gặp lỗi "cô lập hình học" (island node).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Fallback Geocoding -->
+    <section class="slide">
+      <div class="slide-category">KIẾN TRÚC CHỊU LỖI (FAULT-TOLERANCE)</div>
+      <h1 class="slide-title">Thuật Toán Fallback Geocoding & Strict Bounding Box</h1>
+      <p class="lead">Bảo vệ Pipeline không bao giờ bị gián đoạn khi kết nối với các dịch vụ Web API bên ngoài.</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="alert-box alert-warning">
+            <span>⚠️ <strong>Vấn đề thực tế:</strong> Nominatim API của OpenStreetMap thường xuyên bị Rate-Limit (HTTP 429) hoặc Timeout khi truy vấn liên tục các địa danh bản làng xa xôi.</span>
+          </div>
+          <div class="card">
+            <div class="card-header">🛡️ Chiến Lược 3 Tầng Bảo Vệ</div>
+            <div class="card-body">
+              <ol style="margin-left: 20px;">
+                <li><strong>Tầng 1 - API Call:</strong> Truy vấn Nominatim kèm delay 1 giây và định danh <code>User-Agent</code> độc nhất.</li>
+                <li><strong>Tầng 2 - Strict BBox Filter:</strong> Kiểm tra tọa độ trả về có nằm trong Bounding Box Lào Cai: <code>[22.20, 103.50, 22.85, 104.35]</code> hay không để loại bỏ false-positives.</li>
+                <li><strong>Tầng 3 - Offline Catalog Fallback:</strong> Nếu API lỗi hoặc điểm bị trôi, nạp ngay tọa độ Ground-Truth dự phòng từ bảng catalog cục bộ.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">💻 Mã Nguồn Xử Lý Fallback</div>
+          <div class="card-body">
+            <pre class="code-block"><span class="code-keyword">def</span> <span class="code-fn">get_facility_coords</span>(name, district, fallback_coords):
+    <span class="code-keyword">try</span>:
+        loc = geolocator.<span class="code-fn">geocode</span>(f<span class="code-str">"{name}, {district}, Lào Cai"</span>, timeout=<span class="code-num">5</span>)
+        <span class="code-keyword">if</span> loc <span class="code-keyword">and</span> is_within_bbox(loc.latitude, loc.longitude):
+            <span class="code-keyword">return</span> loc.latitude, loc.longitude
+    <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+        logger.<span class="code-fn">warning</span>(f<span class="code-str">"API lỗi ({e}), chuyển sang Fallback"</span>)
+    
+    <span class="code-comment"># Kích hoạt tọa độ Ground-Truth cục bộ</span>
+    <span class="code-keyword">return</span> fallback_coords[<span class="code-num">0</span>], fallback_coords[<span class="code-num">1</span>]</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Nguồn 2 - OSM Network -->
+    <section class="slide">
+      <div class="slide-category">NGUỒN DỮ LIỆU 2 / 4: MẠNG LƯỚI GIAO THÔNG OSM</div>
+      <h1 class="slide-title">Trích Xuất 11,618 km Mạng Đường Bộ Vùng Núi</h1>
+      <p class="lead">Sử dụng OpenStreetMap Overpass API để tạo lập đồ thị giao thông đa hướng (Directed Multigraph) có đầy đủ đường mòn dân sinh.</p>
+
+      <div class="grid-3">
+        <div class="stat-box">
+          <div class="stat-number">708,852</div>
+          <div class="stat-label">Số Lượng Điểm Nút Giao Thông (Nodes)</div>
+        </div>
+        <div class="stat-box" style="border-color: var(--accent-amber);">
+          <div class="stat-number" style="color: var(--accent-amber);">1,419,463</div>
+          <div class="stat-label">Cạnh Đường Có Hướng (Directed Edges)</div>
+        </div>
+        <div class="stat-box" style="border-color: var(--accent-blue);">
+          <div class="stat-number" style="color: var(--accent-blue);">11,617.9 km</div>
+          <div class="stat-label">Tổng Chiều Dài Mạng Lưới Đường Bộ</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 16px;">
+        <div class="card">
+          <div class="card-header">🔍 Bộ Lọc Truy Vấn Overpass QL</div>
+          <div class="card-body">
+            <pre class="code-block">[out:json][timeout:180];
+(
+  way["highway"~"motorway|trunk|primary|secondary|tertiary|unclassified|residential|service|track|path"]
+  (22.20, 103.50, 22.85, 104.35);
+);
+out body;
+&gt;;
+out skel qt;</pre>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">⚙️ Xử Lý Đặc Thù Miền Núi</div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Không bỏ qua <code>track</code> & <code>path</code>:</strong> Ở vùng cao, lối mòn là con đường duy nhất kết nối các bản người Mông, Dao đến trung tâm xã.</li>
+              <li><strong>Tạo cạnh hai chiều tự động:</strong> Các tuyến đường đèo hẹp không có tag <code>oneway=yes</code> được tự động nhân đôi thành 2 directed edges.</li>
+              <li>Tính khoảng cách thực của từng cạnh bằng công thức mặt cầu <strong>Haversine</strong>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Công thức Haversine -->
+    <section class="slide">
+      <div class="slide-category">TOÁN HỌC KHÔNG GIAN</div>
+      <h1 class="slide-title">Tính Khoảng Cách Mặt Cầu Bằng Công Thức Haversine</h1>
+      <p class="lead">Đảm bảo độ chính xác tuyệt đối của từng đoạn đường cong đèo núi khi chuyển đổi từ tọa độ kinh vĩ độ.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">📐 Công Thức Toán Học Haversine</div>
+          <div class="card-body">
+            <div style="font-size: 1.15rem; color: var(--accent-cyan); margin: 18px 0; font-family: 'JetBrains Mono', monospace;">
+              d = 2R · arcsin(√(sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)))
+            </div>
+            <ul>
+              <li>$R = 6,371,000 \text{ m}$ (Bán kính trung bình của Trái Đất).</li>
+              <li>$\phi_1, \phi_2$: Vĩ độ của 2 điểm nút (tính bằng Radians).</li>
+              <li>$\Delta \lambda$: Chênh lệch kinh độ giữa 2 điểm nút.</li>
+              <li>Cho phép tính chính xác chiều dài từng cạnh trong mạng lưới 1.4 triệu cạnh mà không bị sai số do độ cong mặt cầu Trái Đất.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">💻 Triển Khai Vector Hóa Bằng Python / NumPy</div>
+          <div class="card-body">
+            <pre class="code-block"><span class="code-keyword">def</span> <span class="code-fn">calculate_haversine</span>(lat1, lon1, lat2, lon2):
+    R = <span class="code-num">6371000.0</span>  <span class="code-comment"># meters</span>
+    p1, p2 = np.<span class="code-fn">radians</span>(lat1), np.<span class="code-fn">radians</span>(lat2)
+    dp = np.<span class="code-fn">radians</span>(lat2 - lat1)
+    dl = np.<span class="code-fn">radians</span>(lon2 - lon1)
+    
+    a = (np.<span class="code-fn">sin</span>(dp / <span class="code-num">2</span>)**<span class="code-num">2</span> + 
+         np.<span class="code-fn">cos</span>(p1) * np.<span class="code-fn">cos</span>(p2) * np.<span class="code-fn">sin</span>(dl / <span class="code-num">2</span>)**<span class="code-num">2</span>)
+    <span class="code-keyword">return</span> <span class="code-num">2</span> * R * np.<span class="code-fn">arcsin</span>(np.<span class="code-fn">sqrt</span>(a))</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Nguồn 3 - NASA DEM 30m -->
+    <section class="slide">
+      <div class="slide-category">NGUỒN DỮ LIỆU 3 / 4: CAO ĐỘ ĐỊA HÌNH NASA SRTM</div>
+      <h1 class="slide-title">Tích Hợp Mô Hình Cao Độ Số NASA SRTM DEM 30m</h1>
+      <p class="lead">Dữ liệu từ tàu con thoi không gian NASA Shuttle Radar Topography Mission, độ phân giải 1 cung giây (~30 mét).</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="card">
+            <div class="card-header">⛰️ Xử Lý Raster Cao Độ Với Rasterio</div>
+            <div class="card-body">
+              <ul>
+                <li>Xuất ra ma trận numpy <code>elevation_dem_matrix.npy</code> kích thước 131 x 170 pixels.</li>
+                <li>Độ cao thấp nhất: <strong>80.0 mét</strong> (ven thung lũng sông Hồng - Bát Xát).</li>
+                <li>Độ cao cao nhất: <strong>3,116.7 mét</strong> (đỉnh Fansipan - Sa Pa).</li>
+                <li>Tính chênh cao $\Delta h = |Z_{\text{node2}} - Z_{\text{node1}}|$ cho từng đoạn đường để xác định độ dốc cục bộ.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert-box alert-success" style="margin-top: 16px;">
+            <span>💡 <strong>Ứng dụng cốt lõi:</strong> Độ dốc là biến số đầu vào then chốt cho hàm vi sai Tobler ở Buổi 2 để giảm trừ vận tốc đi lại.</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">💻 Trích Xuất Cao Độ Cho Từng Cạnh Đồ Thị</div>
+          <div class="card-body">
+            <pre class="code-block"><span class="code-keyword">import</span> rasterio
+
+<span class="code-keyword">with</span> rasterio.<span class="code-fn">open</span>(<span class="code-str">"srtm_30m_laocai.tif"</span>) <span class="code-keyword">as</span> src:
+    <span class="code-comment"># Biến đổi tọa độ kinh vĩ sang chỉ số dòng/cột raster</span>
+    row, col = src.<span class="code-fn">index</span>(lon, lat)
+    elevation_val = src.<span class="code-fn">read</span>(<span class="code-num">1</span>)[row, col]
+    
+<span class="code-comment"># Tính độ dốc (Slope %)</span>
+slope = abs(elev_end - elev_start) / max(edge_dist, <span class="code-num">10.0</span>)</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Nguồn 4 - WorldPop 100m -->
+    <section class="slide">
+      <div class="slide-category">NGUỒN DỮ LIỆU 4 / 4: DÂN CƯ VI MÔ WORLDPOP 100M</div>
+      <h1 class="slide-title">Mô Hình Hóa Lưới Dân Cư Vi Mô WorldPop 100m</h1>
+      <p class="lead">Dữ liệu dân số vệ tinh có kiểm chứng (Constrained Individual Countries 2020 UN Adjusted 100m).</p>
+
+      <div class="grid-3">
+        <div class="stat-box">
+          <div class="stat-number">219,094</div>
+          <div class="stat-label">Tổng Quy Mô Dân Cư Được Mô Hình Hóa</div>
+        </div>
+        <div class="stat-box" style="border-color: var(--accent-cyan);">
+          <div class="stat-number" style="color: var(--accent-cyan);">17,863</div>
+          <div class="stat-label">Cụm Dân Cư Vi Mô Lưới 100m x 100m</div>
+        </div>
+        <div class="stat-box" style="border-color: var(--accent-amber);">
+          <div class="stat-number" style="color: var(--accent-amber);">99.1%</div>
+          <div class="stat-label">Độ Chuẩn Khớp Niên Giám Thống Kê Tỉnh Lào Cai</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 16px;">
+        <div class="card-header">🏞️ Bộ Lọc Thực Địa Loại Bỏ Điểm Ảo (Outlier Filtering)</div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Loại trừ vùng dốc đứng > 2,400 mét:</strong> Rà soát và loại bỏ các pixel dân số rơi vào vách đá Fansipan và rừng đặc dụng không có người sinh sống.</li>
+            <li><strong>Phân bổ tập trung theo thung lũng:</strong> Dân cư vùng cao tập trung dày đặc ở độ cao 500m - 1,200m gần nguồn nước và thung lũng ruộng bậc thang (Mường Hoa, Tả Van, Bản Vược, Pha Long).</li>
+            <li>Xuất bản tệp <code>data/03_primary/population_points_100m.geojson</code> mang đầy đủ số dân cho từng cell.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: Hệ quy chiếu CRS -->
+    <section class="slide">
+      <div class="slide-category">QUY CHUẨN KỸ THUẬT GIS</div>
+      <h1 class="slide-title">Hệ Quy Chiếu Tọa Độ: EPSG:4326 vs UTM Zone 48N</h1>
+      <p class="lead">Phân định rõ ràng mục đích sử dụng của hệ tọa độ góc (Degrees) và hệ tọa độ phẳng (Meters) trong hệ thống.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">🌐 WGS 84 (EPSG:4326)</div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Đơn vị đo:</strong> Độ thập phân (Decimal Degrees).</li>
+              <li><strong>Mục đích:</strong> Lưu trữ chuẩn GeoJSON, hiển thị trên bản đồ Web (Leaflet / Mapbox), trao đổi dữ liệu REST API.</li>
+              <li><strong>Cảnh báo:</strong> Tuyệt đối không dùng để tính khoảng cách và diện tích tại vùng núi! Ở vĩ độ Lào Cai (~22.3°N), 1 độ kinh tuyến đã co lại chỉ còn ~103 km trong khi vĩ tuyến là ~111 km.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">🗺️ UTM Zone 48N (EPSG:32648 / VN-2000)</div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Đơn vị đo:</strong> Mét thực tế (Meters).</li>
+              <li><strong>Mục đích:</strong> Phép chiếu phẳng hình trụ cắt ngang, dùng cho toàn bộ thuật toán tính ma sát độ dốc, khoảng cách Dijkstra, và tạo vùng đệm Isochrone.</li>
+              <li>Chuyển đổi tức thì trong GeoPandas:
+                <pre class="code-block" style="margin-top: 10px;">gdf_utm = gdf.<span class="code-fn">to_crs</span>(epsg=<span class="code-num">32648</span>)</pre>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 13: Xử lý Topology -->
+    <section class="slide">
+      <div class="slide-category">CHUẨN HÓA DỮ LIỆU KHÔNG GIAN</div>
+      <h1 class="slide-title">Xử Lý Lỗi Hình Học & Topology Cleaning</h1>
+      <p class="lead">Dọn dẹp các lỗi topology phổ biến trong dữ liệu OpenStreetMap để đảm bảo thuật toán tìm đường không bị đứt đoạn.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header">🔗 Snapped Nodes</div>
+          <div class="card-body">
+            Xử lý các ngã ba, ngã tư đèo núi bị lệch tọa độ vài cm (undershoot/overshoot). Gom các điểm nút gần nhau trong ngưỡng 5 mét thành 1 node duy nhất để nối liền mạng giao thông.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">✂️ Dangling Edges</div>
+          <div class="card-body">
+            Phát hiện và loại bỏ các đoạn đường mòn cụt trong rừng sâu không dẫn đến bất kỳ cụm dân cư hay trạm y tế nào, giảm 15% kích thước đồ thị NetworkX.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">🏝️ Island Networks</div>
+          <div class="card-body">
+            Trích xuất thành phần liên thông lớn nhất (Largest Strongly Connected Component). Loại bỏ các mạng lưới đường bị cô lập hoàn toàn do thiếu dữ liệu cầu cống OSM.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 16px;">
+        <div class="card-header">💻 Mã Lệnh Lọc Thành Phần Liên Thông Lớn Nhất</div>
+        <div class="card-body">
+          <pre class="code-block"><span class="code-keyword">import</span> networkx <span class="code-keyword">as</span> nx
+
+<span class="code-comment"># Lấy đồ thị liên thông lớn nhất để đảm bảo mọi điểm đều đi tới được trạm y tế</span>
+largest_cc = max(nx.<span class="code-fn">strongly_connected_components</span>(G), key=len)
+G_cleaned = G.<span class="code-fn">subgraph</span>(largest_cc).<span class="code-fn">copy</span>()</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 14: GeoPackage OGC -->
+    <section class="slide">
+      <div class="slide-category">ĐÓNG GÓI CHUẨN QUỐC TẾ</div>
+      <h1 class="slide-title">OGC GeoPackage: Single Source Of Truth Vượt Trội</h1>
+      <p class="lead">Đóng gói toàn bộ 4 lớp dữ liệu không gian phức tạp vào một tệp duy nhất <code>medimap_laocai_pilot_v1.gpkg</code>.</p>
+
+      <div class="grid-2">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Tiêu Chí So Sánh</th>
+              <th>Shapefile (ESRI 1998)</th>
+              <th>OGC GeoPackage (.gpkg)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cấu trúc tệp</strong></td>
+              <td>Phân mảnh 4 - 6 file (.shp, .dbf, .shx, .prj)</td>
+              <td><span class="badge">1 File Duy Nhất</span> (SQLite)</td>
+            </tr>
+            <tr>
+              <td><strong>Giới hạn dung lượng</strong></td>
+              <td>Tối đa 2.0 GB (Dễ sập với đồ thị lớn)</td>
+              <td>Lên tới 140 Terabytes</td>
+            </tr>
+            <tr>
+              <td><strong>Tên trường (Field)</strong></td>
+              <td>Bị cắt ngắn còn tối đa 10 ký tự</td>
+              <td>Không giới hạn độ dài</td>
+            </tr>
+            <tr>
+              <td><strong>Chỉ mục không gian</strong></td>
+              <td>Phụ thuộc phần mềm đọc bên ngoài</td>
+              <td>Tích hợp sẵn R-Tree siêu tốc</td>
+            </tr>
+            <tr>
+              <td><strong>Hỗ trợ đa lớp</strong></td>
+              <td>Mỗi file chỉ lưu được 1 lớp</td>
+              <td>Lưu đồng thời Điểm, Đường, Vùng, Raster</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="card">
+          <div class="card-header">📦 4 Lớp Dữ Liệu Trong Tệp medimap_laocai_pilot_v1.gpkg</div>
+          <div class="card-body">
+            <ul>
+              <li><code>facilities_ground_truth</code>: 67 điểm cơ sở y tế chuẩn cổng trạm.</li>
+              <li><code>mountain_road_network</code>: 11,618 km đường giao thông kèm thuộc tính độ dốc.</li>
+              <li><code>population_grid_100m</code>: 17,863 cụm dân cư vi mô có gắn số dân.</li>
+              <li><code>study_area_boundary</code>: Đa giác ranh giới 3 huyện Sa Pa, Bát Xát, Mường Khương.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 15: Kiểm thử chất lượng AC-1 -> AC-5 -->
+    <section class="slide">
+      <div class="slide-category">KIỂM THỬ NGHIỆM THU DỮ LIỆU (QA)</div>
+      <h1 class="slide-title">Báo Cáo Nghiệm Thu 5 Tiêu Chí (AC-1 Đến AC-5)</h1>
+      <p class="lead">Toàn bộ 5 tiêu chí chấp thuận học thuật đã được kiểm chứng và vượt qua 100% qua script <code>06_qa_ground_truth_validation.py</code>.</p>
+
+      <table class="styled-table" style="font-size: 0.92rem;">
+        <thead>
+          <tr>
+            <th>Mã Tiêu Chí</th>
+            <th>Tên Tiêu Chí Chấp Thuận</th>
+            <th>Ngưỡng Yêu Cầu</th>
+            <th>Kết Quả Thực Nghiệm</th>
+            <th>Trạng Thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>[AC-1]</strong></td>
+            <td>Tính Đầy Đủ Cơ Sở Y Tế</td>
+            <td>&ge; 55 trạm y tế</td>
+            <td><strong>67 cơ sở y tế</strong> (19 Sa Pa, 28 Bát Xát, 20 Mường Khương)</td>
+            <td><span class="badge" style="color: #4ADE80;">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>[AC-2]</strong></td>
+            <td>Độ Chính Xác Vị Trí Cổng Trạm</td>
+            <td>100% tọa độ Ground-Truth</td>
+            <td><strong>100%</strong> đối soát vệ tinh (Loại bỏ hoàn toàn sai số UBND xã)</td>
+            <td><span class="badge" style="color: #4ADE80;">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>[AC-3]</strong></td>
+            <td>Đại Diện Dân Số Vi Mô</td>
+            <td>Sai số Niên giám &le; 2%</td>
+            <td><strong>219,094 người</strong> (Sai số 0.9% so với Niên giám 221K)</td>
+            <td><span class="badge" style="color: #4ADE80;">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>[AC-4]</strong></td>
+            <td>Tác Động Ma Sát Độ Dốc</td>
+            <td>Phát hiện vùng lõm y tế</td>
+            <td><strong>34,498 người (15.75%)</strong> nằm trong vùng lõm &gt;60 phút</td>
+            <td><span class="badge" style="color: #4ADE80;">PASSED</span></td>
+          </tr>
+          <tr>
+            <td><strong>[AC-5]</strong></td>
+            <td>Khả Năng Tái Lập & Đóng Gói</td>
+            <td>Xuất bản GeoPackage OGC</td>
+            <td>File <code>medimap_laocai_pilot_v1.gpkg</code> chuẩn OGC</td>
+            <td><span class="badge" style="color: #4ADE80;">PASSED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SLIDE 16: Hands-on Lab 01 -->
+    <section class="slide">
+      <div class="slide-category">THỰC HÀNH LIVE LAB (50 PHÚT)</div>
+      <h1 class="slide-title">Hands-On Lab 01: Chạy Tự Động Hóa Pipeline 6 Bước</h1>
+      <p class="lead">Tự tay học viên thực thi toàn bộ quy trình từ tải dữ liệu thô đến xuất bản tệp GeoPackage hoàn chỉnh.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">💻 Các Bước Thực Thi Lệnh</div>
+          <div class="card-body">
+            <pre class="code-block"><span class="code-comment"># 1. Di chuyển vào thư mục dự án</span>
+cd medimap_gis
+
+<span class="code-comment"># 2. Cài đặt các thư viện GIS chuyên biệt</span>
+pip install -r requirements.txt
+
+<span class="code-comment"># 3. Kích hoạt toàn bộ Pipeline tự động hóa</span>
+python run_pipeline.py
+
+<span class="code-comment"># 4. Kiểm tra cấu trúc các lớp dữ liệu đã xuất</span>
+python scripts/06_qa_ground_truth_validation.py</pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">📊 Nhật Ký Thực Thi (Execution Log) Dự Kiến</div>
+          <div class="card-body">
+            <pre class="code-block" style="color: var(--accent-cyan);">[STEP 1/6] Xác lập ranh giới & Bounding Box... (3.2s)
+[STEP 2/6] Chuẩn hóa 67 cơ sở y tế Ground-Truth... (1.1s)
+[STEP 3/6] Cào đồ thị giao thông OSM (708K nodes)... (74.5s)
+[STEP 4/6] Xử lý Raster cao độ DEM & WorldPop 100m... (3.4s)
+[STEP 5/6] Tích hợp trở lực dốc Tobler & Vùng lõm... (6.8s)
+[STEP 6/6] Nghiệm thu 5 tiêu chí AC & GeoPackage... (2.1s)
+=====================================================
+TOÀN BỘ PIPELINE HOÀN TẤT THÀNH CÔNG TRONG 91.1 GIÂY!</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 17: Tổng kết & CFU -->
+    <section class="slide">
+      <div class="slide-category">TỔNG KẾT & CHUYỂN GIAO KIẾN THỨC</div>
+      <h1 class="slide-title">Tổng Kết Buổi 1 & Check For Understanding</h1>
+      <p class="lead">Bàn giao gói dữ liệu sạch và sẵn sàng bước sang bài toán giải mã toán học không gian tại Buổi 2.</p>
+
+      <div class="grid-2">
+        <div class="card" style="border-color: rgba(0, 245, 212, 0.4);">
+          <div class="card-header">🧠 Câu Hỏi Kiểm Tra Độ Hiểu Bài (CFU)</div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Câu 1:</strong> Tại sao không được dùng hệ tọa độ EPSG:4326 để tính cự ly đèo dốc?
+                <p style="color: var(--accent-cyan); margin-top: 4px;">👉 Vì EPSG:4326 tính bằng độ kinh vĩ. Ở vĩ độ Lào Cai, kinh tuyến bị co ngắn lại, tính mét sẽ bị méo hình học, bắt buộc phải dùng UTM Zone 48N.</p>
+              </li>
+              <li style="margin-top: 10px;"><strong>Câu 2:</strong> Nếu một trạm y tế nằm cách tim đường 120m trên vách dốc, rủi ro khi không snap cổng là gì?
+                <p style="color: var(--accent-cyan); margin-top: 4px;">👉 Thuật toán tìm đường Dijkstra sẽ coi trạm y tế là một điểm cô lập (unreachable), khiến mọi người dân đều không thể đi tới trạm.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: rgba(255, 159, 28, 0.4);">
+          <div class="card-header">🎁 Hành Trang Bàn Giao Sang Buổi 2</div>
+          <div class="card-body">
+            <ul>
+              <li>File dữ liệu OGC chuẩn <code>medimap_laocai_pilot_v1.gpkg</code>.</li>
+              <li>Mạng lưới 11,618 km đường đã được gắn cao độ số DEM 30m.</li>
+              <li>Lưới 17,863 cụm dân cư vi mô có thuộc tính dân số thực tế.</li>
+              <li><strong>Nội dung Buổi 2 đón chờ:</strong> Giải mã Hàm Tobler, Mô hình E2SFCA, Khám phá 34,498 người dân vùng lõm và thuật toán tối ưu P-Median cứu trợ 85.7% dân số!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="deck-controls">
+    <div class="btn-group">
+      <button class="nav-btn" id="prevBtn" onclick="prevSlide()">◀ Trang Trước</button>
+      <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Trang Sau ▶</button>
+      <button class="nav-btn" id="fullscreenBtn" onclick="toggleFullscreen()">⛶ Toàn Màn Hình</button>
+    </div>
+    <div class="key-hints">
+      Sử dụng phím <kbd>←</kbd> <kbd>→</kbd> hoặc <kbd>Space</kbd> để chuyển slide | Nhấn <kbd>F</kbd> bật Fullscreen
+    </div>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progress-bar');
+    const counter = document.getElementById('counter');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function updateDeck() {
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+      const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+      counter.innerText = `Slide ${currentSlide + 1} / ${totalSlides}`;
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === totalSlides - 1;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateDeck();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateDeck();
+      }
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => alert(err.message));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        currentSlide = 0;
+        updateDeck();
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        currentSlide = totalSlides - 1;
+        updateDeck();
+      } else if (e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+
+    updateDeck();
+  </script>
+</body>
+</html>
