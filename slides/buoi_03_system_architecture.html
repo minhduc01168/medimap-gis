@@ -41,7 +41,7 @@
 
     #progress-container {
       width: 100%;
-      height: 6px;
+      height: 5px;
       background: #E2E8F0;
       position: relative;
       z-index: 100;
@@ -51,25 +51,25 @@
       background: linear-gradient(90deg, var(--accent-primary), var(--accent-teal), #10B981);
       width: 0%;
       transition: width 0.3s ease;
-      box-shadow: 0 0 10px rgba(13, 148, 136, 0.4);
+      box-shadow: 0 0 8px rgba(13, 148, 136, 0.35);
     }
 
     .deck-header {
-      padding: 14px 36px;
+      padding: 10px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #E2E8F0;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
       z-index: 50;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 0.95rem;
+      gap: 10px;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--text-main);
     }
@@ -77,17 +77,17 @@
       background: #CCFBF1;
       color: var(--accent-teal);
       border: 1px solid #99F6E4;
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 999px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
     }
     .slide-counter {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--accent-teal);
       background: #F0FDF4;
-      padding: 5px 16px;
+      padding: 4px 14px;
       border-radius: 8px;
       border: 1px solid #CCFBF1;
       font-weight: 600;
@@ -100,23 +100,23 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px 40px;
+      padding: 14px 28px;
     }
     .slide {
       position: absolute;
-      width: min(1360px, 94vw);
-      height: min(780px, 86vh);
+      width: min(1360px, 95vw);
+      height: min(820px, 89vh);
       background: var(--bg-card);
       border: 1px solid var(--bg-card-border);
-      border-radius: 20px;
-      padding: 44px 56px;
-      box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.1), 0 4px 16px rgba(0, 0, 0, 0.04);
+      border-radius: 18px;
+      padding: 28px 42px;
+      box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.08), 0 2px 10px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
       opacity: 0;
       transform: translateX(60px) scale(0.98);
       pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       overflow-y: auto;
     }
     .slide.active {
@@ -127,11 +127,11 @@
 
     .slide-category {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       color: var(--accent-teal);
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -140,98 +140,98 @@
     .slide-category::before {
       content: '';
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: var(--accent-teal);
       border-radius: 50%;
-      box-shadow: 0 0 8px rgba(13, 148, 136, 0.5);
+      box-shadow: 0 0 6px rgba(13, 148, 136, 0.5);
     }
     h1.slide-title {
-      font-size: 2.1rem;
+      font-size: 1.8rem;
       font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 22px;
+      line-height: 1.22;
+      margin-bottom: 8px;
       background: linear-gradient(135deg, #0F172A 20%, #0D9488 75%, #0284C7 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     p.lead {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 24px;
+      line-height: 1.48;
+      margin-bottom: 14px;
     }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 1; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; flex: 1; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; flex: 1; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; flex: 1; }
 
     .card {
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
-      border-radius: 14px;
-      padding: 22px;
+      border-radius: 12px;
+      padding: 15px 18px;
       display: flex;
       flex-direction: column;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .card:hover {
       border-color: #99F6E4;
-      box-shadow: 0 8px 24px rgba(13, 148, 136, 0.08);
+      box-shadow: 0 6px 18px rgba(13, 148, 136, 0.08);
       transform: translateY(-2px);
     }
     .card-header {
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       color: var(--text-main);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .card-body {
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       color: #334155;
-      line-height: 1.6;
+      line-height: 1.52;
     }
-    .card-body ul { margin-left: 20px; margin-top: 8px; }
-    .card-body li { margin-bottom: 6px; }
+    .card-body ul { margin-left: 18px; margin-top: 5px; }
+    .card-body li { margin-bottom: 4px; }
 
     .stat-box {
       background: #F0FDF4;
       border-left: 4px solid var(--accent-teal);
-      border-radius: 0 12px 12px 0;
-      padding: 16px 20px;
-      margin-bottom: 16px;
+      border-radius: 0 10px 10px 0;
+      padding: 10px 15px;
+      margin-bottom: 10px;
       border-top: 1px solid #E2E8F0;
       border-right: 1px solid #E2E8F0;
       border-bottom: 1px solid #E2E8F0;
     }
     .stat-number {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 2.2rem;
+      font-size: 1.7rem;
       font-weight: 800;
       color: var(--accent-teal);
       line-height: 1.1;
     }
     .stat-label {
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--text-muted);
-      margin-top: 4px;
+      margin-top: 2px;
       font-weight: 600;
     }
 
     .alert-box {
-      border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 16px;
+      border-radius: 10px;
+      padding: 9px 15px;
+      margin-bottom: 10px;
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      font-size: 0.9rem;
-      line-height: 1.5;
+      gap: 10px;
+      font-size: 0.86rem;
+      line-height: 1.45;
     }
     .alert-success {
       background: #F0FDF4;
@@ -249,17 +249,59 @@
       color: #991B1B;
     }
 
+    .highlight-banner {
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.05), rgba(2, 132, 199, 0.08));
+      border: 1px solid #99F6E4;
+      border-radius: 10px;
+      padding: 10px 18px;
+      margin-top: 12px;
+      font-size: 0.86rem;
+      color: #0F766E;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.48;
+    }
+
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .stat-strip-item {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 9px 12px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .stat-strip-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent-teal);
+    }
+    .stat-strip-lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
     pre.code-block {
       background: var(--code-bg);
       border: 1px solid #E2E8F0;
-      border-radius: 12px;
-      padding: 18px 22px;
+      border-radius: 10px;
+      padding: 10px 14px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      line-height: 1.6;
+      font-size: 0.79rem;
+      line-height: 1.45;
       color: #1E293B;
       overflow-x: auto;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
     .code-comment { color: #94A3B8; }
     .code-keyword { color: #DC2626; font-weight: 600; }
@@ -270,30 +312,29 @@
     table.styled-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
-      margin-top: 8px;
+      font-size: 0.82rem;
+      margin-top: 4px;
     }
     table.styled-table th {
       background: #F1F5F9;
       color: var(--accent-teal);
       font-weight: 700;
       text-align: left;
-      padding: 12px 14px;
+      padding: 7px 11px;
       border-bottom: 2px solid #CBD5E1;
     }
     table.styled-table td {
-      padding: 10px 14px;
+      padding: 6px 11px;
       border-bottom: 1px solid #E2E8F0;
       color: #334155;
     }
     table.styled-table tr:hover td { background: #F8FAFC; }
 
-    /* Custom SVG Chart Containers */
     .chart-container {
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
-      border-radius: 14px;
-      padding: 20px;
+      border-radius: 12px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -303,36 +344,36 @@
     }
 
     .deck-controls {
-      padding: 14px 36px;
+      padding: 10px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid #E2E8F0;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
       z-index: 50;
       box-shadow: 0 -1px 3px rgba(0,0,0,0.02);
     }
-    .btn-group { display: flex; gap: 12px; }
+    .btn-group { display: flex; gap: 10px; }
     button.nav-btn {
       background: #F1F5F9;
       border: 1px solid #CBD5E1;
       color: #1E293B;
-      padding: 9px 20px;
-      border-radius: 10px;
-      font-size: 0.85rem;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s;
     }
     button.nav-btn:hover {
       background: #CCFBF1;
       border-color: var(--accent-teal);
       color: var(--accent-teal);
-      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.15);
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.12);
     }
     button.nav-btn:disabled {
       opacity: 0.4;
@@ -341,12 +382,12 @@
       border-color: #E2E8F0;
       color: #94A3B8;
     }
-    .key-hints { font-size: 0.78rem; color: var(--text-muted); }
+    .key-hints { font-size: 0.76rem; color: var(--text-muted); }
     .key-hints kbd {
       background: #F1F5F9;
       border: 1px solid #E2E8F0;
-      padding: 3px 7px;
-      border-radius: 5px;
+      padding: 2px 6px;
+      border-radius: 4px;
       font-family: 'JetBrains Mono', monospace;
       color: var(--accent-teal);
       font-weight: 600;
@@ -373,7 +414,7 @@
       <h1 class="slide-title">Kiến Trúc Spatial Microservice & Trực Quan Hóa Dữ Liệu</h1>
       <p class="lead">Làm chủ kiến trúc hệ thống 3 tầng hiệu năng cao: FastAPI Spatial Microservice với bộ nhớ đệm In-Memory RAM Cache đạt độ trễ &lt; 50ms, giao diện WebGIS tương tác React Leaflet và bộ 4 biểu đồ dữ liệu khoa học.</p>
 
-      <div class="grid-3" style="margin-top: 20px;">
+      <div class="grid-3" style="margin-top: 14px;">
         <div class="card" style="border-top: 3px solid var(--accent-teal);">
           <div class="card-header">⚡ Tốc Độ Thần Tốc</div>
           <div class="card-body">
@@ -392,6 +433,12 @@
             Bộ 4 biểu đồ khoa học: Donut tiếp cận, Bar chart giải cứu 85.7%, Moran Scatterplot và Radar năng lực y tế 3 huyện.
           </div>
         </div>
+      </div>
+      <div class="stat-strip">
+        <div class="stat-strip-item"><div class="stat-strip-num">&lt; 50 ms</div><div class="stat-strip-lbl">In-Memory RAM Cache</div></div>
+        <div class="stat-strip-item"><div class="stat-strip-num">&lt; 350 KB</div><div class="stat-strip-lbl">Payload Nén GeoJSON</div></div>
+        <div class="stat-strip-item"><div class="stat-strip-num">60 FPS</div><div class="stat-strip-lbl">Canvas Rendering</div></div>
+        <div class="stat-strip-item"><div class="stat-strip-num">3 Services</div><div class="stat-strip-lbl">Docker Compose Stack</div></div>
       </div>
     </section>
 
@@ -514,6 +561,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="highlight-banner">
+        <span>🏆 <strong>Kết Luận Kiến Trúc:</strong> FastAPI + In-Memory Spatial Cache là lựa chọn số 1 cho các ứng dụng WebGIS thời gian thực nhờ độ trễ cực thấp (15 - 42ms) và khả năng can thiệp trực tiếp vào cấu trúc đồ thị NetworkX/SciPy.</span>
+      </div>
     </section>
 
     <!-- SLIDE 5: In-Memory Spatial Cache -->
@@ -643,6 +693,9 @@ nearest_facility = facilities[idx]</pre>
           </tr>
         </tbody>
       </table>
+      <div class="highlight-banner">
+        <span>🛠️ <strong>Môi Trường Thử Nghiệm API:</strong> Truy cập Swagger UI trực tiếp tại <code>http://localhost:8000/docs</code> để test tương tác các endpoints hoặc tích hợp vào các nền tảng ứng dụng di động y tế.</span>
+      </div>
     </section>
 
     <!-- SLIDE 8: Frontend WebGIS Leaflet -->
@@ -676,6 +729,9 @@ nearest_facility = facilities[idx]</pre>
             67 biểu tượng CSYT phân màu theo cấp bậc (Tier 1/2/3). Nhấp chuột hiển thị Popup số giường, số bác sĩ và độ cao trạm.
           </div>
         </div>
+      </div>
+      <div class="highlight-banner" style="border-color: #BAE6FD; background: linear-gradient(135deg, rgba(2, 132, 199, 0.05), rgba(59, 130, 246, 0.08)); color: #1D4ED8;">
+        <span>🗺️ <strong>Thứ Tự Xếp Lớp (Z-Index):</strong> Basemap (Lớp đáy) ➔ Đa giác Isochrones 15/30/60m (Layer 2) ➔ Điểm dân cư Vùng lõm Canvas (Layer 3) ➔ 67 Biểu tượng CSYT Markers tương tác (Lớp đỉnh).</span>
       </div>
     </section>
 
@@ -726,7 +782,7 @@ nearest_facility = facilities[idx]</pre>
       <div class="grid-2">
         <div class="chart-container">
           <!-- Inline SVG Donut Chart -->
-          <svg width="340" height="340" viewBox="0 0 42 42" class="donut">
+          <svg width="250" height="250" viewBox="0 0 42 42" class="donut">
             <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#E2E8F0" stroke-width="6"></circle>
             <!-- Segment 1: <15m (35.93%) -->
             <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#00F5D4" stroke-width="6" stroke-dasharray="35.93 64.07" stroke-dashoffset="25"></circle>
@@ -792,6 +848,9 @@ nearest_facility = facilities[idx]</pre>
           </div>
         </div>
       </div>
+      <div class="highlight-banner">
+        <span>🚑 <strong>Hành Động Ưu Tiên 2026 - 2030:</strong> Thiết lập 15 tủ thuốc cấp cứu thông minh kết hợp mạng lưới nhân viên y tế thôn bản tại các chòm bản xa trung tâm xã trên 60 phút để xử lý sơ cứu ban đầu.</span>
+      </div>
     </section>
 
     <!-- SLIDE 12: Biểu đồ 2 - Bar Chart Before vs After -->
@@ -803,7 +862,7 @@ nearest_facility = facilities[idx]</pre>
       <div class="grid-2">
         <div class="chart-container">
           <!-- Inline SVG Bar Chart -->
-          <svg width="460" height="280" viewBox="0 0 460 280">
+          <svg width="400" height="210" viewBox="0 0 460 270">
             <!-- Trục ngang -->
             <line x1="60" y1="220" x2="420" y2="220" stroke="#CBD5E1" stroke-width="2"/>
             
@@ -885,6 +944,9 @@ nearest_facility = facilities[idx]</pre>
           </div>
         </div>
       </div>
+      <div class="highlight-banner" style="border-color: #A7F3D0; background: linear-gradient(135deg, rgba(13, 148, 136, 0.05), rgba(16, 185, 129, 0.08)); color: #065F46;">
+        <span>📊 <strong>Hiệu Quả Đầu Tư Xã Hội (SROI):</strong> 5 trạm mới giảm 54.9 phút di chuyển bình quân, đưa 29,574 đồng bào vào giờ vàng cấp cứu, giảm ước tính trên 65% ca tử vong mẹ và trẻ sơ sinh do chậm trễ chuyển tuyến.</span>
+      </div>
     </section>
 
     <!-- SLIDE 14: Biểu đồ 3 - Moran's Scatterplot -->
@@ -896,7 +958,7 @@ nearest_facility = facilities[idx]</pre>
       <div class="grid-2">
         <div class="chart-container">
           <!-- Inline SVG Moran Scatterplot -->
-          <svg width="400" height="280" viewBox="0 0 400 280">
+          <svg width="350" height="210" viewBox="0 0 400 270">
             <!-- Trục tọa độ -->
             <line x1="200" y1="20" x2="200" y2="260" stroke="#CBD5E1" stroke-width="1.5"/>
             <line x1="30" y1="140" x2="370" y2="140" stroke="#CBD5E1" stroke-width="1.5"/>
@@ -940,7 +1002,7 @@ nearest_facility = facilities[idx]</pre>
       <div class="grid-2">
         <div class="chart-container">
           <!-- Inline SVG Radar Chart -->
-          <svg width="360" height="280" viewBox="0 0 360 280">
+          <svg width="320" height="215" viewBox="0 0 360 275">
             <!-- Các vòng tròn đồng tâm -->
             <polygon points="180,30 290,110 250,230 110,230 70,110" fill="transparent" stroke="#E2E8F0" stroke-width="1.5"/>
             <polygon points="180,60 255,115 228,198 132,198 105,115" fill="transparent" stroke="#CBD5E1" stroke-width="1.5"/>
@@ -1046,6 +1108,9 @@ docker compose ps
 <span class="code-comment"># Swagger API Docs: http://localhost:8000/docs</span></pre>
           </div>
         </div>
+      </div>
+      <div class="highlight-banner">
+        <span>⚡ <strong>Yêu Cầu Phần Cứng Cơ Sở:</strong> Tối thiểu 2 vCPU, 2GB RAM (toàn bộ 3 containers chỉ chiếm ~380MB RAM), tương thích 100% môi trường Linux/Ubuntu máy chủ y tế huyện và máy tính để bàn thông thường.</span>
       </div>
     </section>
 

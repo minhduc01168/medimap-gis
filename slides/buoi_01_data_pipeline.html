@@ -37,10 +37,9 @@
       flex-direction: column;
     }
 
-    /* Top progress bar */
     #progress-container {
       width: 100%;
-      height: 6px;
+      height: 5px;
       background: #E2E8F0;
       position: relative;
       z-index: 100;
@@ -50,51 +49,48 @@
       background: linear-gradient(90deg, var(--accent-teal), var(--accent-primary));
       width: 0%;
       transition: width 0.3s ease;
-      box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+      box-shadow: 0 0 8px rgba(2, 132, 199, 0.35);
     }
 
-    /* Top header */
     .deck-header {
-      padding: 14px 36px;
+      padding: 10px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #E2E8F0;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
       z-index: 50;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 0.95rem;
+      gap: 10px;
+      font-size: 0.92rem;
       font-weight: 700;
-      letter-spacing: 0.5px;
       color: var(--text-main);
     }
     .badge {
       background: #E0F2FE;
       color: var(--accent-primary);
       border: 1px solid #BAE6FD;
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 999px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
     }
     .slide-counter {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--accent-primary);
       background: #F1F5F9;
-      padding: 5px 16px;
+      padding: 4px 14px;
       border-radius: 8px;
       border: 1px solid #E2E8F0;
       font-weight: 600;
     }
 
-    /* Slide Stage */
     #slide-stage {
       flex: 1;
       position: relative;
@@ -102,23 +98,23 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px 40px;
+      padding: 14px 28px;
     }
     .slide {
       position: absolute;
-      width: min(1360px, 94vw);
-      height: min(780px, 86vh);
+      width: min(1360px, 95vw);
+      height: min(820px, 89vh);
       background: var(--bg-card);
       border: 1px solid var(--bg-card-border);
-      border-radius: 20px;
-      padding: 44px 56px;
-      box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.1), 0 4px 16px rgba(0, 0, 0, 0.04);
+      border-radius: 18px;
+      padding: 28px 42px;
+      box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.08), 0 2px 10px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
       opacity: 0;
       transform: translateX(60px) scale(0.98);
       pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       overflow-y: auto;
     }
     .slide.active {
@@ -127,14 +123,13 @@
       pointer-events: all;
     }
 
-    /* Typography */
     .slide-category {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       color: var(--accent-primary);
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -143,117 +138,115 @@
     .slide-category::before {
       content: '';
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       background: var(--accent-primary);
       border-radius: 50%;
-      box-shadow: 0 0 8px rgba(2, 132, 199, 0.5);
+      box-shadow: 0 0 6px rgba(2, 132, 199, 0.5);
     }
     h1.slide-title {
-      font-size: 2.1rem;
+      font-size: 1.8rem;
       font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 22px;
+      line-height: 1.22;
+      margin-bottom: 8px;
       background: linear-gradient(135deg, #0F172A 20%, #0284C7 80%, #0D9488 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     p.lead {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 24px;
+      line-height: 1.48;
+      margin-bottom: 14px;
     }
 
-    /* Grid & Cards */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 18px;
       flex: 1;
     }
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 16px;
       flex: 1;
     }
     .grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 14px;
       flex: 1;
     }
     .card {
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
-      border-radius: 14px;
-      padding: 22px;
+      border-radius: 12px;
+      padding: 15px 18px;
       display: flex;
       flex-direction: column;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .card:hover {
       border-color: #BAE6FD;
-      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.08);
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.08);
       transform: translateY(-2px);
     }
     .card-header {
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       color: var(--text-main);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .card-body {
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       color: #334155;
-      line-height: 1.6;
+      line-height: 1.52;
     }
     .card-body ul {
-      margin-left: 20px;
-      margin-top: 8px;
+      margin-left: 18px;
+      margin-top: 5px;
     }
-    .card-body li { margin-bottom: 6px; }
+    .card-body li { margin-bottom: 4px; }
 
-    /* Highlights & Metrics */
     .stat-box {
       background: #F0FDF4;
       border-left: 4px solid var(--accent-teal);
-      border-radius: 0 12px 12px 0;
-      padding: 16px 20px;
-      margin-bottom: 16px;
+      border-radius: 0 10px 10px 0;
+      padding: 10px 15px;
+      margin-bottom: 10px;
       border-top: 1px solid #E2E8F0;
       border-right: 1px solid #E2E8F0;
       border-bottom: 1px solid #E2E8F0;
     }
     .stat-number {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 2.2rem;
+      font-size: 1.7rem;
       font-weight: 800;
       color: var(--accent-teal);
       line-height: 1.1;
     }
     .stat-label {
-      font-size: 0.82rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--text-muted);
-      margin-top: 4px;
+      margin-top: 2px;
       font-weight: 600;
     }
 
     .alert-box {
-      border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 16px;
+      border-radius: 10px;
+      padding: 9px 15px;
+      margin-bottom: 10px;
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      font-size: 0.9rem;
-      line-height: 1.5;
+      gap: 10px;
+      font-size: 0.86rem;
+      line-height: 1.45;
     }
     .alert-danger {
       background: #FEF2F2;
@@ -271,18 +264,59 @@
       color: #166534;
     }
 
-    /* Code Block */
+    .highlight-banner {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.05), rgba(13, 148, 136, 0.08));
+      border: 1px solid #BAE6FD;
+      border-radius: 10px;
+      padding: 10px 18px;
+      margin-top: 12px;
+      font-size: 0.86rem;
+      color: #0369A1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.48;
+    }
+
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .stat-strip-item {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 9px 12px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .stat-strip-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent-primary);
+    }
+    .stat-strip-lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
     pre.code-block {
       background: var(--code-bg);
       border: 1px solid #E2E8F0;
-      border-radius: 12px;
-      padding: 18px 22px;
+      border-radius: 10px;
+      padding: 10px 14px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      line-height: 1.6;
+      font-size: 0.79rem;
+      line-height: 1.45;
       color: #1E293B;
       overflow-x: auto;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
     .code-comment { color: #94A3B8; }
     .code-keyword { color: #DC2626; font-weight: 600; }
@@ -290,23 +324,22 @@
     .code-str { color: #16A34A; }
     .code-num { color: #D97706; }
 
-    /* Tables */
     table.styled-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
-      margin-top: 8px;
+      font-size: 0.82rem;
+      margin-top: 4px;
     }
     table.styled-table th {
       background: #F1F5F9;
       color: var(--accent-primary);
       font-weight: 700;
       text-align: left;
-      padding: 12px 14px;
+      padding: 7px 11px;
       border-bottom: 2px solid #CBD5E1;
     }
     table.styled-table td {
-      padding: 10px 14px;
+      padding: 6px 11px;
       border-bottom: 1px solid #E2E8F0;
       color: #334155;
     }
@@ -314,41 +347,40 @@
       background: #F8FAFC;
     }
 
-    /* Bottom navigation controls */
     .deck-controls {
-      padding: 14px 36px;
+      padding: 10px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid #E2E8F0;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
       z-index: 50;
       box-shadow: 0 -1px 3px rgba(0,0,0,0.02);
     }
     .btn-group {
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
     button.nav-btn {
       background: #F1F5F9;
       border: 1px solid #CBD5E1;
       color: #1E293B;
-      padding: 9px 20px;
-      border-radius: 10px;
-      font-size: 0.85rem;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: all 0.2s;
     }
     button.nav-btn:hover {
       background: #E0F2FE;
       border-color: var(--accent-primary);
       color: var(--accent-primary);
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.15);
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12);
     }
     button.nav-btn:disabled {
       opacity: 0.4;
@@ -358,14 +390,14 @@
       color: #94A3B8;
     }
     .key-hints {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-muted);
     }
     .key-hints kbd {
       background: #F1F5F9;
       border: 1px solid #E2E8F0;
-      padding: 3px 7px;
-      border-radius: 5px;
+      padding: 2px 6px;
+      border-radius: 4px;
       font-family: 'JetBrains Mono', monospace;
       color: var(--accent-primary);
       font-weight: 600;
@@ -392,7 +424,7 @@
       <h1 class="slide-title">Xây Dựng Spatial Data Pipeline Từ Đa Nguồn Kết Hợp</h1>
       <p class="lead">Làm chủ quy trình thu thập, chuẩn hóa tọa độ trạm y tế, trích xuất mạng lưới đường bộ OSM, cao độ số NASA DEM 30m và lưới dân số vi mô WorldPop 100m.</p>
       
-      <div class="grid-3" style="margin-top: 20px;">
+      <div class="grid-3" style="margin-top: 14px;">
         <div class="card" style="border-top: 3px solid var(--accent-teal);">
           <div class="card-header">🎯 Mục Tiêu Đào Tạo</div>
           <div class="card-body">
@@ -411,6 +443,12 @@
             Gói dữ liệu OGC chuẩn quốc tế <code>medimap_laocai_pilot_v1.gpkg</code> sẵn sàng phục vụ phân tích ma sát Tobler và mô hình E2SFCA.
           </div>
         </div>
+      </div>
+      <div class="stat-strip">
+        <div class="stat-strip-item"><div class="stat-strip-num">67 CSYT</div><div class="stat-strip-lbl">Ground-Truth Vệ Tinh</div></div>
+        <div class="stat-strip-item"><div class="stat-strip-num">11,618 km</div><div class="stat-strip-lbl">Mạng Đường Đèo OSM</div></div>
+        <div class="stat-strip-item"><div class="stat-strip-num">219,094</div><div class="stat-strip-lbl">Dân Cư Lưới WorldPop</div></div>
+        <div class="stat-strip-item"><div class="stat-strip-num">100% OGC</div><div class="stat-strip-lbl">GeoPackage Chuẩn Hóa</div></div>
       </div>
     </section>
 
@@ -478,6 +516,9 @@
             </ul>
           </div>
         </div>
+      </div>
+      <div class="highlight-banner">
+        <span>💡 <strong>Nguyên Lý Cốt Lõi:</strong> 1 km đường chim bay ở đồng bằng ≈ 1.75 km đường đèo cua tay áo vùng núi và tương đương 15 - 25 phút di chuyển thực tế do ma sát sườn dốc (Slope Impedance).</span>
       </div>
     </section>
 
@@ -624,6 +665,9 @@
             </ul>
           </div>
         </div>
+      </div>
+      <div class="highlight-banner" style="border-color: #A7F3D0; background: linear-gradient(135deg, rgba(13, 148, 136, 0.05), rgba(16, 185, 129, 0.08)); color: #065F46;">
+        <span>🎯 <strong>Tiêu Chuẩn Kiểm Soát Chất Lượng (QC):</strong> Bán kính Nearest Edge Snapping tối đa &lt; 100m. Mọi điểm trạm y tế phải gắn kết thành công vào mạng lưới giao thông liên thông, không để sót Island Nodes.</span>
       </div>
     </section>
 
@@ -824,6 +868,9 @@ slope = abs(elev_end - elev_start) / max(edge_dist, <span class="code-num">10.0<
           </ul>
         </div>
       </div>
+      <div class="highlight-banner" style="border-color: #FED7AA; background: linear-gradient(135deg, rgba(217, 119, 6, 0.05), rgba(245, 158, 11, 0.08)); color: #9A3412;">
+        <span>🏔️ <strong>Đặc Thù Phân Bố Dân Cư Theo Cao Độ:</strong> Đai thấp (500 - 1,200m) tập trung 75.8% dân cư theo các thung lũng lúa nước; Đai cao (1,200 - 2,000m) gồm 23.3% đồng bào Mông, Dao phân tán; Vùng đỉnh (&gt; 2,400m) là vách đá không người sinh sống.</span>
+      </div>
     </section>
 
     <!-- SLIDE 12: Hệ quy chiếu CRS -->
@@ -856,6 +903,9 @@ slope = abs(elev_end - elev_start) / max(edge_dist, <span class="code-num">10.0<
             </ul>
           </div>
         </div>
+      </div>
+      <div class="highlight-banner">
+        <span>📐 <strong>Quy Tắc Vàng Kỹ Thuật GIS:</strong> "Dùng EPSG:4326 (Độ thập phân) cho lưu trữ GeoJSON & hiển thị WebGIS Leaflet — Bắt buộc chuyển sang UTM Zone 48N (EPSG:32648 - Mét) khi tính toán cự ly, độ dốc và thuật toán Dijkstra".</span>
       </div>
     </section>
 
